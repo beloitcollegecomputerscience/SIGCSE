@@ -1,10 +1,7 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 
 <?php
-//minor change to allow a commit
 // Access to global variables
 require_once ('../global/include.php');
 
