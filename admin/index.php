@@ -2,6 +2,7 @@
 <html lang="en">
 
 <?php
+    //surprise, more test of oddity
 // Access to global variables
 require_once ('../global/include.php');
 
