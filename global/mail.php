@@ -1,4 +1,4 @@
-<?php
+<?php 
 
 // The global include file ?? this neccessary
 //require_once('include.php');

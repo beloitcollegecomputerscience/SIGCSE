@@ -71,11 +71,11 @@
 					<?php echo (isset($user['tshirt_size']) && $isLoggedIn) && ($user['tshirt_size'] == "XL") ? "selected" : ""; ?>>XL</option>
 					<option
 					<?php echo (isset($user['tshirt_size']) && $isLoggedIn) && ($user['tshirt_size'] == "XXL") ? "selected" : ""; ?>>XXL</option>
-				</select>
+				</select>								
 			</div>
-
+			
 			<span class="help-block"><?php echo $system_text["user_register_part2"]["shirt_info"]; ?></span>
-
+			
 		</div>
 
 		<div class="form-group">
@@ -141,19 +141,19 @@
 					value="<?php echo (isset($user['advisor_email']) && $isLoggedIn) ? $user['advisor_email'] : ""; ?>">
 			</div>
 		</div>
-
-
-
-
-
-
+		
+		
+		
+		
+		
+		
 		<!-- ___________
 		______________
 		_____look at this part below for Kids Camp question____
 		___
 		____ -->
-
-
+		
+		
 
 			<div class="form-group">
 			<label for="kids_camp_radio"
@@ -173,24 +173,24 @@
 					</div>
 					<p>Explore computing with elementary and middle school aged kids through applications like Scratch and Kodu.  </p>
 			</div>
-
+			
 		</div>
-
-
-
-
-
+		
+		
+		
+		
+			
 		<!-- ___________
 		______________
 		_____ENDS HERE____
 		___
 		____ -->
-
-
-
-
-
-
+		
+		
+		
+		
+		
+		
 		<div class="form-group">
 			<div class="col-lg-offset-3 col-lg-9">
 				<button id="step_two_submit" type="button"
@@ -200,12 +200,12 @@
 			</div>
 		</div>
 	</form>
-
+	
 	<hr />
 
 </div>
 
-<?php
+<?php 
 if (!$stepTwo) {
 	?>
 <script type="text/javascript"> $("#step_two").hide(); </script>

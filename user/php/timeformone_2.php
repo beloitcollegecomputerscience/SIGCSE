@@ -1,4 +1,4 @@
-<?php
+<?php 
 /*
  backend/timeformoneprocess.php
 ------------------------------
@@ -118,9 +118,9 @@ else {
 	if ($errno2 == true) {
 		$response .= "err2,";
 	}
-
+	
 	$response = substr($response, 0, -1);
-
+	
 	// Send back the appropriate errors
 	echo $response;
 }

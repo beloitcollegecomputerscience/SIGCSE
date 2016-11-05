@@ -94,7 +94,7 @@ $.extend( $.fn.dataTableExt.oPagination, {
 				}
 			}
 		}
-	},
+	},	
 	"bs_two_button": {
 		"fnInit": function ( oSettings, nPaging, fnCallbackDraw )
 		{
@@ -341,7 +341,7 @@ $.extend( $.fn.dataTableExt.oPagination, {
 						});
 				}
 			}
-	}
+	}	
 } );
 
 

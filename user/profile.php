@@ -81,32 +81,32 @@ $displayingSchedule = $lockRow ['locked'] == "t" ? false : true;
 					<p style="margin: 0px;">
 						<b><?php echo $row['first_name'] . " " . $row['last_name']; ?> </b>
 					</p>
-
-
-
-
-
-
-
+					
+					
+					
+					
+					
+					
+					
 					<!-- --------------THIS PART --------------->
-
+					
 					<br />
-
-
+	
+					
 					<p style="margin: 0px;">
-
-
-
-
-
+					
+					
+					
+					
+					
 						<?php if($kids_camp_result==0){echo "Can not volunteer with Kid's Camp";}
-						else {echo "Can volunteer with Kid's Camp";} ?>
+						else {echo "Can volunteer with Kid's Camp";} ?> 
 					</p>
-
-
-
+					
+					
+					
 					<!-- ----------------------- --------------->
-
+					
 
 					<?php
 					if (isset ( $row ['preferred_name'] ) && $row ['preferred_name'] != "") {
@@ -148,7 +148,7 @@ $displayingSchedule = $lockRow ['locked'] == "t" ? false : true;
 					<a href="<?php echo SYSTEM_WEB_BASE_ADDRESS; ?>user/password.php"><button
 							style="margin-top: 3px;" type="button"
 							class="btn btn-default btn-xs"><?php echo $system_text["user_profile"]["password_change"]; ?></button></a>
-
+								
 					<?php
 					if (isset ( $row ['tshirt_size'] )) {
 						?>
@@ -156,7 +156,7 @@ $displayingSchedule = $lockRow ['locked'] == "t" ? false : true;
 					<?php
 					}
 					?>
-
+					
 					<?php
 					if (isset ( $row ['school'] )) {
 						?>
@@ -228,7 +228,7 @@ $displayingSchedule = $lockRow ['locked'] == "t" ? false : true;
 				</div>
 
 
-
+				
 				<?php
 				// This was done to limit when can see schedule but not used now.
 				// Only show if within 15 mintues of work time.
@@ -245,13 +245,13 @@ $displayingSchedule = $lockRow ['locked'] == "t" ? false : true;
 				// if ($show >= new DateTime ( $row ['start_time'] )) {
 				// $displayingSchedule = false;
 				// }
-
+				
 				if ($displayingSchedule) {
 					// Shows general instructions for student that can always see.
 					?>
 		<a
 					href="<?php echo SYSTEM_WEB_BASE_ADDRESS."user/generalinstruction.php" ?>"
-					target="_blank"><h4>General student instructions</h4></a>
+					target="_blank"><h4>General student instructions</h4></a> 
 					<?php
 					schedule ( $system_text, $db );
 				}
@@ -266,7 +266,7 @@ $displayingSchedule = $lockRow ['locked'] == "t" ? false : true;
 	</div>
 
 	<?php require_once("footer.html")?>
-
+	
 </body>
 </html>
 
@@ -276,12 +276,12 @@ function availability($system_text, $db) {
 <p style="font-size: 18px;" class="lead"><?php echo $system_text["user_profile"]["avail_desc"]; ?></p>
 <ul style="margin-left: -22px;">
 	<?php
-
+	
 	$query = "SELECT * FROM student_availability SA, time_slots TS WHERE SA.student_id = " . $_SESSION ['student_id'] . " AND SA.slot_id = TS.slot_id";
-
+	
 	// Query the database
 	$result = $db->query ( $query );
-
+	
 	$affected_time_slots = mysqli_num_rows ( $result );
 	for($i = 0; $i < $affected_time_slots; $i ++) {
 		$row = $result->fetch_assoc ();
@@ -292,7 +292,7 @@ function availability($system_text, $db) {
 
 	<?php
 	}
-
+	
 	?>
 </ul>
 <?php
@@ -305,17 +305,17 @@ function schedule($system_text, $db) {
 	<hr />
 
 	<?php
-
+	
 	$query = "SELECT * from students where student_id = " . $_SESSION ['student_id'];
 	$result = $db->query ( $query );
 	$row = $result->fetch_assoc ();
-
+	
 	if ($row ['refund'] == "t") {
 		?>
 		<span class="label label-success"><?php echo $system_text["user_profile"]["refund"]; ?></span>
 		<?php
 	}
-
+	
 	$query = "SELECT A.activity_id, TS.start_time, TS.end_time, SS.attended, SS.hours_granted
 	FROM student_shifts SS, time_slots TS, students S, activity A
 	WHERE SS.student_id = S.student_id AND
@@ -323,22 +323,22 @@ function schedule($system_text, $db) {
 	A.slot_id = TS.slot_id AND
 	S.student_id = " . $_SESSION ['student_id'] . "
 	ORDER BY TS.start_time";
-
+	
 	$result = $db->query ( $query );
 	$affected_rows = mysqli_num_rows ( $result );
-
+	
 	if ($affected_rows != 0) {
 		?>
 		<p style="font-size: 18px;" class="lead"><?php echo $system_text["user_profile"]["schedule"]; ?></p>
 		<?php
 	}
-
+	
 	for($i = 0; $i < $affected_rows; $i ++) {
 		$row = $result->fetch_assoc ();
 		$activity_id = $row ['activity_id'];
 		$attended = $row ['attended'] == "t" ? true : false;
 		$grantedHours = $row ['hours_granted'] == "0" ? false : true;
-
+		
 		?>
 
 	<p style="margin-bottom: 0px;">
@@ -352,19 +352,19 @@ function schedule($system_text, $db) {
 			href="<?php echo SYSTEM_WEB_BASE_ADDRESS."user/assemble.php?student_id={$_SESSION['student_id']}&activity_id=$activity_id" ?>"
 			target="_blank">- Instructions</a>
 	</p>
-
+		
 		<?php
 		$show = new DateTime ();
 		// Dummy date for testing.
 // 		$show = new DateTime ( '2015-03-06' );
 		if ($show >= new DateTime ( $row ['end_time'] )) {
-
+			
 			?>
 		<span
 		class="label label-<?php echo $attended ? "success" : "danger" ?>"><?php echo $attended ? $system_text["user_profile"]["attended"] : $system_text["user_profile"]["not_attended"] ?></span>
-
+		
 		<?php
-
+			
 			if ($attended) {
 				?>
 			<span
@@ -373,20 +373,20 @@ function schedule($system_text, $db) {
 			}
 		}
 		// TODO }
-
+		
 		?>
-
+	
 	<br /> <br />
 
 	<?php
 	}
-
+	
 	if ($affected_rows == 0) {
 		?>
 	<p style="font-size: 18px;" class="lead">You have not been scheduled.</p>
 	<?php
 	}
-
+	
 	?>
 </div>
 <?php

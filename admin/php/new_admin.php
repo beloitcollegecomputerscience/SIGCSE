@@ -1,4 +1,4 @@
-<?php
+<?php 
 
 // Access to global variables
 require_once('../../global/include.php');
@@ -20,11 +20,11 @@ $row = $result->fetch_assoc();
 $num_using = $row['num_using'];
 
 if (checkEmail($admin_email) && (strlen($admin_password) > 2) && ($num_using == 0)) {
-
+	
 	$query = "INSERT INTO admin (`email`, `password`) VALUES ('$admin_email', '$hashed_password')";
 	$result = $db->query($query);
 	echo "true";
-
+	
 } else {
 	echo "false";
 }

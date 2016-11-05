@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<?php
+<?php 
 
 // Access to global variables
 require_once('../global/include.php');
@@ -36,18 +36,18 @@ require("php/head.php");
 			<!-- /.row -->
 
 			<div class="row">
-
+			
 				<p class="lead" style="margin-left:20px">Edit all snippets of text accross the entire public site visable by volunteers.</p>
-
-				<?php
+			
+				<?php 
 
 				$page_result = $db->query("SELECT DISTINCT page from system_text");
 				$affected_pages = mysqli_num_rows($page_result);
-
+					
 				for ($i = 0; $i < $affected_pages; $i++) {
 					$page = $page_result->fetch_assoc();
 					?>
-
+				
 					<div class="col-lg-12">
 						<div class="panel panel-primary">
 							<div class="panel-heading">
@@ -57,50 +57,50 @@ require("php/head.php");
 								</h3>
 							</div>
 							<div class="panel-body">
-
+								
 								<table class="table table-striped table-bordered table-hover">
 									<thead>
 										<tr>
 											<td style="width:25%;"><strong>Key</strong></td>
 											<td><strong>Value</strong></td>
 										</tr>
-									</thead>
-
-									<?php
-
+									</thead>		
+									
+									<?php 
+									
 									$text_result = $db->query("SELECT * FROM system_text WHERE page = '{$page['page']}'");
 									$affected_text = mysqli_num_rows($text_result);
-
+									
 									for ($j = 0; $j < $affected_text; $j++) {
 										$text = $text_result->fetch_assoc();
 										?>
-
+										
 										<tr>
 											<td><?php echo $text['key']; ?></td>
-											<td><a href="#" class="system_text" data-type="textarea" data-pk="<?php echo $text['text_id']; ?>"><?php echo htmlentities($text['value']); ?></a></td>
+											<td><a href="#" class="system_text" data-type="textarea" data-pk="<?php echo $text['text_id']; ?>"><?php echo htmlentities($text['value']); ?></a></td>	
 										</tr>
-
+										
 									<?php
 									}
 									?>
 								</table>
-
+								
 							</div>
 						</div>
 					</div>
-
-				<?php
+		
+				<?php 
 				}
 				?>
-
-
+		
+		
 			</div>
-
+			
 		</div>
-
+		
 		<?php require_once("footer.html"); ?>
-
+		
 	</div>
-
-
+	
+	
 </body>

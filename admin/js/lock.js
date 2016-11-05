@@ -1,5 +1,5 @@
 $(document).ready(function() {
-
+	
 	handleLocks();
 
 });
@@ -8,7 +8,7 @@ function handleLocks() {
 
 	$("div[id^='lock']").on('switch-change', function(e, data) {
 		lock_id = $(this).attr("lock_id");
-
+				
 		$.ajax({
 			type : "POST",
 			url : "php/lock.php",

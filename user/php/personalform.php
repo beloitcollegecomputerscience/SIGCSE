@@ -50,7 +50,7 @@ $updateNeeded = false;
 
 $result= $db->query("SELECT * FROM student_skills WHERE student_id = ".$_SESSION['student_id']." and skill_id =-1");
 if(mysqli_num_rows($result)==0){
-	if($kids_camp_result=='1'){
+	if($kids_camp_result=='1'){	
 		$db->query("INSERT INTO student_skills(student_id,skill_id) VALUES ('".$_SESSION['student_id']."','-1')"); }
 }
 else{
@@ -60,7 +60,7 @@ else{
 }
 
 
-
+	
 /* -------------------------------------------------------- */
 
 // Grab user data
@@ -213,7 +213,7 @@ if (($errno1 != true) and ($errno2 != true) and ($errno3 != true) and ($errno4 !
 	}
 
 	$response = substr($response, 0, -1);
-
+		
 	// Send back the appropriate errors
 	echo $response;
 }

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<?php
+<?php 
 
 // Access to global variables
 require_once('../global/include.php');
@@ -39,18 +39,18 @@ if ($isLoggedIn) {
 	if ($isLoggedIn & $display) {
 		?>
 	<span class="label label-success">Logged In</span>
-	<?php
+	<?php 
 	} else if (!$isLoggedIn & $display) {
 		?>
 	<span class="label label-danger">Not Logged In</span>
-	<?php
+	<?php 
 	}
 	?>
 
 	<div style="margin-top: -40px" class="container">
 		<div class="row col-lg-10 col-lg-offset-1">
 
-
+	
 
 			<!-- Indicators to let user know what step they are on -->
 			<div class="row text-center" style="margin-top: 50px">
@@ -70,10 +70,10 @@ if ($isLoggedIn) {
 					value="<?php echo ($stepTwo || $stepThree) ? "profile" : ""?>">
 
 				<?php require_once("reg_sections/step_one.php"); ?>
-
+				
 				<?php require_once("reg_sections/step_two.php"); ?>
-
-				<?php require_once("reg_sections/step_three_2.php"); ?>
+				
+				<?php require_once("reg_sections/step_three_2.php"); ?>		
 
 			</div>
 		</div>
@@ -81,24 +81,24 @@ if ($isLoggedIn) {
 		<hr />
 
 	</div>
-
+	
 	<?php require_once("footer.html") ?>
-
+	
 </body>
 </html>
 
-<?php
+<?php 
 
 if (isset($_POST['step_one_first_name'])) {
 	?>
 <script>
 
 		setTimeout(function() {
-			$("#step_one_submit").click();
+			$("#step_one_submit").click(); 
 		}, 2000);
-
+		
 	</script>
-<?php
+<?php 
 }
 
 ?>

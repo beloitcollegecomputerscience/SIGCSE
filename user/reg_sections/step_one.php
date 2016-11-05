@@ -7,21 +7,21 @@
 
 	<p style="font-size: 18px;" class="lead"><?php echo $system_text["user_register"]["description_2"]; ?></p>
 
-
-
+	
+	
 	<div class="alert alert-warning">
 		<?php echo $system_text["user_index"]["registration_warning"]; ?>
 	</div>
-
+	
 	<hr />
-
+	
 	<div id="step_one_alert_success"
 		class="alert alert-success col-lg-8 col-lg-offset-2"></div>
 	<div id="step_one_alert_danger"
 		class="alert alert-danger col-lg-8 col-lg-offset-2"></div>
 	<script type="text/javascript"> $("#step_one_alert_success").hide(); </script>
 	<script type="text/javascript"> $("#step_one_alert_danger").hide(); </script>
-
+	
 	<form class="form-horizontal" role="form">
 		<div class="form-group">
 			<label for="step_one_first_name" class="col-lg-3 control-label"><?php echo $system_text["user_register"]["register_first_name"]; ?></label>
@@ -75,10 +75,10 @@
 	</form>
 
 	<hr/>
-
+	
 </div>
 
-<?php
+<?php 
 if (!$stepOne) {
 	?>
 <script type="text/javascript"> $("#step_one").hide(); </script>

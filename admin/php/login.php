@@ -1,4 +1,4 @@
-<?php
+<?php 
 
 
 // Access to global variables
@@ -28,10 +28,10 @@ if ($num_rows == 0) {
 } else if ($hashed_password != $real_password) {
 	echo "false"; # Email recognized but password doesn't match
 } else {
-
+	
 	// Mark a session variable to see if they are admin
 	$_SESSION['admin_id'] = $row['admin_id'];;
-
+	
 	echo "true"; # Email recognized and password matches
 }
 

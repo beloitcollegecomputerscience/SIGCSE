@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<?php
+<?php 
 
 // Access to global variables
 require_once('../global/include.php');
@@ -43,32 +43,35 @@ $show = $idSet && $isValid ? true : false;
 
 			<div class="row">
 				<div class="col-lg-12">
-					<h1>Activities<a class="btn btn-primary btn-sm" type="button"  href= php/add_activity.php >
-					Add Acitivity </a></h1>
-
-
+					<h1>Activities</h1>
+					
+						<a class="btn btn-primary btn-sm" type="button"  href= php/add_activity.php >
+						Create New Acitivty </a>
+						<p>&nbsp;</p>
+								
+					
 					<ol class="breadcrumb">
 						<li><a href="index.php"><i class="fa fa-dashboard"></i> Dashboard</a>
 						</li>
 						<li <?php echo !$show ? 'class="active"' : "" ?>><?php echo $show ? '<a href="activity.php">' : "" ?><i class="fa fa-th"></i> Activities<?php echo $show ? '</a>' : "" ?></li>
-						<?php
+						<?php 
 						if ($show) { ?>
 						<li class="active"><i class="fa fa-th-large"></i> <?php echo $objectRow['activity_name']; ?>
 						</li>
 						<?php }
-						?>
+						?>					
 					</ol>
 				</div>
 			</div>
 			<!-- /.row -->
 
-			<?php
+			<?php 
 			if ($show) {
 				?>
-
+				
 				<div class="row">
 					<div class="col-lg-6">
-
+	
 						<div class="panel panel-primary">
 							<div class="panel-heading">
 								<h3 class="panel-title">
@@ -76,57 +79,57 @@ $show = $idSet && $isValid ? true : false;
 								</h3>
 							</div>
 							<div class="panel-body">
-
+							
 							<h4>
 								<?php echo $objectRow['activity_name']; ?>
 							</h4>
-
+							
 							<p style="margin: 0px;">
 								<?php echo $objectRow['room_location']; ?>
 							</p>
-
+							
 							<p style="margin: 0px;">
 								<strong>Begins:</strong> <?php echo date("F j, Y, g:i a", strtotime($objectRow['start_time'])); ?>
 							</p>
-
+							
 							<p style="margin: 0px;">
 								<strong>Ends:</strong> <?php echo date("F j, Y, g:i a", strtotime($objectRow['end_time'])); ?>
 							</p>
-
-							<?php
-
+							
+							<?php 
+							
 							$now = time();
 							//$now = strtotime("2013-03-07 14:00:00");
 							$start = strtotime($objectRow['start_time']);
 							$end = strtotime($objectRow['end_time']);
-
+							
 							if (($now >= $start) && ($now < $end)) {
 								?>
 								<p style="margin: 0px;"><span class="label label-success">In Progress</span></p>
 								<?php
 							}
 							?>
-
+							
 							<br/>
-
+							
 							<p style="margin: 0px;">
 								Minimum Workers: <span class="badge"><?php echo $objectRow['min_workers']; ?></span>
 							</p>
-
+							
 							<p style="margin: 0px;">
 								Desired Workers: <span class="badge"><?php echo $objectRow['desired_workers']; ?></span>
 							</p>
-
+							
 							<p style="margin: 0px;">
 								Maximum Workers: <span class="badge"><?php echo $objectRow['max_workers']; ?></span>
 							</p>
-
+							
 							</div>
 						</div>
 					</div>
-
+					
 					<div class="col-lg-6">
-
+	
 						<div class="panel panel-primary">
 							<div class="panel-heading">
 								<h3 class="panel-title">
@@ -139,12 +142,12 @@ $show = $idSet && $isValid ? true : false;
 							</div>
 						</div>
 					</div>
-
+					
 				</div>
-
+				
 				<div class="row">
 					<div class="col-lg-12">
-
+						
 						<div class="panel panel-primary">
 							<div class="panel-heading">
 								<h3 class="panel-title">
@@ -152,8 +155,8 @@ $show = $idSet && $isValid ? true : false;
 								</h3>
 							</div>
 							<div class="panel-body">
-
-
+							
+							
 				<table class="table table-striped table-bordered table-hover">
 					<thead>
 						<tr>
@@ -162,17 +165,17 @@ $show = $idSet && $isValid ? true : false;
 							<td><strong>Grant Hours</strong></td>
 						</tr>
 					</thead>
-
-					<?php
+					
+					<?php 
 					$result = $db->query("SELECT * FROM student_shifts ss, students s, activity a  WHERE ss.activity_id = " . $activity_id . " AND ss.student_id = s.student_id AND ss.activity_id = a.activity_id;");
 					$affected_rows = mysqli_num_rows($result);
-
+					
 					for ($i = 0; $i < $affected_rows; $i++) {
 						$row = $result->fetch_assoc();
-
+						
 						$currently_granted_hour = floor($row['hours_granted']*60 / 60);
 						$currently_granted_min = round((($row['hours_granted'] - $currently_granted_hour) * 60), 0);
-
+						
 						?>
 							<tr id="row_<?php echo $row['activity_id']; ?>">
 								<td>
@@ -180,7 +183,7 @@ $show = $idSet && $isValid ? true : false;
 									<p style="margin:0px;"><span class="label label-info">Currently granted <span id="<?php echo $activity_id; ?>_<?php echo $row['student_id']; ?>_hours_display"><?php echo $currently_granted_hour; ?></span> hour(s), <span id="<?php echo $activity_id; ?>_<?php echo $row['student_id']; ?>_minutes_display"><?php echo $currently_granted_min; ?></span> min(s).</span></p>
 									<p style="margin:0px;"><button student_id="<?php echo $row['student_id']; ?>" activity_id=<?php echo $activity_id; ?> type="button" class="btn btn-danger btn-xs pull-right unschedule">Unschedule</button></p>
 								</td>
-
+								
 								<td><div id="attended" activity_id="<?php echo $activity_id; ?>" student_id="<?php echo $row['student_id']; ?>" class="make-switch switch-small" data-on="success"
 										data-off="danger"
 										data-on-label="<i class='fa fa-check'></i>"
@@ -188,23 +191,23 @@ $show = $idSet && $isValid ? true : false;
 										<input type="checkbox" <?php echo $row['attended'] == "t" ? "checked" : ""; ?>>
 									</div></td>
 								<td style="min-width:325px;"><form class="form-inline" style="margin-bottom: 5px;">
-
-										<?php
+								
+										<?php 
 										$query = "SELECT time_format(timediff(TS.end_time, TS.start_time), '%l%:%i') as hours_granted
 												FROM time_slots TS, activity A
 												WHERE A.slot_id = TS.slot_id
 												AND A.activity_id = '". $row['activity_id'] ."';";
-
+										
 										$result2 = $db->query($query);
 										$row2 = $result2->fetch_assoc();
-
+										
 										// calculate hours/mins granted
 										$times = explode(':', $row2['hours_granted']);
 										$activity_hours = $times[0];
 										$activity_mins = $times[1];
-
+										
 										?>
-
+							
 										<select id="<?php echo $activity_id; ?>_<?php echo $row['student_id']; ?>_hours_input" style="width:75px;"class='form-control input-sm'>
 											<option <?php echo $activity_hours == "0" ? "selected" : ""?>>0</option>
 											<option <?php echo $activity_hours == "1" ? "selected" : ""?>>1</option>
@@ -229,22 +232,22 @@ $show = $idSet && $isValid ? true : false;
 									</td>
 
 							</tr>
-
+	
 						<?php
 					}
 					?>
 				</table>
-
-
+							
+							
 							</div>
 						</div>
 					</div>
 				</div>
-
+				
 				<div class="row">
-
+			
 					<div class="col-lg-12">
-
+					
 						<div class="panel panel-primary">
 							<div class="panel-heading">
 								<p class="pull-right">Volunteers compatible with availability</p>
@@ -253,7 +256,7 @@ $show = $idSet && $isValid ? true : false;
 								</h3>
 							</div>
 							<div class="panel-body">
-
+							
 							<table class="datatable table table-striped table-bordered table-hover">
 								<thead>
 									<tr>
@@ -266,56 +269,56 @@ $show = $idSet && $isValid ? true : false;
 										<th></th>
 									</tr>
 								</thead>
-
-								<?php
-
+							
+								<?php 
+								
 								$query = "SELECT slot_id FROM covering_time_slots WHERE activity_id = $activity_id";
 								$result = $db->query($query);
 								$affected_rows = mysqli_num_rows($result);
-
+								
 								$covering_slots = array();
 								for ($i = 0; $i < $affected_rows; $i++) {
 									$row = $result->fetch_assoc();
 									array_push($covering_slots, $row["slot_id"]);
 								}
-
+								
 								$query = "SELECT * FROM students;";
 								$result = $db->query($query);
 								$affected_rows = mysqli_num_rows($result);
-
+								
 								for ($i = 0; $i < $affected_rows; $i++) {
 									$row = $result->fetch_assoc();
 									$student_id = $row["student_id"];
-
+									
 //									$result3 = $db->query("SELECT sum(hours_granted) as sum FROM student_shifts WHERE student_id=$student_id");
 //									$result3 = $db->query("SELECT time_format(sum(timediff(TS.end_time, TS.start_time)), '%l%:%i') as sum FROM time_slots TS, activity A , students S, student_shifts SS where A.slot_id = TS.slot_id AND A.activity_id = SS.activity_id AND S.student_id = SS.student_id and S.student_id=$student_id;");
-									$result3 = $db->query("SELECT sum(time_to_sec(timediff(TS.end_time, TS.start_time)) / 60) as sum FROM time_slots TS, activity A ,
+									$result3 = $db->query("SELECT sum(time_to_sec(timediff(TS.end_time, TS.start_time)) / 60) as sum FROM time_slots TS, activity A , 
 students S, student_shifts SS where A.slot_id = TS.slot_id AND A.activity_id = SS.activity_id AND S.student_id = SS.student_id and S.student_id=$student_id;");
 									$row3 = $result3->fetch_assoc();
 									$hoursScheduled = ($row3['sum'] / 60);
-
+									
 									$query2 = "SELECT * FROM student_availability WHERE student_id = $student_id";
 									$result2 = $db->query($query2);
 									$affected_rows2 = mysqli_num_rows($result2);
-
+									
 									$available_slots = array();
 									for ($j = 0; $j < $affected_rows2; $j++) {
 										$row2 = $result2->fetch_assoc();
-										array_push($available_slots, $row2["slot_id"]);
+										array_push($available_slots, $row2["slot_id"]);	
 									}
-
+									
 									$valid = true;
 									foreach ($covering_slots as $covering_slot) {
 										if (!in_array($covering_slot, $available_slots)) {
 											$valid = false;
 										}
 									}
-
-
-
+								
+								
+									
 									if ($valid) {
 										?>
-
+										
 										<tr>
 											<td>
 												<p style="margin:0px;"><a href="volunteer.php?id=<?php echo $row["student_id"]; ?>"><?php echo $row["first_name"] . " " . $row["last_name"]; ?></a></p>
@@ -329,24 +332,24 @@ students S, student_shifts SS where A.slot_id = TS.slot_id AND A.activity_id = S
 												<button student_id="<?php echo $row["student_id"]; ?>" activity_id="<?php echo $activity_id; ?>" type="button" class="btn btn-success btn-xs pull-right schedule_manual">Schedule</button>
 											</td>
 										</tr>
-
-										<?php
+										
+										<?php	
 									}
-
+								
 								}
-
+								
 								?>
 								</table>
-
+							
 							</div>
 						</div>
 					</div>
 				</div>
-
-			<?php
+				
+			<?php 
 			}
 			?>
-
+			
 			<div class="row" id="not_found">
 				<div class="col-lg-4 col-lg-offset-4">
 
@@ -357,18 +360,18 @@ students S, student_shifts SS where A.slot_id = TS.slot_id AND A.activity_id = S
 					</div>
 				</div>
 			</div>
-			<?php
+			<?php 
 			if (!($idSet && !$isValid)) {
 				?>
 			<script type="text/javascript"> $("#not_found").hide(); </script>
 			<?php
 			}
 			?>
-
+			
 			<div class="row" id="search">
-
-
-
+					
+					 
+					 
 				<div class="col-lg-12">
 
 					<table cellpadding="0" cellspacing="0" border="0" class="datatable table table-striped table-bordered table-hover">
@@ -388,19 +391,19 @@ students S, student_shifts SS where A.slot_id = TS.slot_id AND A.activity_id = S
 						</thead>
 						<tbody>
 
-							<?php
+							<?php 
 							$result = $db->query("SELECT * FROM activity a, rooms r, time_slots ts WHERE a.room_id = r.room_id AND a.slot_id = ts.slot_id");
 							$affected_rows = mysqli_num_rows($result);
 
-
-
+							
+							
 							for ($i = 0; $i < $affected_rows; $i++) {
 								$row = $result->fetch_assoc();
 
 								$result3 = $db->query("SELECT count(*) as count FROM student_shifts WHERE activity_id = {$row['activity_id']}");
 								$row3 = $result3->fetch_assoc();
 								$numScheduled = $row3['count'];
-
+								
 								?>
 							<tr>
 								<td><a href="activity.php?id=<?php echo $row['activity_id']?>"><?php echo $row['activity_name']; ?>
@@ -425,19 +428,19 @@ students S, student_shifts SS where A.slot_id = TS.slot_id AND A.activity_id = S
 			</div>
 			<!-- /.row -->
 
-			<?php
+			<?php 
 			if ($idSet && $isValid) {
 				?>
 			<script type="text/javascript"> $("#search").hide(); </script>
 			<?php
 			}
 			?>
-
+			
 		</div>
 		<!-- /#page-wrapper -->
 
 		<?php require_once("footer.html"); ?>
-
+		
 	</div>
 	<!-- /#wrapper -->
 

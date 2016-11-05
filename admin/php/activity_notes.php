@@ -1,4 +1,4 @@
-<?php
+<?php 
 
 // Access to global variables
 require_once('../../global/include.php');
