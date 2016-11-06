@@ -23,14 +23,14 @@ $affected_time_slots = mysqli_num_rows ( $result );
 for($i = 0; $i < $affected_time_slots; $i ++) {
 	$row = $result->fetch_assoc ();
 	$activity_id = $row ['activity_id'];
-
+	
 	// Queries the database for the all student's scheduled to work for that activity.
 	$query2 = "SELECT S.student_id
 	FROM students S, student_shifts SS, activity A
 	WHERE S.student_id = SS.student_id
 	AND SS.activity_id = A.activity_id
 	AND A.activity_id = $activity_id";
-
+	
 	// Loop through all students scheduled for given activity
 	$result2 = $db->query ( $query2 );
 	$affected_time_slots2 = mysqli_num_rows ( $result2 );
@@ -39,7 +39,7 @@ for($i = 0; $i < $affected_time_slots; $i ++) {
 		$student_id = $row2 ['student_id'];
 		$instruction = assembleInstruction ( $db, $activity_id, $student_id, $isAdmin );
 		echo $instruction;
-
+		
 		echo '<html>
 				<head>
 				<STYLE TYPE="text/css"> P.pagebreakhere {page-break-before: always} </STYLE>

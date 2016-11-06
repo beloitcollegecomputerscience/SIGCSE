@@ -1,4 +1,4 @@
-<?php
+<?php 
 /*
  backend/timeformoneprocess.php
 ------------------------------
@@ -37,7 +37,7 @@ for ($i = 0; $i < $affected_rows; $i++) {
 	if (in_array ('ts'.$slot_id, $posted_values)) {
 		array_push($selected_slots, "$slot_id");
 	}
-
+	
 	// if a slot id is posted, add it to array
 	//if (isset($_POST['ts'.$slot_id])) {
 		//array_push($selected_slots, "$slot_id");
@@ -143,9 +143,9 @@ else {
 	if ($errno2 == true) {
 		$response .= "err2,";
 	}
-
+	
 	$response = substr($response, 0, -1);
-
+	
 	// Send back the appropriate errors
 	echo $response;
 }

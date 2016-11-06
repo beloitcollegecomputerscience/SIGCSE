@@ -14,20 +14,20 @@ switch ($func) {
 }
 
 function toggleLock($db, $lock_id) {
-
+	
 	// Get current info on lock
 	$result = $db->query("SELECT * FROM system_locks WHERE system_lock_id = $lock_id;");
 	$row = $result->fetch_assoc();
 	//TODO what if lock not valid?
 	$oldAtt = $row['locked'];
-
+	
 	// Toggle lock value
 	$newAtt = $oldAtt == "t" ? "f" : "t";
-
+	
 	// Update the new value and send back to index
 	$query = "UPDATE system_locks SET locked='$newAtt' WHERE system_lock_id='$lock_id'";
 	$db->query($query);
-
+	
 }
 
 ?>

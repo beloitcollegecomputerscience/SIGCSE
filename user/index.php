@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<?php
+<?php 
 
 // Access to global variables
 require_once('../global/include.php');
@@ -20,11 +20,11 @@ require_once(SYSTEM_WEBHOME_DIR.'user/php/head.php');
 	if ($isLoggedIn & $display) {
 		?>
 	<span class="label label-success">Logged In</span>
-	<?php
+	<?php 
 	} else if (!$isLoggedIn & $display) {
 		?>
 	<span class="label label-danger">Not Logged In</span>
-	<?php
+	<?php 
 	}
 	?>
 
@@ -75,7 +75,7 @@ require_once(SYSTEM_WEBHOME_DIR.'user/php/head.php');
 						<div class="form-group">
 							<div class="col-sm-offset-3 col-sm-6">
 
-								<?php
+								<?php 
 								if ($isLoggedIn) {
 									?>
 								<a href="<?php echo SYSTEM_WEB_BASE_ADDRESS; ?>user/logout.php"><button type="button"
@@ -87,13 +87,13 @@ require_once(SYSTEM_WEBHOME_DIR.'user/php/head.php');
 								<?php
 								}
 								?>
-
+								
 								<button id="forgot_button" type="button" class="btn btn-danger btn-xs"><?php echo $system_text["user_index"]["forgot_password_button"]; ?></button>
 
 							</div>
 						</div>
 					</form>
-
+										
 				</div>
 
 				<div class="col-lg-6 col-md-6 col-sm-6">
@@ -101,7 +101,7 @@ require_once(SYSTEM_WEBHOME_DIR.'user/php/head.php');
 					<div class="alert alert-warning">
 						<?php echo $system_text["user_index"]["registration_warning"]; ?>
 					</div>
-
+				
 					<div class="text-center">
 						<h3 class="center-text"><?php echo $system_text["user_index"]["register_title"]; ?></h3>
 					</div>
@@ -155,10 +155,10 @@ require_once(SYSTEM_WEBHOME_DIR.'user/php/head.php');
 
 						<div class="form-group">
 							<div class="col-lg-offset-3 col-lg-9">
-
-
-
-															<?php
+							
+							
+							
+															<?php 
 								if (!$isAdmin) {
 									?>
 								<button id="step_one_submit" type="submit"
@@ -173,11 +173,11 @@ require_once(SYSTEM_WEBHOME_DIR.'user/php/head.php');
 								<?php
 								}
 								?>
-
-
-
-
-
+							
+							
+							
+							
+								
 							</div>
 						</div>
 					</form>
@@ -187,13 +187,13 @@ require_once(SYSTEM_WEBHOME_DIR.'user/php/head.php');
 			</div>
 
 			<hr />
-
+			
 		</div>
-
+		
 	</div>
-
+	
 	<?php require_once("footer.html") ?>
-
+	
 </body>
 
 </html>

@@ -62,13 +62,13 @@
 	<script type="text/javascript"> $("#step_three_alert_success").hide(); </script>
 	<script type="text/javascript"> $("#step_three_alert_danger").hide(); </script>
 
-	<?php
+	<?php 
 
 	if ($isLoggedIn) {
 		// Queries the database
 		$result = $db->query("SELECT SA.slot_id as arrival, SD.slot_id as departure FROM student_arrivals SA, student_departures SD WHERE SA.student_id = SD.student_id and SA.student_id =".$_SESSION['student_id']);
 		$aff = mysqli_num_rows($result);
-
+			
 		// If no rows affected
 		if ($aff == 0) {
 			$arrival = null;
@@ -130,13 +130,13 @@
 
 	// for each day
 	foreach ($usedDays as $day) {
-
+			
 		if (($currentDay % 4) == 1) {
 			?>
 	<div class="row" class="text-center">
 		<?php
 		}
-
+			
 		?>
 		<div class="col-lg-3">
 			<h4>
@@ -170,7 +170,7 @@
 			?>
 		</div>
 		<?php
-
+			
 		if (($currentDay % 4) == 0) {
 			?>
 	</div>
@@ -194,7 +194,7 @@
 
 </div>
 
-<?php
+<?php 
 if (!$stepThree) {
 	?>
 <script type="text/javascript"> $("#step_three").hide(); </script>

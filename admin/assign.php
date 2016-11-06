@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<?php
+<?php 
 
 // Access to global variables
 require_once('../global/include.php');
@@ -83,12 +83,12 @@ require("php/head.php");
 			</div>
 
 			<hr />
-
+			
 			<div class="row">
 
 				<div class="col-lg-6">
 					<h3>Add Volunteers</h3>
-
+					
 					<table class="datatable table table-striped table-bordered table-hover">
 						<thead>
 							<tr>
@@ -96,7 +96,7 @@ require("php/head.php");
 							</tr>
 						</thead>
 
-						<?php
+						<?php 
 
 						$result = $db->query("SELECT * FROM students");
 						$affected_rows = mysqli_num_rows($result);
@@ -107,7 +107,7 @@ require("php/head.php");
 						<tr>
 							<td>
 								<button id="<?php echo $row["student_id"]; ?>" type="button" class="btn btn-success btn-xs pull-right add_volunteer"><i class="fa fa-plus"></i></button>
-
+								
 								<div id="<?php echo $row["student_id"]; ?>_stu_title">
 									<p style="margin:0px;"><a href="volunteer.php?id=<?php echo $row["student_id"]; ?>"><?php echo $row["first_name"]." ".$row["last_name"]; ?></a></p>
 									<p style="margin:0px;"><small><?php echo $row["email"]; ?></small></p>
@@ -115,15 +115,15 @@ require("php/head.php");
 							</td>
 						</tr>
 
-						<?php
+						<?php 
 						}
 						?>
 					</table>
 				</div>
-
+				
 				<div class="col-lg-6">
 					<h3>Add Activities</h3>
-
+					
 					<table class="datatable table table-striped table-bordered table-hover">
 						<thead>
 							<tr>
@@ -131,7 +131,7 @@ require("php/head.php");
 							</tr>
 						</thead>
 
-						<?php
+						<?php 
 
 						$result = $db->query("SELECT * FROM activity a, rooms r, time_slots ts WHERE a.room_id = r.room_id AND a.slot_id = ts.slot_id");
 						$affected_rows = mysqli_num_rows($result);
@@ -142,7 +142,7 @@ require("php/head.php");
 						<tr>
 							<td>
 								<button id="<?php echo $row["activity_id"]; ?>" type="button" class="btn btn-success btn-xs pull-right add_activity"><i class="fa fa-plus"></i></button>
-
+								
 								<div id="<?php echo $row["activity_id"]; ?>_act_title">
 									<p style="margin:0px;"><a href="activity.php?id=<?php echo $row["activity_id"]; ?>"><?php echo $row["activity_name"]; ?></a> - <small><?php echo $row["room_location"]; ?></small></p>
 									<p style="margin:0px;"><small><?php echo date("F j, Y, g:i a", strtotime($row['start_time'])); ?> - <?php echo date("F j, Y, g:i a", strtotime($row['end_time'])); ?></small></p>
@@ -150,7 +150,7 @@ require("php/head.php");
 							</td>
 						</tr>
 
-						<?php
+						<?php 
 						}
 						?>
 					</table>

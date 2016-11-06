@@ -54,12 +54,12 @@ if ($row['locked'] == 't') {
 	$result = $db->query($query);
 	// Number of users with that email
 	$num_rows = mysqli_num_rows($result);
-
+		
 	// Retrieve users password from database
 	$row = $result->fetch_assoc();
 	$real_password = $row['password'];
 	$student_id = $row['student_id'];
-
+		
 	// Check email against the regex
 	if (checkEmail($email) == false) {
 		$email_error = true;
@@ -75,7 +75,7 @@ if ($row['locked'] == 't') {
 	if (checkPass($password) == false) {
 		$password_error = true;
 		$errno3 = true;
-
+		
 	// Check both passwords for equality
 	} else if ($hashed_password != $real_password) {
 		$password_error = true;
@@ -84,17 +84,17 @@ if ($row['locked'] == 't') {
 
 	// If all specific error flags are true then the form data is correct and we can login the user
 	if (($password_error == false) and ($email_error == false)) { // Login was successful
-
+			
 		// Store student_id as a session variable
 		$_SESSION['student_id'] = $student_id;
-
+		
 		echo "true";
 
 	} else { // Login was unsuccessful
-
+		
 		// Errors to send back
 		$response = "";
-
+		
 		// If the following error numbers exist then they are to be added to the URL to be displayed on login.php
 		if ($errno1 == true) {
 			$response .= "err1,";
@@ -108,12 +108,12 @@ if ($row['locked'] == 't') {
 		if ($errno4 == true) {
 			$response .= "err4,";
 		}
-
+			
 		$response = substr($response, 0, -1);
-
+		
 		// Send back the appropriate errors
 		echo $response;
-
+		
 	}
 }
 

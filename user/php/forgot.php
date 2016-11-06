@@ -1,4 +1,4 @@
-<?php
+<?php 
 /*
  passwordrecoveryprocess.php
 -------------
@@ -23,31 +23,31 @@ $count = $row['count'];
 
 // If only 1 person, then it is a match and we can set the password to something random
 if ($count == 1) {
-
+	
 	// Find the student_id of the user we have a match with
 	$query = "SELECT student_id FROM students WHERE email='$email'";
 	$result = $db->query($query);
 	$row = $result->fetch_assoc();
 	$student_id = $row['student_id'];
-
+	
 	// Generate password and set it in the DB
 	$newPass = generatePassword();
 	$query = "UPDATE students SET password=SHA1('$newPass') WHERE student_id='$student_id'";
 	$result = $db->query($query);
-
+	
 	// Email the user the new password
 	sendPasswordRecoveryEmail($email, $newPass);
-
+	
 	// Send back to login
 	//header('Location: '.SYSTEM_WEB_BASE_ADDRESS.'login.php?newpass');
 	echo "true";
-
-
+	
+	
 } else {
 	// no match with password so send back to password recovery
 	//header('Location: '.SYSTEM_WEB_BASE_ADDRESS.'passwordrecovery.php?bademail');
 	echo "err1";
-
+	
 }
 
 // Function to generate passwords

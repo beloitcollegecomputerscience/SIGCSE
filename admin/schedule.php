@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<?php
+<?php 
 
 // Access to global variables
 require_once('../global/include.php');
@@ -42,17 +42,17 @@ ORDER BY TS.start_time;";
 			<!-- /.row -->
 
 			<div class="row">
-
-			<?php
-
+			
+			<?php 
+			
 			$dayResult = $db->query("SELECT DISTINCT YEAR(start_time) as year, MONTH(start_time) as month, DAY(start_time) as day FROM time_slots;");
 			$affected_rows_day = mysqli_num_rows($dayResult);
-
+			
 			for ($i = 0; $i < $affected_rows_day; $i++) {
 				$day = $dayResult->fetch_assoc();
 				$date = $day['year'] . "-" . sprintf("%02s", $day['month']) . "-" . sprintf("%02s", $day['day']);
 				?>
-
+				
 				<div class="col-lg-12">
 					<div class="panel panel-primary">
 						<div class="panel-heading">
@@ -63,7 +63,7 @@ ORDER BY TS.start_time;";
 						</div>
 						<div id="<?php echo $date; ?>_display" status="closed" class="panel-body">
 							<div class="panel-group" id="accordion">
-
+				
 				<?php
 				$query = "SELECT * FROM time_slots ts, activity a, rooms r
 							WHERE date(start_time) = Date('$date')
@@ -72,48 +72,48 @@ ORDER BY TS.start_time;";
 							ORDER BY ts.start_time;";
 				$activityResult = $db->query($query);
 				$affected_rows_activity = mysqli_num_rows($activityResult);
-
+					
 				for ($j = 0; $j < $affected_rows_activity; $j++) {
 					$activity = $activityResult->fetch_assoc();
 					$activity_id = $activity['activity_id'];
 					?>
-
-
+					
+					
 					<div class="panel panel-default">
 							<div class="panel-heading">
 								<h4 class="panel-title">
 									<a data-toggle="collapse" data-parent="#accordion"
-										href="#collapseOne<?php echo $activity['activity_id']; ?>">
-
-
-										<?php
-
+										href="#collapseOne<?php echo $activity['activity_id']; ?>"> 
+										
+										
+										<?php 
+										
 										$now = time();
 										//$now = strtotime("2013-03-07 14:00:00");
 										$start = strtotime($activity['start_time']);
 										$end = strtotime($activity['end_time']);
-
+											
 										if (($now >= $start) && ($now < $end)) {
 											?>
 												<span class="label label-success pull-right">In Progress</span>
 											<?php
 										}
 										?>
-
+										
 										<p><?php echo $activity['activity_name']; ?></p>
 										<p><small><?php echo date("F j, Y, g:i a", strtotime($activity['start_time'])); ?> - <?php echo date("g:i a", strtotime($activity['end_time'])); ?></small></p>
 										<p><small><?php echo $activity['room_location']; ?></small></p>
-
+										
 										</a>
 								</h4>
 							</div>
 							<div id="collapseOne<?php echo $activity['activity_id']; ?>" class="panel-collapse collapse">
 								<div class="panel-body">
-
-
-
-
-
+								
+								
+								
+								
+								
 												<table class="table table-striped table-bordered table-hover">
 					<thead>
 						<tr>
@@ -122,27 +122,27 @@ ORDER BY TS.start_time;";
 							<td><strong>Grant Hours</strong></td>
 						</tr>
 					</thead>
-
-					<?php
+					
+					<?php 
 					$studentResult = $db->query("SELECT * FROM student_shifts ss, students s, activity a  WHERE ss.activity_id = " . $activity['activity_id'] . " AND ss.student_id = s.student_id AND ss.activity_id = a.activity_id;");
 					$affected_rows = mysqli_num_rows($studentResult);
-
+					
 					for ($k = 0; $k < $affected_rows; $k++) {
 						$student = $studentResult->fetch_assoc();
-
+						
 						$currently_granted_hour = floor($student['hours_granted']*60 / 60);
 						$currently_granted_min = round((($student['hours_granted'] - $currently_granted_hour) * 60), 0);
-
+						
 						?>
 							<tr id="row_<?php echo $student['activity_id']; ?>">
 								<td>
 									<p style="margin:0px;"><a href="volunteer.php?id=<?php echo $student['student_id']; ?>">
-										<div class="led <?php
+										<div class="led <?php 
 											if ($student['checked_in'] == 't')
 												echo "led-green";
 											else
 												echo "led-red";
-											?>">&nbsp;&nbsp;&nbsp;</div>
+											?>">&nbsp;&nbsp;&nbsp;</div>	
 										<?php echo $student['first_name'] . " " . $student['last_name']; ?></a></p>
 									<p style="margin:0px;"><span class="label label-info">Currently granted <span id="<?php echo $activity['activity_id']; ?>_<?php echo $student['student_id']; ?>_hours_display"><?php echo $currently_granted_hour; ?></span> hour(s), <span id="<?php echo $activity_id; ?>_<?php echo $student['student_id']; ?>_minutes_display"><?php echo $currently_granted_min; ?></span> min(s).</span></p>
 									<p style="margin:0px;"><button student_id="<?php echo $student['student_id']; ?>" activity_id=<?php echo $activity_id; ?> type="button" class="btn btn-danger btn-xs pull-right unschedule">Unschedule</button></p>
@@ -151,7 +151,7 @@ ORDER BY TS.start_time;";
 			href="<?php echo SYSTEM_WEB_BASE_ADDRESS.'user/assemble.php?student_id='.$student['student_id'].'&activity_id='.$activity['activity_id'] ?>"
 			target="_blank">Student instructions</a>
 								</td>
-
+								
 								<td><div id="attended" activity_id="<?php echo $activity_id; ?>" student_id="<?php echo $student['student_id']; ?>" class="make-switch switch-small" data-on="success"
 										data-off="danger"
 										data-on-label="<i class='fa fa-check'></i>"
@@ -159,23 +159,23 @@ ORDER BY TS.start_time;";
 										<input type="checkbox" <?php echo $student['attended'] == "t" ? "checked" : ""; ?>>
 									</div></td>
 								<td style="min-width:325px;"><form class="form-inline" style="margin-bottom: 5px;">
-
-										<?php
+								
+										<?php 
 										$query = "SELECT time_format(timediff(TS.end_time, TS.start_time), '%l%:%i') as hours_granted
 												FROM time_slots TS, activity A
 												WHERE A.slot_id = TS.slot_id
 												AND A.activity_id = '". $student['activity_id'] ."';";
-
+										
 										$result2 = $db->query($query);
 										$student2 = $result2->fetch_assoc();
-
+										
 										// calculate hours/mins granted
 										$times = explode(':', $student2['hours_granted']);
 										$activity_hours = $times[0];
 										$activity_mins = $times[1];
-
+										
 										?>
-
+							
 										<select id="<?php echo $activity_id; ?>_<?php echo $student['student_id']; ?>_hours_input" style="width:75px;"class='form-control input-sm'>
 											<option <?php echo $activity_hours == "0" ? "selected" : ""?>>0</option>
 											<option <?php echo $activity_hours == "1" ? "selected" : ""?>>1</option>
@@ -200,38 +200,38 @@ ORDER BY TS.start_time;";
 									</td>
 
 							</tr>
-
+	
 						<?php
 					}
 					?>
 				</table>
-
-
-
-
-
+								
+								
+								
+								
+								
 								</div>
 							</div>
 						</div>
-
-
+					
+					
 					<?php
 				}
-
+				
 				?>
-
+				
 							</div>
 						</div>
 						<script type="text/javascript"> $("#<?php echo $date; ?>_display").hide(); </script>
 					</div>
 				</div>
-
+				
 				<?php
 			}
-
+			
 			?>
-
-
+			
+			
 			</div>
 
 
@@ -239,7 +239,7 @@ ORDER BY TS.start_time;";
 		<!-- /#page-wrapper -->
 
 		<?php require_once("footer.html"); ?>
-
+		
 	</div>
 	<!-- /#wrapper -->
 

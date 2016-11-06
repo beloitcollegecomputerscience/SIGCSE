@@ -2,7 +2,7 @@ $(document).ready(function() {
 	$(document).ready(function() {
 		$('.datatable').dataTable({
 			"sPaginationType": "bs_full"
-		});
+		});	
 		$('.datatable').each(function(){
 			var datatable = $(this);
 			// SEARCH - Add the placeholder for Search and Turn this into in-line form control
@@ -18,28 +18,28 @@ $(document).ready(function() {
 });
 /* borrowed from schedule.js, possibly adapt to make query tables collapsible?
 $(document).ready(function() {
-
+	
 	 $(".day_toggle").click(function() {
-
-
+		
+		 
 		 date = $(this).attr("date");
 		 display = "#" + date + "_display"
 		 status = $(display).attr("status");
-
+		 		 
 		 if (status == "expended") {
 			 $(display).slideUp();
 			 $(display).attr("status","closed");
 			 $(this).children().removeClass("fa-minus");
 			 $(this).children().addClass("fa-plus");
-
+			 
 		 } else if (status == "closed") {
 			 $(display).slideDown();
 			 $(display).attr("status","expended");
 			 $(this).children().removeClass("fa-plus");
 			 $(this).children().addClass("fa-minus");
 		 }
-
-
+		 
+		 
 	 });
-
+	
 });*/

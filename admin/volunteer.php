@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<?php
+<?php 
 
 // Access to global variables
 require_once('../global/include.php');
@@ -49,7 +49,7 @@ $show = $idSet && $isValid ? true : false;
 						<li <?php echo !$show ? 'class="active"' : "" ?>><?php echo $show ? '<a href="volunteer.php">' : "" ?><i
 							class="fa fa-users"></i> Volunteers<?php echo $show ? '</a>' : "" ?>
 						</li>
-						<?php
+						<?php 
 						if ($show) { ?>
 						<li class="active"><i class="fa fa-user"></i> <?php echo $objectRow['first_name'] . " " . $objectRow['last_name']; ?>
 						</li>
@@ -61,7 +61,7 @@ $show = $idSet && $isValid ? true : false;
 			</div>
 			<!-- /.row -->
 
-			<?php
+			<?php 
 			if ($show) {
 				?>
 
@@ -78,25 +78,25 @@ $show = $idSet && $isValid ? true : false;
 
 							<div id="righthandside" class="pull-right" >
 								<button student_id="<?php echo $student_id; ?>" id="delete_vol" type="button" class="btn btn-danger pull-right">Delete</button>
-
+								
 								<br>
 
 								<?php
-									$query_arrival = "SELECT start_time FROM student_arrivals, time_slots WHERE student_arrivals.slot_id = time_slots.slot_id AND
+									$query_arrival = "SELECT start_time FROM student_arrivals, time_slots WHERE student_arrivals.slot_id = time_slots.slot_id AND 
 student_id=$student_id;";
 									$result_arrival = $db->query($query_arrival);
 									$row_arrival = $result_arrival->fetch_assoc();
 
-									$query_departure = "SELECT end_time FROM student_departures, time_slots WHERE student_departures.slot_id = time_slots.slot_id AND
+									$query_departure = "SELECT end_time FROM student_departures, time_slots WHERE student_departures.slot_id = time_slots.slot_id AND 
 student_id=$student_id;";
 									$result_departure = $db->query($query_departure);
 									$row_departure = $result_departure->fetch_assoc();
 
 								?>
-
-								<p style="margin-top:115px;" class="pull-right">
+								
+								<p style="margin-top:115px;" class="pull-right"> 
 									Arrival Time: <?php echo $row_arrival['start_time']; ?>
-									<br>
+									<br> 
 									Departure Time: <?php echo $row_departure['end_time']; ?>
 								</p>
 							</div>
@@ -105,7 +105,7 @@ student_id=$student_id;";
 								<?php echo $objectRow['first_name'] . " " . $objectRow['last_name']; ?>
 							</h4>
 
-							<?php
+							<?php 
 							if (isset($objectRow['preferred_name'])) {
 								?>
 							<p style="margin: 0px;">
@@ -120,7 +120,7 @@ student_id=$student_id;";
 								<?php echo $objectRow['email']; ?>
 							</p>
 
-							<?php
+							<?php 
 							if (isset($objectRow['cell_phone'])) {
 								?>
 							<p style="margin: 0px;">
@@ -130,7 +130,7 @@ student_id=$student_id;";
 							}
 							?>
 
-							<?php
+							<?php 
 							if (isset($objectRow['tshirt_size'])) {
 								?>
 							<p style="margin: 0px;">
@@ -142,7 +142,7 @@ student_id=$student_id;";
 							}
 							?>
 
-							<?php
+							<?php 
 							if (isset($objectRow['school'])) {
 								?>
 							<p style="margin: 0px;">
@@ -152,7 +152,7 @@ student_id=$student_id;";
 							}
 							?>
 
-							<?php
+							<?php 
 							if (isset($objectRow['standing'])) {
 								?>
 							<p style="margin: 0px;">
@@ -162,7 +162,7 @@ student_id=$student_id;";
 							}
 							?>
 
-							<?php
+							<?php 
 							if (isset($objectRow['advisor_name'])) {
 								?>
 							<p style="margin: 0px;">
@@ -172,7 +172,7 @@ student_id=$student_id;";
 							}
 							?>
 
-							<?php
+							<?php 
 							if (isset($objectRow['advisor_email'])) {
 								?>
 							<p style="margin: 0px;">
@@ -181,8 +181,8 @@ student_id=$student_id;";
 							<?php
 							}
 							?>
-							<?php
-							$query_kids_camp = "SELECT * FROM student_skills WHERE skill_id = -1 AND
+							<?php 
+							$query_kids_camp = "SELECT * FROM student_skills WHERE skill_id = -1 AND 
 student_id=$student_id;";
 							$result_kids_camp = $db->query($query_kids_camp);
 							if(mysqli_num_rows($result_kids_camp)!=0){?>
@@ -196,7 +196,7 @@ student_id=$student_id;";
 								Can not volunteer with Kid's Camp
 							</b></p>
 							<?php } ?>
-
+							
 
 						</div>
 					</div>
@@ -291,11 +291,11 @@ student_id=$student_id;";
 									</tr>
 								</thead>
 
-								<?php
+								<?php 
 								$query = "SELECT * FROM student_shifts ss, activity a, rooms r, time_slots ts WHERE student_id= $student_id AND ss.activity_id = a.activity_id AND a.room_id = r.room_id AND ts.slot_id = a.slot_id;";
 								$result = $db->query($query);
 								$affected_rows = mysqli_num_rows($result);
-
+									
 								for ($i = 0; $i < $affected_rows; $i++) {
 									$row = $result->fetch_assoc();
 
@@ -341,7 +341,7 @@ student_id=$student_id;";
 									<td style="min-width: 325px;"><form class="form-inline"
 											style="margin-bottom: 5px;">
 
-											<?php
+											<?php 
 											$query = "SELECT time_format(timediff(TS.end_time, TS.start_time), '%l%:%i') as hours_granted
 											FROM time_slots TS, activity A
 											WHERE A.slot_id = TS.slot_id
@@ -447,7 +447,7 @@ student_id=$student_id;";
 									</tr>
 								</thead>
 
-								<?php
+								<?php 
 
 								$query = "SELECT * FROM student_availability WHERE student_id = $student_id;";
 								$result = $db->query($query);
@@ -460,12 +460,12 @@ student_id=$student_id;";
 									array_push($available_slots, $row["slot_id"]);
 
 								}
-
+									
 								$query = "SELECT * FROM activity a, rooms r, time_slots ts WHERE a.room_id = r.room_id AND a.slot_id = ts.slot_id";
 								$result = $db->query($query);
 								$affected_rows = mysqli_num_rows($result);
-
-
+									
+									
 
 								for ($i = 0; $i < $affected_rows; $i++) {
 									$row = $result->fetch_assoc();
@@ -484,7 +484,7 @@ student_id=$student_id;";
 										$row2 = $result2->fetch_assoc();
 
 										array_push($covering_slots, $row2["slot_id"]);
-
+											
 									}
 
 									$valid = true;
@@ -530,7 +530,7 @@ student_id=$student_id;";
 
 								}
 
-
+									
 								?>
 
 							</table>
@@ -567,19 +567,19 @@ student_id=$student_id;";
 				</div>
 			</div>
 
-
-
-
+			
+			
+			
 			<!-- _______Notes starts here______________ -->
 			<!-- _______Notes starts here______________ -->
 			<!-- _______Notes starts here______________ -->
 			<!-- _______Notes starts here______________ -->
 			<!-- _______Notes starts here______________ -->
-
-
+			
+			
 	<div class="row">
 				<div class="col-lg-12">
-
+	
 						<div class="panel panel-primary">
 							<div class="panel-heading">
 								<h3 class="panel-title">
@@ -592,19 +592,19 @@ student_id=$student_id;";
 							</div>
 						</div>
 					</div>
-
+					
 				</div> </div>
-
-
-
-
-
-
-
+			
+			
+			
+			
+			
+			
+			
 	<!-- _______Notes ends here______________ -->
 	<!-- _______Notes ends here______________ -->
-	<!-- _______Notes ends here______________ -->
-
+	<!-- _______Notes ends here______________ -->		
+			
 			<?php
 			}         //What's this for????!!!!!!
 			?>
@@ -619,7 +619,7 @@ student_id=$student_id;";
 					</div>
 				</div>
 			</div>
-			<?php
+			<?php 
 			if (!($idSet && !$isValid)) {
 				?>
 			<script type="text/javascript"> $("#not_found").hide(); </script>
@@ -659,7 +659,7 @@ student_id=$student_id;";
 						</thead>
 						<tbody>
 
-							<?php
+							<?php 
 							$result = $db->query("SELECT * FROM students");
 							$affected_rows = mysqli_num_rows($result);
 
@@ -667,21 +667,21 @@ student_id=$student_id;";
 								$row = $result->fetch_assoc();
 
 //								$result3 = $db->query("SELECT sum(hours_granted) as sum FROM student_shifts WHERE student_id={$row['student_id']}");
-								$result3 = $db->query("SELECT sum(time_to_sec(timediff(TS.end_time, TS.start_time)) / 60) as sum FROM time_slots TS, activity A ,
+								$result3 = $db->query("SELECT sum(time_to_sec(timediff(TS.end_time, TS.start_time)) / 60) as sum FROM time_slots TS, activity A , 
 students S, student_shifts SS where A.slot_id = TS.slot_id AND A.activity_id = SS.activity_id AND S.student_id = SS.student_id and S.student_id={$row['student_id']};");
 								$row3 = $result3->fetch_assoc();
 								$hoursScheduled = $row3['sum'] / 60;
 
 								?>
 							<tr style="font-size: 100%;">
-
-								<?php
-
+							
+								<?php 
+								
 								$fullName = ($row['first_name'] . " " . $row['last_name']) ==  " " ? "null" : $row['first_name'] . " " . $row['last_name'];
-
+								
 								?>
-
-
+								
+							
 								<td><a href="volunteer.php?id=<?php echo $row['student_id']?>"><?php echo $fullName; ?>
 								</a></td>
 								<td><?php echo $row['email']; ?></td>
@@ -701,7 +701,7 @@ students S, student_shifts SS where A.slot_id = TS.slot_id AND A.activity_id = S
 			</div>
 			<!-- /.row -->
 
-			<?php
+			<?php 
 			if ($idSet && $isValid) {
 				?>
 			<script type="text/javascript"> $("#search").hide(); </script>

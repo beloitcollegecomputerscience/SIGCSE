@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<?php
+<?php 
 
 // Access to global variables
 require_once('../global/include.php');
@@ -43,6 +43,6 @@ require_once(SYSTEM_WEBHOME_DIR.'user/php/head.php');
 	</div>
 
 	<?php require_once("footer.html") ?>
-
+	
 </body>
 </html>

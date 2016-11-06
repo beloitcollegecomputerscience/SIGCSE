@@ -26,7 +26,7 @@ if ($row['locked'] == 't'&& !$isAdmin) {
 	//header('Location: '.SYSTEM_WEB_BASE_ADDRESS.'registration.php');
 	echo "locked";
 } else {
-
+	
 	// Make quick references to all form data
 	$first_name = mysqli_real_escape_string($db->getDB(), $_POST["first_name"]);
 	$last_name = mysqli_real_escape_string($db->getDB(), $_POST["last_name"]);
@@ -38,21 +38,21 @@ if ($row['locked'] == 't'&& !$isAdmin) {
 	$confirm_password = $_POST['confirm_password'];
 	// TODO: check that hashed password has not bad SQL? - feasible?
 	$hashed_confirm_password = sha1($_POST['confirm_password']);
-
+	
 	// Grab rows where database email == input email
 	$query = "SELECT count(*) as num_using FROM students WHERE email = '$email'";
 	$result = $db->query($query);
 	$row = $result->fetch_assoc();
-
+	
 	// Number of users with that email
 	$num_using = $row['num_using'];
-
+	
 	// Specific error flags used to create sessions variables for correct data to send back to register
 	$email_error = false;
 	$first_name_error = false;
 	$last_name_error = false;
 	$password_error = false;
-
+	
 	// Error flags used to send error messages back to register.php
 	$errno1 = false;
 	$errno2 = false;
@@ -60,19 +60,19 @@ if ($row['locked'] == 't'&& !$isAdmin) {
 	$errno4 = false;
 	$errno5 = false;
 	$errno6 = false;
-
+	
 	// Check first_name against the regex
 	if (checkName($first_name) == false) {
 		$first_name_error = true;
 		$errno1 = true;
 	}
-
+	
 	// Check last_name against the regex
 	if (checkName($last_name) == false) {
 		$last_name_error = true;
 		$errno2 = true;
 	}
-
+	
 	// Check email against the regex
 	if (checkEmail($email) == false) {
 		$email_error = true;
@@ -82,7 +82,7 @@ if ($row['locked'] == 't'&& !$isAdmin) {
 		$email_error = true;
 		$errno4 = true;
 	}
-
+	
 	// Check both password against the regex
 	if (checkPass($password) == false) {
 		$password_error = true;
@@ -92,26 +92,26 @@ if ($row['locked'] == 't'&& !$isAdmin) {
 		$password_error = true;
 		$errno5 = true;
 	}
-
+	
 	// If all specific error flags are false then the form data is correct and we can register the user
 	if (($password_error == false) and ($email_error == false) and ($first_name_error == false) and ($last_name_error == false)) { // Registration was successful
 		// Add the users data into the students table
 		$query = "INSERT INTO students(first_name, last_name, email, password) VALUES ('$first_name','$last_name', '$email', '$hashed_password')";
 		$db->query($query);
-
+		
 		// Store student_id as a session variable
 		$_SESSION['student_id'] = $db->getLastID();
-
+		
 		// Send user an email
 		//sendRegistrationEmail($email);
-
+	
 		echo "true";
-
+	
 	} else { // Registration was unsuccessful
-
+	
 		// Errors to send back
 		$response = "";
-
+		
 		// If the following error numbers exist then they are to be added to the URL to be displayed on register.php
 		if ($errno1 == true) {
 			$response .= "err1,";
@@ -131,9 +131,9 @@ if ($row['locked'] == 't'&& !$isAdmin) {
 		if ($errno6 == true) {
 			$response .= "err6,";
 		}
-
+	
 		$response = substr($response, 0, -1);
-
+		
 		// Send back the appropriate errors
 		echo $response;
 	}

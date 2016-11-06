@@ -1,4 +1,4 @@
-<?php
+<?php 
 /*
 	backend/timeformtwoprocess.php
 	------------------------------
@@ -6,7 +6,7 @@
 		- Checks for error
 		- If no errors, processes information and puts it into the database
 		- If there is an error, redirects back to the same url with errors
-
+		
 	Notes:
 		- Does this update the databse? Where? And Document lines 69 to 84. Alex isn't sure what they do.
 */
@@ -67,10 +67,10 @@ if ($total_min < 720) {
 
 // If 720 minutes of time or more was selected
 if (($errno1 != true)) {
-
+		
 	$current_slots = array();
-
-	// Queries the database for the student's available times
+	
+	// Queries the database for the student's available times	
 	$result = $db->query("SELECT slot_id FROM student_availability WHERE student_id = ".$_SESSION['student_id']);
 	$affected_rows = mysqli_num_rows($result);
 	for ($i = 0; $i < $affected_rows; $i++) {
@@ -78,15 +78,15 @@ if (($errno1 != true)) {
 		$slot_id = $row['slot_id'];
 		array_push($current_slots, "$slot_id");
 	}
-
+	
 	// For each deselected slot, if it is in the current_slots then delete it.
 	foreach ($deselected_slots as $id) {
 		if (in_array($id, $current_slots)) {
 			$query = "DELETE FROM student_availability WHERE student_id = '".$_SESSION['student_id']."' and slot_id = '$id'";
 			$result = $db->query($query);
-		}
+		} 
 	}
-
+	
 	// For each selected slot, if it is not in the current_slots then add it.
 	foreach ($selected_slots as $id) {
 		if (!in_array($id, $current_slots)) {
@@ -95,25 +95,25 @@ if (($errno1 != true)) {
 			$result = $db->query($query);
 		}
 	}
-
+	
 	// send to profile
 	echo "true";
-}
+} 
 
 // If less than 720 minutes of time was selected
 else {
-
-
+	
+	
 	// Errors to send back
 	$response = "";
-
+	
 	// If the following error numbers exist then they are to be added to the URL to be displayed on register.php
 	if ($errno1 == true) {
 		$response .= "err1,";
 	}
-
+	
 	$response = substr($response, 0, -1);
-
+	
 	// Send back the appropriate errors
 	echo $response;
 }

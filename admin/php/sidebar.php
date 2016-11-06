@@ -1,12 +1,12 @@
-<?php
+<?php 
 
 function echoNav($db, $page) {
-
+	
 	// Query the database
 	$query = "SELECT * FROM admin WHERE admin_id =".$_SESSION['admin_id'];
 	$result = $db->query($query);
 	$row = $result->fetch_assoc();
-
+	
 	?>
 
 <!-- Sidebar -->
