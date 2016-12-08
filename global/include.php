@@ -14,8 +14,8 @@ define('SYSTEM_LIVE', 1); // true
 // define ( 'SYSTEM_LIVE', 0 ); // false
 
 // If true then testing which means files are located in special location on server.
-define ( 'SYSTEM_TESTING', 1 ); // true
-                                // define('SYSTEM_TESTING', 0); // false
+// define ( 'SYSTEM_TESTING', 1 ); // true
+define('SYSTEM_TESTING', 0); // false
 
 // If true then PHP messages are enabled. By default only on if testing.
 if (SYSTEM_TESTING) {
