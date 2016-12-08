@@ -10,18 +10,18 @@
  * I use 0 for false and 1 for true. Not perfect but works.
  */
 // If true then live system, otherwise at test server at Beloit.
-define('SYSTEM_LIVE', 1); // true
-// define ( 'SYSTEM_LIVE', 0 ); // false
-                             
+// define('SYSTEM_LIVE', 1); // true
+define ( 'SYSTEM_LIVE', 0 ); // false
+
 // If true then testing which means files are located in special location on server.
 define ( 'SYSTEM_TESTING', 1 ); // true
-// define('SYSTEM_TESTING', 0); // false
-                                
+                                // define('SYSTEM_TESTING', 0); // false
+
 // If true then PHP messages are enabled. By default only on if testing.
 if (SYSTEM_TESTING) {
-	define ( 'SYSTEM_PHP_MSG', 1 ); // true
+    define ( 'SYSTEM_PHP_MSG', 1 ); // true
 } else {
-	define ( 'SYSTEM_PHP_MSG', 0 ); // false
+    define ( 'SYSTEM_PHP_MSG', 0 ); // false
 }
 
 // Where is the top level of the web system.
@@ -41,25 +41,25 @@ if (SYSTEM_TESTING) {
 date_default_timezone_set ( 'America/Chicago' );
 // TODO: Do we want to change SYSTEM_EMAIL_ADDRESS more?
 if (SYSTEM_LIVE) {
-	define ( 'SYSTEM_EMAIL_ADDRESS', 'sigcse2014-volunteers@ggc.edu' );
-	
-	if (SYSTEM_TESTING) {
-		define ( 'SYSTEM_WEBHOME_DIR', '/ubc/cs/home/s/sig-cse/public_html/sigcse_testing/project/' );
-		define ( 'SYSTEM_WEB_BASE_ADDRESS', 'https://www.cs.ubc.ca/~sig-cse/sigcse_testing/project/' );
-	} else {
-		define ( 'SYSTEM_WEBHOME_DIR', '/ubc/cs/home/s/sig-cse/public_html/sigcse/' );
-		define ( 'SYSTEM_WEB_BASE_ADDRESS', 'https://www.cs.ubc.ca/~sig-cse/sigcse/' );
-	}
+    define ( 'SYSTEM_EMAIL_ADDRESS', 'sigcse2014-volunteers@ggc.edu' );
+
+    if (SYSTEM_TESTING) {
+        define ( 'SYSTEM_WEBHOME_DIR', '/ubc/cs/home/s/sig-cse/public_html/sigcse_testing/project/' );
+        define ( 'SYSTEM_WEB_BASE_ADDRESS', 'https://www.cs.ubc.ca/~sig-cse/sigcse_testing/project/' );
+    } else {
+        define ( 'SYSTEM_WEBHOME_DIR', '/ubc/cs/home/s/sig-cse/public_html/sigcse/' );
+        define ( 'SYSTEM_WEB_BASE_ADDRESS', 'https://www.cs.ubc.ca/~sig-cse/sigcse/' );
+    }
 } else {
-	define ( 'SYSTEM_EMAIL_ADDRESS', 'huss@beloit.edu' );
-	
-	if (SYSTEM_TESTING) {
-		define ( 'SYSTEM_WEBHOME_DIR', '/home/huss/public_html/sigcse/sigcse_testing/project/' );
-		define('SYSTEM_WEB_BASE_ADDRESS', 'https://csserver.beloit.edu/~huss/sigcse/sigcse_testing/project/');
-	} else {
-		define ( 'SYSTEM_WEBHOME_DIR', '/home/sigcse/public_html/project/' );
-		define('SYSTEM_WEB_BASE_ADDRESS', 'https://csserver.beloit.edu/~huss/sigcse/sigcse/project/');
-	}
+    define ( 'SYSTEM_EMAIL_ADDRESS', 'huss@beloit.edu' );
+
+    if (SYSTEM_TESTING) {
+        define ( 'SYSTEM_WEBHOME_DIR', '/home/twomeypm/public_html/SIGCSE-live/' );
+        define('SYSTEM_WEB_BASE_ADDRESS', 'https://csserver.beloit.edu/~twomeypm/SIGCSE-live/');
+    } else {
+        define ( 'SYSTEM_WEBHOME_DIR', '/home/sigcse/public_html/project/' );
+        define('SYSTEM_WEB_BASE_ADDRESS', 'https://csserver.beloit.edu/~huss/sigcse/sigcse/project/');
+    }
 }
 
 define ( 'SYSTEM_EMAIL_NAME', 'SIGCSE Volunteer Coordinators' );
@@ -74,22 +74,22 @@ require_once (SYSTEM_WEBHOME_DIR . "global/mail.php");
 
 // If PHP messages are enabled then turn them on.
 if (SYSTEM_PHP_MSG) {
-	// If errors not on then turn it on.
-	if (! ini_get ( 'display_errors' )) {
-		ini_set ( 'display_errors', '1' );
-	}
+    // If errors not on then turn it on.
+    if (! ini_get ( 'display_errors' )) {
+        ini_set ( 'display_errors', '1' );
+    }
 }
 
 // On the live server we need to set session information.
 if (SYSTEM_LIVE) {
-	/*
-	 * This is where session files are stored. Note that the permissions are important. The are:
-	 * private is 700 so no on can read
-	 * tmp is 755 so PHP can access to read/write
-	 */
-	session_save_path ( SYSTEM_WEBHOME_DIR . 'global/private/tmp/' );
-	// This makes PHP clear out old session data so it does not hang around.
-	ini_set ( 'session.gc_probability', 1 );
+    /*
+     * This is where session files are stored. Note that the permissions are important. The are:
+     * private is 700 so no on can read
+     * tmp is 755 so PHP can access to read/write
+     */
+    session_save_path ( SYSTEM_WEBHOME_DIR . 'global/private/tmp/' );
+    // This makes PHP clear out old session data so it does not hang around.
+    ini_set ( 'session.gc_probability', 1 );
 }
 
 /*
@@ -109,12 +109,12 @@ $db = new DBAccess ();
 define ( 'DISPLAY_TODOS', 1 ); // true
                                // define('DISPLAY_TODOS', 0); // false
 function toDo($string) {
-	if (DISPLAY_TODOS) {
-		?>
+    if (DISPLAY_TODOS) {
+        ?>
 <div class="alert alert-info">
-	<span class="glyphicon glyphicon-hand-right"></span> <?php echo $string; ?></div>
+    <span class="glyphicon glyphicon-hand-right"></span> <?php echo $string; ?></div>
 <?php
-	}
+    }
 }
 
 // Start session. Check if user is logged in.
@@ -136,47 +136,47 @@ $page_result = $db->query ( "SELECT DISTINCT page from system_text" );
 $affected_pages = mysqli_num_rows ( $page_result );
 $system_text = array ();
 for($i = 0; $i < $affected_pages; $i ++) {
-	$page = $page_result->fetch_assoc ();
-	$system_text [$page ['page']] = array ();
-	$text_result = $db->query ( "SELECT * FROM system_text WHERE page = '{$page['page']}'" );
-	$affected_text = mysqli_num_rows ( $text_result );
-	for($j = 0; $j < $affected_text; $j ++) {
-		$text = $text_result->fetch_assoc ();
-		$system_text [$page ['page']] [$text ['key']] = $text ['value'];
-	}
+    $page = $page_result->fetch_assoc ();
+    $system_text [$page ['page']] = array ();
+    $text_result = $db->query ( "SELECT * FROM system_text WHERE page = '{$page['page']}'" );
+    $affected_text = mysqli_num_rows ( $text_result );
+    for($j = 0; $j < $affected_text; $j ++) {
+        $text = $text_result->fetch_assoc ();
+        $system_text [$page ['page']] [$text ['key']] = $text ['value'];
+    }
 }
 
 $variables_result = $db->query ( "SELECT * FROM system_variables" );
 $affected_variables = mysqli_num_rows ( $variables_result );
 $variables = array ();
 for($i = 0; $i < $affected_variables; $i ++) {
-	$variable = $variables_result->fetch_assoc ();
-	$variables [$variable ["key"]] = $variable ["value"];
+    $variable = $variables_result->fetch_assoc ();
+    $variables [$variable ["key"]] = $variable ["value"];
 }
 
 foreach ( $system_text as $key => $value ) {
-	foreach ( $value as $key2 => $value2 ) {
-		foreach ( $variables as $key3 => $value3 ) {
-			$system_text [$key] [$key2] = str_replace ( $key3, $value3, $system_text [$key] [$key2] );
-		}
-	}
+    foreach ( $value as $key2 => $value2 ) {
+        foreach ( $variables as $key3 => $value3 ) {
+            $system_text [$key] [$key2] = str_replace ( $key3, $value3, $system_text [$key] [$key2] );
+        }
+    }
 }
 
 $mass_email_queries = array(
 
-	
-		"SELECT * FROM students where profile_complete = 'f';"
-			=> "Have not finished basic profile.",
 
-		"SELECT * FROM students where times_complete = 'f' and profile_complete = 't';"
-			=> "Have not given available times.",
+        "SELECT * FROM students where profile_complete = 'f';"
+            => "Have not finished basic profile.",
 
-
-		"SELECT * FROM students where times_complete = 't' and profile_complete = 't';"
-			=> "who completely registered for sending notes",
+        "SELECT * FROM students where times_complete = 'f' and profile_complete = 't';"
+            => "Have not given available times.",
 
 
-		
+        "SELECT * FROM students where times_complete = 't' and profile_complete = 't';"
+            => "who completely registered for sending notes",
+
+
+
 
 
 );
