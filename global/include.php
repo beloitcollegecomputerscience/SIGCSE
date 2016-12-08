@@ -10,12 +10,12 @@
  * I use 0 for false and 1 for true. Not perfect but works.
  */
 // If true then live system, otherwise at test server at Beloit.
-// define('SYSTEM_LIVE', 1); // true
-define ( 'SYSTEM_LIVE', 0 ); // false
+define('SYSTEM_LIVE', 1); // true
+// define ( 'SYSTEM_LIVE', 0 ); // false
                              
 // If true then testing which means files are located in special location on server.
 define ( 'SYSTEM_TESTING', 1 ); // true
-                                // define('SYSTEM_TESTING', 0); // false
+// define('SYSTEM_TESTING', 0); // false
                                 
 // If true then PHP messages are enabled. By default only on if testing.
 if (SYSTEM_TESTING) {
