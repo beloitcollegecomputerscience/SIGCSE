@@ -10,12 +10,12 @@
  * I use 0 for false and 1 for true. Not perfect but works.
  */
 // If true then live system, otherwise at test server at Beloit.
-// define('SYSTEM_LIVE', 1); // true
-define ( 'SYSTEM_LIVE', 0 ); // false
+define('SYSTEM_LIVE', 1); // true
+// define ( 'SYSTEM_LIVE', 0 ); // false
 
 // If true then testing which means files are located in special location on server.
-define ( 'SYSTEM_TESTING', 1 ); // true
-                                // define('SYSTEM_TESTING', 0); // false
+// define ( 'SYSTEM_TESTING', 1 ); // true
+define('SYSTEM_TESTING', 0); // false
 
 // If true then PHP messages are enabled. By default only on if testing.
 if (SYSTEM_TESTING) {
@@ -38,10 +38,10 @@ if (SYSTEM_TESTING) {
  * strtotime() /home/huss/public_html/sigcse/sigcse_testing/project/admin/schedule.php:60
  */
 // TODO: check correct solution to timezone.
-date_default_timezone_set ( 'America/Chicago' );
+date_default_timezone_set ( 'America/Los_Angeles' );
 // TODO: Do we want to change SYSTEM_EMAIL_ADDRESS more?
 if (SYSTEM_LIVE) {
-    define ( 'SYSTEM_EMAIL_ADDRESS', 'sigcse2014-volunteers@ggc.edu' );
+    define ( 'SYSTEM_EMAIL_ADDRESS', 'sigcse2017-volunteers@cs.vt.edu' );
 
     if (SYSTEM_TESTING) {
         define ( 'SYSTEM_WEBHOME_DIR', '/ubc/cs/home/s/sig-cse/public_html/sigcse_testing/project/' );
@@ -64,8 +64,8 @@ if (SYSTEM_LIVE) {
 
 define ( 'SYSTEM_EMAIL_NAME', 'SIGCSE Volunteer Coordinators' );
 define ( 'SYSTEM_ADDRESS', SYSTEM_WEB_BASE_ADDRESS );
-define ( 'SIGCSE_HOME_PAGE', "http://sigcse2014.sigcse.org/" );
-define ( 'SIGCSE_VOL_PAGE', "http://sigcse2014.sigcse.org/students/volunteers.php" );
+define ( 'SIGCSE_HOME_PAGE', "http://sigcse2017.sigcse.org/" );
+define ( 'SIGCSE_VOL_PAGE', "http://sigcse2017.sigcse.org/info/studentvolunteers.html" );
 
 // Make all PHP regex methods available
 require_once (SYSTEM_WEBHOME_DIR . "global/regex.php");
@@ -135,6 +135,7 @@ $isAdmin = isset ( $_SESSION ['admin_id'] ) ? true : false;
 $page_result = $db->query ( "SELECT DISTINCT page from system_text" );
 $affected_pages = mysqli_num_rows ( $page_result );
 $system_text = array ();
+
 for($i = 0; $i < $affected_pages; $i ++) {
     $page = $page_result->fetch_assoc ();
     $system_text [$page ['page']] = array ();

@@ -1,77 +1,17 @@
-<?php 
+<?php
 
 // Query to find students who can come to dinner
 
 $queries = array(
-	
+
 		#query for shift soon but not checked in with us
 			
 		#query for missed shift
-		
-		"stuclick SELECT email FROM students where profile_complete = 'f';" 
-			=> "Have not finished basic profile.",
-		
-		"stuclick SELECT email FROM students where times_complete = 'f' and profile_complete = 't';" 
-			=> "Have not given available times.",
-		
-		"xxxxxxxx SELECT tshirt_size, count(tshirt_size) from students where times_complete = 't' group by tshirt_size;" 
-			=> "find out needed t-shirt sizes for all students (does exclude ones not done with registration)",
-		
-		"stuclick SELECT email FROM students where times_complete = 't' and profile_complete = 't';" 
-			=> "who completely registered for sending notes",
-		
-		"stuclick SELECT first_name, last_name, email FROM students where times_complete = 't';" 
-			=> "who gave times_complete for sending notes",
-			
-		"stuclick SELECT student_id, (sum(time_to_sec(TS.end_time) - time_to_sec(TS.start_time)))/60 as total_minutes FROM student_availability SA, time_slots TS where TS.slot_id=SA.slot_id group by student_id;"
-			=> "check how many hours students are available and if ok",
-			
-		"stuclick SELECT student_id, count(student_id) FROM student_availability SA group by student_id"
-			=> "check number of slots per student",
-			
-		"stuclick SELECT student_id, count(student_id) FROM student_availability SA group by student_id;"
-			=> "check number of slots per student",
-			
-		"stuclick SELECT SS.student_id, sum((time_to_sec(TS.end_time) - time_to_sec(TS.start_time)) / 60) as time_scheduled
-		from time_slots TS, student_shifts SS, activity A
-		where SS.activity_id = A.activity_id and A.slot_id = TS.slot_id
-		group by SS.student_id
-		order by time_scheduled;"
-			=> "Check time scheduled per student - won't find zero times",
-			
-		"stuclick SELECT S.student_id
-		from students S
-		where S.times_complete = 't'
-		and S.student_id not in
-		(SELECT SS.student_id
-		from student_shifts SS
-		where S.student_id = SS.student_id);"
-			=> "Find any not scheduled at all since above excludes these",
-			
-		"xxxxxxxx SELECT sum((time_to_sec(TS.end_time) - time_to_sec(TS.start_time)) / 3600) as total_time_scheduled_hrs
-		from time_slots TS, student_shifts SS, activity A
-		where SS.activity_id = A.activity_id and A.slot_id = TS.slot_id;"
-			=> "Check total time scheduled",
-			
-		"xxxxxxxx SELECT sum((time_to_sec(TS.end_time) - time_to_sec(TS.start_time)) * A.desired_workers / 3600) as total_time_activities_hrs
-		from time_slots TS, activity A
-		where A.slot_id = TS.slot_id;"
-			=> "Check total time for all activities at desired level",
-			
-		"stuclick SELECT SS.student_id, sum((time_to_sec(TS.end_time) - time_to_sec(TS.start_time)) / 60) as time_scheduled
-		from time_slots TS, student_shifts SS, activity A
-		where SS.activity_id = A.activity_id and A.slot_id = TS.slot_id
-		group by SS.student_id
-		having time_scheduled > 360;"
-			=> "Check if any student time scheduled exceeds limit",
-			
-		"stuclick SELECT SS.student_id, sum((time_to_sec(TS.end_time) - time_to_sec(TS.start_time)) / 60) as time_scheduled
-		from time_slots TS, student_shifts SS, activity A
-		where SS.activity_id = A.activity_id and A.slot_id = TS.slot_id
-		group by SS.student_id
-		having time_scheduled < 270;"
-			=> "Check if any student time scheduled less than minimum - check for ones with zero separately",
-		
+
+		"xxxxxxxx SELECT tshirt_size, count(tshirt_size) from students where times_complete = 't' group by tshirt_size;"
+		=> "find out needed t-shirt sizes for all students (does exclude ones not done with registration)",
+
+
 		"actclick SELECT A.activity_id, A.desired_workers - (
 		SELECT count(SS.activity_id)
 		from student_shifts SS
@@ -84,22 +24,8 @@ $queries = array(
 				from student_shifts SS
 				where SS.activity_id = A.activity_id
 		);"
-			=> "Check which activities don't have desired number of workers and determine how many - ugly but works",
-		
-		"actclick SELECT A.activity_id, A.desired_workers - (
-		SELECT count(SS.activity_id)
-		from student_shifts SS
-		where SS.activity_id = A.activity_id
-		)
-		from activity A
-		where A.desired_workers <>
-		(
-		SELECT count(SS.activity_id)
-		from student_shifts SS
-		where SS.activity_id = A.activity_id
-		);"
-			=> "Check which activities don't have desired number of workers and determine how many - ugly but works",
-		
+		=> "Check which activities don't have desired number of workers and determine how many - ugly but works",
+
 		"actclick SELECT sum((A.desired_workers - (
 		SELECT count(SS.activity_id)
 		from student_shifts SS
@@ -113,13 +39,13 @@ $queries = array(
 				from student_shifts SS
 				where SS.activity_id = A.activity_id
 		);"
-			=> "Check which activities don't have desired number of workers and determine total time - ugly but works",
-		
+		=> "Check which activities don't have desired number of workers and determine total time - ugly but works",
+
 		"actclick SELECT SS.activity_id, count(SS.activity_id)
 		from student_shifts SS
 		group by SS.activity_id;"
-			=> "Number desired for each activity",
-		
+		=> "Number desired for each activity",
+
 		"xxxxxxxx SELECT S.student_id, S.first_name, S.last_name
 		from students S
 		where S.checked_in = 'f'
@@ -129,13 +55,75 @@ $queries = array(
 				where S.student_id = SS.student_id
 				and SS.attended = 't'
 		);"
-			=> "fully not checked in but worked",
-		
+		=> "fully not checked in but worked",
+
+		"stuclick SELECT email FROM students where profile_complete = 'f';"
+		=> "Have not finished basic profile.",
+
+		"stuclick SELECT email FROM students where times_complete = 'f' and profile_complete = 't';"
+		=> "Have not given available times.",
+
+		"stuclick SELECT email FROM students where times_complete = 't' and profile_complete = 't';"
+		=> "who completely registered for sending notes",
+
+		"stuclick SELECT first_name, last_name, email FROM students where times_complete = 't';"
+		=> "who gave times_complete for sending notes",
+			
+		"stuclick SELECT student_id, (sum(time_to_sec(TS.end_time) - time_to_sec(TS.start_time)))/60 as total_minutes FROM student_availability SA, time_slots TS where TS.slot_id=SA.slot_id group by student_id;"
+		=> "check how many hours students are available and if ok",
+			
+		"stuclick SELECT student_id, count(student_id) FROM student_availability SA group by student_id"
+		=> "check number of slots per student",
+			
+		"stuclick SELECT student_id, count(student_id) FROM student_availability SA group by student_id;"
+		=> "check number of slots per student",
+			
+		"stuclick SELECT SS.student_id, sum((time_to_sec(TS.end_time) - time_to_sec(TS.start_time)) / 60) as time_scheduled
+				from time_slots TS, student_shifts SS, activity A
+				where SS.activity_id = A.activity_id and A.slot_id = TS.slot_id
+				group by SS.student_id
+				order by time_scheduled;"
+		=> "Check time scheduled per student - won't find zero times",
+			
+		"stuclick SELECT S.student_id
+				from students S
+				where S.times_complete = 't'
+				and S.student_id not in
+				(SELECT SS.student_id
+				from student_shifts SS
+				where S.student_id = SS.student_id);"
+		=> "Find any not scheduled at all since above excludes these",
+			
+		"xxxxxxxx SELECT sum((time_to_sec(TS.end_time) - time_to_sec(TS.start_time)) / 3600) as total_time_scheduled_hrs
+				from time_slots TS, student_shifts SS, activity A
+				where SS.activity_id = A.activity_id and A.slot_id = TS.slot_id;"
+		=> "Check total time scheduled",
+			
+		"xxxxxxxx SELECT sum((time_to_sec(TS.end_time) - time_to_sec(TS.start_time)) * A.desired_workers / 3600) as total_time_activities_hrs
+				from time_slots TS, activity A
+				where A.slot_id = TS.slot_id;"
+		=> "Check total time for all activities at desired level",
+			
+		"stuclick SELECT SS.student_id, sum((time_to_sec(TS.end_time) - time_to_sec(TS.start_time)) / 60) as time_scheduled
+				from time_slots TS, student_shifts SS, activity A
+				where SS.activity_id = A.activity_id and A.slot_id = TS.slot_id
+				group by SS.student_id
+				having time_scheduled > 360;"
+		=> "Check if any student time scheduled exceeds limit",
+			
+		"stuclick SELECT SS.student_id, sum((time_to_sec(TS.end_time) - time_to_sec(TS.start_time)) / 60) as time_scheduled
+				from time_slots TS, student_shifts SS, activity A
+				where SS.activity_id = A.activity_id and A.slot_id = TS.slot_id
+				group by SS.student_id
+				having time_scheduled < 270;"
+		=> "Check if any student time scheduled less than minimum - check for ones with zero separately",
+
 		"stuclick SELECT S.student_id, S.first_name, S.last_name
 		from students S
 		where S.times_complete = 't'
 		and S.checked_in = 'f';"
-			=> "fully registered but not checked in - need to improve by sorting by arrival date"
+		=> "fully registered but not checked in - need to improve by sorting by arrival date"
+		
 );
 
 
