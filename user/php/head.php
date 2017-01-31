@@ -1,23 +1,37 @@
+<!-- Copyright (C) 2017  Beloit College
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program (License.txt).  If not, see <http://www.gnu.org/licenses/>. -->
+
 <head>
 
 <title>SIGCSE Volunteer Registration</title>
 
 <meta name="title" content="SIGCSE Volunteer Registration" />
 <meta name="keywords"
-	content="SIGCSE Volunteer Registration, sigcse, volunteer registration, volunteer, register, special interest group for computer science education, computer science, education, special interest" />
+    content="SIGCSE Volunteer Registration, sigcse, volunteer registration, volunteer, register, special interest group for computer science education, computer science, education, special interest" />
 <meta name="description"
-	content="SIGCSE 2014 continues our long tradition of bringing together colleagues from around the world to present papers, panels, posters, special sessions, and workshops, and to discuss computer science education in birds-of-a-feather sessions and informal settings." />
+    content="SIGCSE 2014 continues our long tradition of bringing together colleagues from around the world to present papers, panels, posters, special sessions, and workshops, and to discuss computer science education in birds-of-a-feather sessions and informal settings." />
 <meta name="author" content="Beloit College" />
 <meta name="Copyright" content="Beloit College 2013" />
 
 <meta property="og:title" content="SIGCSE Volunteer Registration" />
 <meta property="og:type" content="website" />
 <meta property="og:image"
-	content="<?php echo SYSTEM_WEB_BASE_ADDRESS; ?>images/sigcse_logo_large.png" />
+    content="<?php echo SYSTEM_WEB_BASE_ADDRESS; ?>images/sigcse_logo_large.png" />
 <meta property="og:url"
-	content="<?php echo SYSTEM_WEB_BASE_ADDRESS; ?>user/" />
+    content="<?php echo SYSTEM_WEB_BASE_ADDRESS; ?>user/" />
 <meta property="og:description"
-	content="SIGCSE 2014 continues our long tradition of bringing together colleagues from around the world to present papers, panels, posters, special sessions, and workshops, and to discuss computer science education in birds-of-a-feather sessions and informal settings." />
+    content="SIGCSE 2014 continues our long tradition of bringing together colleagues from around the world to present papers, panels, posters, special sessions, and workshops, and to discuss computer science education in birds-of-a-feather sessions and informal settings." />
 
 <link rel="shortcut icon" href="" />
 
