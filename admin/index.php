@@ -1,3 +1,6 @@
+<!-- Licensed under the BSD. See License.txt for full text.  -->
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -37,6 +40,7 @@ $activityCount = $row ['count'];
         .embed{
             margin-top:5px !important;
             }
+
         </style>
 <body>
 

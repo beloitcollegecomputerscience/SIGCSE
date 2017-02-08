@@ -1,4 +1,6 @@
-<?php 
+<!-- Licensed under the BSD. See License.txt for full text.  -->
+
+<?php
 
 // Access to global variables
 require_once('../../global/include.php');
@@ -21,23 +23,23 @@ $row = $result->fetch_assoc();
 
 // If currentPassword isn't same as in database then error
 if ($row['password'] != $hashed_currentPassword) {
-	echo "err1";
+    echo "err1";
 } else
 
 // If the 2 new passwords aren't the same then error
-	if ($hashed_newPassword != $hashed_confirmPassword) {
+    if ($hashed_newPassword != $hashed_confirmPassword) {
 echo "err2";
 } else
 
 // If the new password isn't valid error
-	if (checkPass($newPassword) == false) {
+    if (checkPass($newPassword) == false) {
 echo "err3";
 } else {
 
-	// If we get passed all those redirects then it is same to update the password.
-	$query = "UPDATE admin SET password='$hashed_newPassword' WHERE admin_id={$_SESSION['admin_id']}";
-	$db->query($query);
-	echo "true";
+    // If we get passed all those redirects then it is same to update the password.
+    $query = "UPDATE admin SET password='$hashed_newPassword' WHERE admin_id={$_SESSION['admin_id']}";
+    $db->query($query);
+    echo "true";
 }
 
 

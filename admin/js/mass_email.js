@@ -1,3 +1,6 @@
+/* Licensed under the BSD. See License.txt for full text.  */
+
+
 $(document).ready(function() {
  $('#mass_email').summernote();
 
@@ -8,6 +11,7 @@ $(document).ready(function() {
      $("#recipients_to_show").html("");
      $("#recipient").html('');
         $(".embed").remove();
+
            if($("#mass_email_query_selection").val()=="-1"){
 
             $("#recipient").append('<p> select a query</p>');
@@ -57,8 +61,6 @@ $(document).ready(function() {
 
             $(".update_template_button").html("<button id='update_template' type='button' class='btn btn-primary pull-right'>Update template</button>");
                $(".note-toolbar").append("<button class='btn btn-default btn-sm btn-small embed' id='firstname' type='button' >First Name</button>");
-
-
 
            }
 

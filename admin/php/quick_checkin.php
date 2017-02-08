@@ -1,3 +1,5 @@
+<!-- Licensed under the BSD. See License.txt for full text.  -->
+
 <!DOCTYPE html>
 <html lang="en">
 <?php

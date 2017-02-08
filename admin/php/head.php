@@ -1,3 +1,5 @@
+<!-- Licensed under the BSD. See License.txt for full text.  -->
+
 <head>
 
 <meta charset="utf-8">
@@ -44,7 +46,7 @@
 <script src="<?php echo SYSTEM_WEB_BASE_ADDRESS; ?>resources/datetimepicker/js/bootstrap-datetimepicker.js"></script>
 
 <!-- Admin Site -->
-<link href="<?php echo SYSTEM_WEB_BASE_ADDRESS; ?>admin/css/sb-admin.css" rel="stylesheet" type="text/css"> 
+<link href="<?php echo SYSTEM_WEB_BASE_ADDRESS; ?>admin/css/sb-admin.css" rel="stylesheet" type="text/css">
 <link href="<?php echo SYSTEM_WEB_BASE_ADDRESS; ?>admin/css/tables.css" rel="stylesheet" type="text/css">
 <link href="<?php echo SYSTEM_WEB_BASE_ADDRESS; ?>admin/css/led.css" rel="stylesheet" type="text/css">
 <script src="<?php echo SYSTEM_WEB_BASE_ADDRESS; ?>admin/js/lock.js"></script>

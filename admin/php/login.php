@@ -1,4 +1,6 @@
-<?php 
+<!-- Licensed under the BSD. See License.txt for full text. -->
+
+<?php
 
 
 // Access to global variables
@@ -24,15 +26,15 @@ $row = $result->fetch_assoc();
 $real_password = $row['password'];
 
 if ($num_rows == 0) {
-	echo "false"; # Email not recognized
+    echo "false"; # Email not recognized
 } else if ($hashed_password != $real_password) {
-	echo "false"; # Email recognized but password doesn't match
+    echo "false"; # Email recognized but password doesn't match
 } else {
-	
-	// Mark a session variable to see if they are admin
-	$_SESSION['admin_id'] = $row['admin_id'];;
-	
-	echo "true"; # Email recognized and password matches
+
+    // Mark a session variable to see if they are admin
+    $_SESSION['admin_id'] = $row['admin_id'];;
+
+    echo "true"; # Email recognized and password matches
 }
 
 ?>

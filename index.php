@@ -1,7 +1,9 @@
+<!-- Licensed under the BSD. See License.txt for full text.  -->
+
 <!DOCTYPE html>
 <html lang="en">
 
-<?php 
+<?php
 
 // Access to global variables
 require_once('global/include.php');
@@ -12,7 +14,7 @@ $result = $db->query($query);
 $row = $result->fetch_assoc();
 
 if ($row['locked'] != 't') {
-	header('Location: '.SYSTEM_WEB_BASE_ADDRESS.'user/index.php');
+    header('Location: '.SYSTEM_WEB_BASE_ADDRESS.'user/index.php');
 }
 
 // Include the head for every page
@@ -22,18 +24,18 @@ require_once(SYSTEM_WEBHOME_DIR.'user/php/head.php');
 
 <body>
 
-	<div style="margin-top: 50px;" class="container">
+    <div style="margin-top: 50px;" class="container">
 
-		<div class="jumbotron col-lg-6 col-lg-offset-3">
-			<p class="text-center">
-				<i class="fa fa-exclamation fa-5x"></i>
-			</p>
-			<h2>SIGCSE Volunteer Registration</h2>
-			<p class="lead">We'll be back shortly. Website is undergoing
-				maintence.</p>
-		</div>
+        <div class="jumbotron col-lg-6 col-lg-offset-3">
+            <p class="text-center">
+                <i class="fa fa-exclamation fa-5x"></i>
+            </p>
+            <h2>SIGCSE Volunteer Registration</h2>
+            <p class="lead">We'll be back shortly. Website is undergoing
+                maintence.</p>
+        </div>
 
-	</div>
+    </div>
 
 </body>
 </html>
