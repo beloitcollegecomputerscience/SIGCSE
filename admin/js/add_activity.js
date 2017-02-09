@@ -234,5 +234,5 @@ var dup_name=false;
  }
             }
 
-    )});
+    )};
  });
