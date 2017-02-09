@@ -232,7 +232,9 @@ var dup_name=false;
   else{
   bootbox.alert("activity added.", function() {document.location.href = '../activity.php';});
  }
-            }
+            )};
 
-    )};
- });
+            }
+    });
+});
+
