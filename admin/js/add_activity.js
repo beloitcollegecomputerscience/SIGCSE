@@ -230,7 +230,7 @@ var dup_name=false;
 
             if($msg.indexOf("nocoveringslot")!= -1 ){bootbox.alert("This activity is created with a time slot OUTSIDE (or partly outside) of the planned conference time. The compatible students shown on the activity page for this activity will not be valid. You will have to find compatible students manually and schedule them.",function() {document.location.href = '../activity.php';});}
   else{
-  bootbox.alert("activity added.", function() {document.location.href = '../activity.php';});
+  bootbox.alert("activity added.", function() {document.location.href = '../activity.php';})
  }
             }
 
