@@ -1,3 +1,5 @@
+<!-- Licensed under the BSD. See License.txt for full text.  -->
+
 <?php
 require_once('../../global/include.php');
 
@@ -6,7 +8,7 @@ if($_POST["action"]== "select"){
 $selected_query= $_POST["selected_query"];
 $query1='select query, content from mass_email_query where query_id='.$selected_query.';';
 $query_result1 = $db->query($query1);
-$row1 = $query_result1->fetch_assoc();	
+$row1 = $query_result1->fetch_assoc();
 $query2=$row1['query'];
 $content=$row1['content'];
 
@@ -15,7 +17,7 @@ $affected_rows = mysqli_num_rows($query_result2);
 ?>
 
  <?php for ($i = 0; $i < $affected_rows; $i++) {
-	$row = $query_result2->fetch_assoc();
+ $row = $query_result2->fetch_assoc();
 
 $recipient_first_name=$row['first_name'];
 $recipient_last_name=$row['last_name'];
@@ -24,7 +26,7 @@ $recipient_student_email=$row['email'];
 $response[$recipient_student_id] = $recipient_first_name."/".$recipient_last_name."/".$recipient_student_email;
 
 
- } 
+ }
  $response["content"]=$content;
  echo json_encode($response);}
 
@@ -47,25 +49,25 @@ sendHTMLEmail($email, "Message From SIGCSE Student Volunteer Site", $message);
 
 
  }
- 
- 
+
+
  if($_POST["action"]== 'update'){
- 	
- 	$new_template= $_POST["new_template"];
- 	$selected_query= $_POST["selected_query"];
- 	
- 	$query = "UPDATE mass_email_query SET content='".$new_template."' WHERE query_id=".$selected_query.";";
- 	$result3 = $db->query($query);
- 	
 
- 	
+  $new_template= $_POST["new_template"];
+  $selected_query= $_POST["selected_query"];
 
- 
- 
+  $query = "UPDATE mass_email_query SET content='".$new_template."' WHERE query_id=".$selected_query.";";
+  $result3 = $db->query($query);
+
+
+
+
+
+
  }
- 
- 
- 
+
+
+
 ?>
 
 

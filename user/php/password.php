@@ -1,4 +1,6 @@
-<?php 
+<!-- Licensed under the BSD. See License.txt for full text.  -->
+
+<?php
 /*
  passwordchangeprocess.php
 -------------
@@ -27,27 +29,27 @@ $row = $result->fetch_assoc();
 
 // If currentPassword isn't same as in database then error
 if ($row['password'] != $hashed_currentPassword) {
-	//header('Location: '.SYSTEM_WEB_BASE_ADDRESS.'passwordchange.php?err1&');
-	echo "err1";
+    //header('Location: '.SYSTEM_WEB_BASE_ADDRESS.'passwordchange.php?err1&');
+    echo "err1";
 } else
 
 // If the 2 new passwords aren't the same then error
 if ($hashed_newPassword != $hashed_confirmPassword) {
-	//header('Location: '.SYSTEM_WEB_BASE_ADDRESS.'passwordchange.php?err2&');
-	echo "err2";
+    //header('Location: '.SYSTEM_WEB_BASE_ADDRESS.'passwordchange.php?err2&');
+    echo "err2";
 } else
 
 // If the new password isn't valid error
 if (checkPass($newPassword) == false) {
-	//header('Location: '.SYSTEM_WEB_BASE_ADDRESS.'passwordchange.php?err3&');
-	echo "err3";
+    //header('Location: '.SYSTEM_WEB_BASE_ADDRESS.'passwordchange.php?err3&');
+    echo "err3";
 } else {
 
-	// If we get passed all those redirects then it is same to update the password.
-	$query = "UPDATE students SET password='$hashed_newPassword' WHERE student_id={$_SESSION['student_id']}";
-	$db->query($query);
-	//header('Location: '.SYSTEM_WEB_BASE_ADDRESS.'profile.php?passchange');
-	echo "true";
+    // If we get passed all those redirects then it is same to update the password.
+    $query = "UPDATE students SET password='$hashed_newPassword' WHERE student_id={$_SESSION['student_id']}";
+    $db->query($query);
+    //header('Location: '.SYSTEM_WEB_BASE_ADDRESS.'profile.php?passchange');
+    echo "true";
 }
 
 ?>

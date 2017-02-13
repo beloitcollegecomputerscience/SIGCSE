@@ -1,6 +1,8 @@
+<!-- Licensed under the BSD. See License.txt for full text.  -->
 
 
-<?php 
+
+<?php
 /*
  assemble.php
 -------------
@@ -14,7 +16,7 @@ require_once(SYSTEM_WEBHOME_DIR.'user/php/assemble.php');
 
 // If the user is not logged in then redirect them to login.php
 if (!$isLoggedIn) {
-	header('Location:'. SYSTEM_WEB_BASE_ADDRESS . 'user/index.php');
+    header('Location:'. SYSTEM_WEB_BASE_ADDRESS . 'user/index.php');
 }
 
 // Grab posted info
@@ -25,13 +27,13 @@ $activity_id = $_GET['activity_id'];
 // $student_id = 1;
 // $activity_id = 365;
 if ($isAdmin){
-	$instruction = assembleInstruction($db, $activity_id, $student_id, $isAdmin);
-	echo $instruction. "</br>";
+    $instruction = assembleInstruction($db, $activity_id, $student_id, $isAdmin);
+    echo $instruction. "</br>";
 }
 else{
-// 	require_once(SYSTEM_WEBHOME_DIR.'images/header.php');
-// 	displayNav($loggedIn, 'profile');
-	$instruction = assembleInstruction($db, $activity_id, $student_id, $isAdmin);
-	echo $instruction . "</br>";
+//     require_once(SYSTEM_WEBHOME_DIR.'images/header.php');
+//     displayNav($loggedIn, 'profile');
+    $instruction = assembleInstruction($db, $activity_id, $student_id, $isAdmin);
+    echo $instruction . "</br>";
 }
 ?>

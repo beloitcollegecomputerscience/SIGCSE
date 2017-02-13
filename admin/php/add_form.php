@@ -1,3 +1,5 @@
+<!-- Licensed under the BSD. See License.txt for full text.  -->
+
 
 <?php
 require_once('../../global/include.php');
@@ -158,11 +160,6 @@ $covering_slots_affected_rows = mysqli_num_rows($covering_slots_result);
                          else{
                              echo "nocoveringslot";
                          }
-
-
 }
-
-
-
 
 ?>

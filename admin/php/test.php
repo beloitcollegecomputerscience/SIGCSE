@@ -1,3 +1,5 @@
+<!-- Licensed under the BSD. See License.txt for full text.  -->
+
 require_once('../../global/include.php');
   <script>
 function test(){
@@ -5,7 +7,7 @@ var html = "<div class=\"make-switch\" data-on=\"info\" data-off=\"success\"><in
 $("#test").append(html);
 }
 
-</script>       
+</script>
 <div id="test"></div>
 
 <script>
