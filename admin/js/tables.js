@@ -1,8 +1,8 @@
 /* Licensed under the BSD. See License.txt for full text.  */
 
-$(document).ready(function() {
+
     $(document).ready(function() {
-        $('.datatable').dataTable({
+        $('.datatable').dataTable({     //Query issue touches here
             "sPaginationType": "bs_full"
         });
         $('.datatable').each(function(){
@@ -17,7 +17,7 @@ $(document).ready(function() {
         });
     });
 
-});
+
 /* borrowed from schedule.js, possibly adapt to make query tables collapsible?
 $(document).ready(function() {
 
