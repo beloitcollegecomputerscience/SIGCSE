@@ -19,7 +19,12 @@ if(mysqli_num_rows($result)!=0){echo "duplicateroom";}
 
 }
 
+ if($_POST["action"]== '5'){
+    $potential_activity_name = $_POST["activity_name"];
+    $result = $db->query("SELECT activity_name from activity where activity_name='$potential_activity_name';");
+    if(mysqli_num_rows($result)!=0){echo "duplicateactivityname";}
 
+}
   if($_POST["action"]== '3'){
     $new_activity_organizer_first = $_POST["other_activity_organizer_first"];
     $new_activity_organizer_last = $_POST["other_activity_organizer_last"];
@@ -33,10 +38,11 @@ if(mysqli_num_rows($result)!=0){echo "duplicateroom";}
 //this $response, which is echoed later goes to the js as msg.
 if($_POST["action"]=='4'){
 $response="failed";
-
+$prev;
 $activity_start_time = $_POST["activity_start_time"];
 $activity_end_time =$_POST["activity_end_time"];
-
+$nu_start=preg_replace("/[^0-9]/", "", $activity_start_time);
+$nu_end=preg_replace("/[^0-9]/", "", $activity_end_time);
 $slot_result = $db->query("select * from time_slots where start_time = '$activity_start_time' and end_time='$activity_end_time';");
 
 //if this time slot does not exist.
@@ -50,7 +56,8 @@ else{
     $row=$slot_result->fetch_assoc();
     $activity_slot_id=$row['slot_id'];
 }
-
+$potential_covering_start= $db->query("select MAX(start_time) as max from time_slots where student_available ='t' and start_time <= ".$nu_start.";");
+    $potential_covering_end= $db->query("select MIN(end_time) as min from time_slots where student_available ='t' and end_time >= ".$nu_end.";");
 
 //get the values posted by ajax in the js file and put them in variables.
 $activity_name = mysqli_real_escape_string($db->getDB(), $_POST["activity_name"]);
@@ -121,6 +128,38 @@ if(mysqli_num_rows($result)!=0){
 values ('$activity_id','$instruction_id');";
 $db->query($query);}
 
+$covering_start_row=$potential_covering_start->fetch_assoc();
+    $covering_start=$covering_start_row["max"];
+    $covering_end_row=$potential_covering_end->fetch_assoc();
+    $covering_end=$covering_end_row["min"];
+if($covering_start!=null && $covering_end!=null){
+
+
+    $nu_covering_start=preg_replace("/[^0-9]/", "", $covering_start);
+    $nu_covering_end=preg_replace("/[^0-9]/", "", $covering_end);
+    $prev=$covering_start;
+    $covering_slots_result=$db->query("select slot_id, start_time, end_time from time_slots where student_available ='t' and start_time >= ".$nu_covering_start." and end_time <= ".$nu_covering_end.";");
+$covering_slots_affected_rows = mysqli_num_rows($covering_slots_result);
+
+
+                    for ($i = 0; $i < $covering_slots_affected_rows; $i++) {
+                                 $covering_slots_row=$covering_slots_result->fetch_assoc();
+                                $covering_slot=$covering_slots_row["slot_id"];
+
+                                if($covering_slots_row["start_time"]!=$prev){
+                                    echo"nocoveringslot";
+                                    break;
+                                }
+                                else{$add_covering_slot= $db->query("insert into covering_time_slots(activity_id, slot_id) values ('$activity_id', '$covering_slot');");
+                                    $prev=$covering_slots_row["end_time"];
+                            }
+
+
+
+                         } }
+                         else{
+                             echo "nocoveringslot";
+                         }
 }
 
 ?>

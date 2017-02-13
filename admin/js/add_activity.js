@@ -1,12 +1,12 @@
-/* Licensed under the BSD. See License.txt for full text.  */
 
+/* Licensed under the BSD. See License.txt for full text.  */
 
 $(document).ready(function(){
 
 var dup_organizer=false;
 var dup_room=false;
 var dup_type=false;
-
+var dup_name=false;
 
     var delay = (function(){
       var timer = 0;
@@ -16,7 +16,27 @@ var dup_type=false;
       };
     })();
 
+  $('#activity_name').keyup(function(){
 
+  delay(function(){
+
+     $.ajax({
+             url: 'add_form.php',
+             type: 'POST',
+             data : {
+              action : '5',
+              activity_name : $("#activity_name").val()
+          }//when this is done the msg echoed from the php file that this file posts to which is add_form.php.
+          }).done(function($msg) {
+            if($msg.indexOf("duplicateactivityname")!= -1 ){
+              bootbox.alert("An activity of this name already exist. Change the name to create a new activity. Otherwise an activity of duplicate name will be created.");
+              dup_name=true;
+            }else{dup_name=false;}
+
+          });
+  },600);
+
+     });
  $('#other_activity_type').keyup(function(){
 
      delay(function(){
@@ -28,6 +48,7 @@ var dup_type=false;
                  other_activity_type : $("#other_activity_type").val()
           }//when this is done the msg echoed from the php file that this file posts to which is add_form.php.
           }).done(function($msg) {
+
                 if($msg.indexOf("duplicatetype")!= -1 ){
                     bootbox.alert("duplicate type, change name or select from the list");
                     dup_type = true;
@@ -169,6 +190,9 @@ var dup_type=false;
         if (dup_organizer){bootbox.alert("Please fix duplicate organizer, change name or select from the list"); error=true;}
         if (dup_room){bootbox.alert("Please fix duplicate room, change room name or select from the list");error=true;}
         if (dup_type){bootbox.alert("Please fix duplicate type, change type or select from the list");error=true;}
+      
+        if(dup_name){bootbox.alert("Please fix duplicate name.");error=true;}
+
         if($("#activity_end_time").val()<=$("#activity_start_time").val()){bootbox.alert("invalid time slot");error=true;}
         if(parseInt($("#min_num").val(),10)>parseInt($("#max_num").val(),10)){num_err=true; }
         else if(parseInt($("#min_num").val(),10)>parseInt($("#desired_num").val(),10)){num_err=true;}
@@ -210,8 +234,14 @@ var dup_type=false;
                }//when this is done the msg echoed from the php file that this file posts to which is add_form.php.
          }).done(function($msg) {
 
-             document.location.href = '../activity.php';});
+            if($msg.indexOf("nocoveringslot")!= -1 ){bootbox.alert("This activity is created with a time slot OUTSIDE (or partly outside) of the planned conference time. The compatible students shown on the activity page for this activity will not be valid. You will have to find compatible students manually and schedule them.",function() {document.location.href = '../activity.php';});}
+  else{
+  bootbox.alert("activity added.", function() {document.location.href = '../activity.php';});
+ }
             }
 
+    )};
+
     });
- });
+});
+
