@@ -18,7 +18,7 @@ $queries = array(
         SELECT count(SS.activity_id)
         from student_shifts SS
         where SS.activity_id = A.activity_id
-        ) as missing_workers, (missing_workers) * (time_to_sec(TS.end_time) - time_to_sec(TS.start_time)) / 3600 as additional_hours_needed
+        ) as missing_workers, (SELECT missing_workers) * (time_to_sec(TS.end_time) - time_to_sec(TS.start_time)) / 3600 as additional_hours_needed
         from activity A, time_slots TS
         where A.slot_id = TS.slot_id
         and A.desired_workers >
