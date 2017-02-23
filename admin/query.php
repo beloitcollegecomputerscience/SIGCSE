@@ -20,7 +20,7 @@ $queries = array(
         where SS.activity_id = A.activity_id
         ) as desired_workers
         from activity A
-        where A.desired_workers <
+        where A.desired_workers >
         (
                 SELECT count(SS.activity_id)
                 from student_shifts SS
