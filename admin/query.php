@@ -18,11 +18,7 @@ $queries = array(
         SELECT count(SS.activity_id)
         from student_shifts SS
         where SS.activity_id = A.activity_id
-        ) as desired_workers, (A.desired_workers - (
-        SELECT count(SS.activity_id)
-        from student_shifts SS
-        where SS.activity_id = A.activity_id
-        )) * (time_to_sec(TS.end_time) - time_to_sec(TS.start_time)) / 3600 as additional_hours_needed
+        ) as desired_workers, (desired_workers) * (time_to_sec(TS.end_time) - time_to_sec(TS.start_time)) / 3600 as additional_hours_needed
         from activity A, time_slots TS
         where A.slot_id = TS.slot_id
         and A.desired_workers >
@@ -31,24 +27,7 @@ $queries = array(
                 from student_shifts SS
                 where SS.activity_id = A.activity_id
         );"
-        => "Check which activities don't have desired number of workers and determine how many - ugly but works",
-
-    //This query should be changed to have activity_id and use id of -1 for the total, list by activity_id
-
-        "actclick SELECT A.activity_id, (A.desired_workers - (
-        SELECT count(SS.activity_id)
-        from student_shifts SS
-        where SS.activity_id = A.activity_id
-        )) * (time_to_sec(TS.end_time) - time_to_sec(TS.start_time)) / 3600 as additional_hours_needed
-        from activity A, time_slots TS
-        where A.slot_id = TS.slot_id
-        and A.desired_workers >
-        (
-                SELECT count(SS.activity_id)
-                from student_shifts SS
-                where SS.activity_id = A.activity_id
-        );"
-        => "Check which activities don't have desired number of workers and determine missing time - ugly but works",
+        => "Get desired workers/hours for activities w/ less workers than desired.",
 
         "actclick SELECT SS.activity_id, count(SS.activity_id)
         from student_shifts SS
