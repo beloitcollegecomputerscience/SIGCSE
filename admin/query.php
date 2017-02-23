@@ -34,7 +34,7 @@ $queries = array(
         SELECT count(SS.activity_id)
         from student_shifts SS
         where SS.activity_id = A.activity_id
-        )) * (time_to_sec(TS.end_time) - time_to_sec(TS.start_time)) / 3600) as activity_id
+        )) * (time_to_sec(TS.end_time) - time_to_sec(TS.start_time)) / 3600) as short_hours
         from activity A, time_slots TS
         where A.slot_id = TS.slot_id
         and A.desired_workers <>
@@ -269,7 +269,7 @@ $query=substr ( $query ,9);
 
                                     if(array_key_exists ( "activity_id" , $row )) {
                                         $act_key_to_use="activity_id";
-                                    }
+                                    } else {$act_key_to_use="short_hours";}
 
 $act_link_query="select * from activity where $act_key_to_use = '$row[$act_key_to_use]';";
 $act_link_result = $db->query($act_link_query);
