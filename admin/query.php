@@ -28,6 +28,8 @@ $queries = array(
         );"
         => "Check which activities don't have desired number of workers and determine how many - ugly but works",
 
+    //This query should be changed to have activity_id and use id of -1 for the total, list by activity_id
+
         "actclick SELECT sum((A.desired_workers - (
         SELECT count(SS.activity_id)
         from student_shifts SS
@@ -200,6 +202,7 @@ $query=substr ( $query ,9);
                             <?php
 
                             $result2 = $db->query($query);
+                            $affected_rows = mysqli_num_rows($result2);
                             $row2 = $result2->fetch_assoc();
 
                             ?>
@@ -208,13 +211,14 @@ $query=substr ( $query ,9);
                                 <thead>
                                     <tr>
                                         <?php
-
+                                        if($affected_rows != 0) {
                                         foreach ($row2 as $key2 => $value2) {
 
 
                                             ?>
                                         <th><?php echo $key2; ?><i class="fa fa-plus pull-right"></i></th>
                                         <?php
+                                        }
                                         }
                                         ?>
 
@@ -227,27 +231,24 @@ $query=substr ( $query ,9);
 
                                 $result = $db->query($query);
                                 $affected_rows = mysqli_num_rows($result);
-                                if($stuclick){
+
+                                if($stuclick && $affected_rows != 0){
 
                                 for ($i = 0; $i < $affected_rows; $i++) {
 
                                     $row = $result->fetch_assoc();
 
-if(array_key_exists ( "email" , $row )){$stu_key_to_use="email";}
-else if(array_key_exists ( "student_id" , $row )){$stu_key_to_use="student_id";}
-$stu_link_query="select * from students where $stu_key_to_use = '$row[$stu_key_to_use]';";
-$stu_link_result = $db->query($stu_link_query);
-$stu_link_row = $stu_link_result->fetch_assoc();
-$stu_link_id=$stu_link_row['student_id'];
+                                    if(array_key_exists ( "email" , $row )){$stu_key_to_use="email";}
+                                    else if(array_key_exists ( "student_id" , $row )){$stu_key_to_use="student_id";}
+                                    $stu_link_query="select * from students where $stu_key_to_use = '$row[$stu_key_to_use]';";
+                                    $stu_link_result = $db->query($stu_link_query);
+                                    $stu_link_row = $stu_link_result->fetch_assoc();
+                                    $stu_link_id=$stu_link_row['student_id'];
                                     echo "<tr>";
                                     if (is_array($row)) {
 
                                         foreach ($row as $value) {
-
-
-echo "<td><a href='volunteer.php?id=".$stu_link_id."'>" . $value. "</a></td>";
-
-
+                                            echo "<td><a href='volunteer.php?id=".$stu_link_id."'>" . $value. "</a></td>";
 
                                         }
                                         }
@@ -256,10 +257,11 @@ echo "<td><a href='volunteer.php?id=".$stu_link_id."'>" . $value. "</a></td>";
 
 
                                     echo "</tr>";
-                                }}
+                                }
+                            }
 
 
-                            if($actclick){
+                            if($actclick&& $affected_rows != 0){
 
                                 for ($i = 0; $i < $affected_rows; $i++) {
 

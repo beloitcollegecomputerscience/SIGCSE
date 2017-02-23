@@ -124,6 +124,9 @@ ORDER BY TS.start_time;";
                             <td><strong>Grant Hours</strong></td>
                         </tr>
                     </thead>
+                    <tbody>
+
+                    </tbody>
 
                     <?php
                     $studentResult = $db->query("SELECT * FROM student_shifts ss, students s, activity a  WHERE ss.activity_id = " . $activity['activity_id'] . " AND ss.student_id = s.student_id AND ss.activity_id = a.activity_id;");

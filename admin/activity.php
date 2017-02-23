@@ -167,6 +167,9 @@ $show = $idSet && $isValid ? true : false;
                             <td><strong>Grant Hours</strong></td>
                         </tr>
                     </thead>
+                    <tbody>
+
+                    </tbody>
 
                     <?php
                     $result = $db->query("SELECT * FROM student_shifts ss, students s, activity a  WHERE ss.activity_id = " . $activity_id . " AND ss.student_id = s.student_id AND ss.activity_id = a.activity_id;");
@@ -271,6 +274,9 @@ $show = $idSet && $isValid ? true : false;
                                         <th></th>
                                     </tr>
                                 </thead>
+                                <tbody>
+
+                                </tbody>
 
                                 <?php
 
