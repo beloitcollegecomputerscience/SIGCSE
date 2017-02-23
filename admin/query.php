@@ -18,7 +18,11 @@ $queries = array(
         SELECT count(SS.activity_id)
         from student_shifts SS
         where SS.activity_id = A.activity_id
-        ) as desired_workers, A.desired_workers * (time_to_sec(TS.end_time) - time_to_sec(TS.start_time)) / 3600) as Total
+        ) as desired_workers, A.desired_workers - (
+        SELECT count(SS.activity_id)
+        from student_shifts SS
+        where SS.activity_id = A.activity_id
+        ) * (time_to_sec(TS.end_time) - time_to_sec(TS.start_time)) / 3600) as Total
         from activity A
         where A.desired_workers >
         (
