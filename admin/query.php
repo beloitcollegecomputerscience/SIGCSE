@@ -18,7 +18,7 @@ $queries = array(
         SELECT count(SS.activity_id)
         from student_shifts SS
         where SS.activity_id = A.activity_id
-        ) as desired_workers
+        ) as desired_workers, desired_workers * (time_to_sec(TS.end_time) - time_to_sec(TS.start_time)) / 3600) as Total
         from activity A
         where A.desired_workers >
         (
@@ -37,7 +37,7 @@ $queries = array(
         )) * (time_to_sec(TS.end_time) - time_to_sec(TS.start_time)) / 3600) as short_hours
         from activity A, time_slots TS
         where A.slot_id = TS.slot_id
-        and A.desired_workers <>
+        and A.desired_workers >
         (
                 SELECT count(SS.activity_id)
                 from student_shifts SS
@@ -261,7 +261,7 @@ $query=substr ( $query ,9);
                             }
 
 
-                            if($actclick&& $affected_rows != 0){
+                            if($actclick && $affected_rows != 0){
 
                                 for ($i = 0; $i < $affected_rows; $i++) {
 
@@ -269,24 +269,25 @@ $query=substr ( $query ,9);
 
                                     if(array_key_exists ( "activity_id" , $row )) {
                                         $act_key_to_use="activity_id";
-                                    } else {$act_key_to_use="short_hours";}
+                                    }
 
 $act_link_query="select * from activity where $act_key_to_use = '$row[$act_key_to_use]';";
 $act_link_result = $db->query($act_link_query);
 $act_link_row = $act_link_result->fetch_assoc();
 $act_link_id=$act_link_row['activity_id'];
-                                    echo "<tr>";
+
+                    echo "<tr>";
                                     if (is_array($row)) {
 
                                         foreach ($row as $value) {
 
 
-echo "<td><a href='activity.php?id=".$act_link_id."'>" . $value. "</a></td>";
+                                            echo "<td><a href='activity.php?id=".$act_link_id."'>" . $value. "</a></td>";
 
 
 
                                         }
-                                        }
+                                    }
 
 
 
