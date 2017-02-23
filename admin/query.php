@@ -10,8 +10,8 @@ $queries = array(
 
         #query for missed shift
 
-        /*"xxxxxxxx SELECT tshirt_size, count(tshirt_size) from students where times_complete = 't' group by tshirt_size;"
-        => "find out needed t-shirt sizes for all students (does exclude ones not done with registration)",*/
+        "xxxxxxxx SELECT tshirt_size, count(tshirt_size) from students where times_complete = 't' group by tshirt_size;"
+        => "find out needed t-shirt sizes for all students (does exclude ones not done with registration)",
 
     //Check whether this query should display activities with more than the desired number/if we want a separate query for it
         "actclick SELECT A.activity_id, A.desired_workers - (
@@ -34,7 +34,7 @@ $queries = array(
         group by SS.activity_id;"
         => "Number desired for each activity",
 
-       /* "xxxxxxxx SELECT S.student_id, S.first_name, S.last_name
+        "xxxxxxxx SELECT S.student_id, S.first_name, S.last_name
         from students S
         where S.checked_in = 'f'
         and S.student_id in
@@ -46,7 +46,7 @@ $queries = array(
         => "fully not checked in but worked",
 
         "stuclick SELECT email FROM students where profile_complete = 'f';"
-        => "Have not finished basic profile.",*/
+        => "Have not finished basic profile.",
 
         "stuclick SELECT email FROM students where times_complete = 'f' and profile_complete = 't';"
         => "Have not given available times.",
