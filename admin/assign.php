@@ -97,7 +97,7 @@ require("php/head.php");
                                 <td><strong>Volunteers</strong></td>
                             </tr>
                         </thead>
-
+                        <tbody>
                         <?php
 
                         $result = $db->query("SELECT * FROM students");
@@ -120,6 +120,7 @@ require("php/head.php");
                         <?php
                         }
                         ?>
+                        </tbody>
                     </table>
                 </div>
 

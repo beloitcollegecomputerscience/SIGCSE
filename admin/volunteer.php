@@ -292,7 +292,7 @@ student_id=$student_id;";
                                         <td><strong>Grant Hours</strong></td>
                                     </tr>
                                 </thead>
-
+                                <tbody>
                                 <?php
                                 $query = "SELECT * FROM student_shifts ss, activity a, rooms r, time_slots ts WHERE student_id= $student_id AND ss.activity_id = a.activity_id AND a.room_id = r.room_id AND ts.slot_id = a.slot_id;";
                                 $result = $db->query($query);
@@ -410,6 +410,7 @@ student_id=$student_id;";
                                 <?php
                                 }
                                 ?>
+                                </tbody>
                             </table>
 
 
