@@ -6,7 +6,6 @@
 
 $queries = array(
 
-        #query for shift soon but not checked in with us
 
         #query for missed shift
 
@@ -14,6 +13,8 @@ $queries = array(
         => "find out needed t-shirt sizes for all students (does exclude ones not done with registration)",
 
     //Check whether this query should display activities with more than the desired number/if we want a separate query for it
+    //This looks nastier than it is, missing_workers is calculated and then reused
+    //This combines the two queries on missing workers and missing total time
         "actclick SELECT A.activity_id, A.desired_workers - (
         SELECT count(SS.activity_id)
         from student_shifts SS
