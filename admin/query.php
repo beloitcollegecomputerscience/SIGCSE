@@ -34,7 +34,7 @@ $queries = array(
         group by SS.activity_id;"
         => "Number desired for each activity",
 
-        "xxxxxxxx SELECT S.student_id, S.first_name, S.last_name
+       /* "xxxxxxxx SELECT S.student_id, S.first_name, S.last_name
         from students S
         where S.checked_in = 'f'
         and S.student_id in
@@ -43,7 +43,7 @@ $queries = array(
                 where S.student_id = SS.student_id
                 and SS.attended = 't'
         );"
-        => "fully not checked in but worked",
+        => "fully not checked in but worked",*/
 
         "stuclick SELECT email FROM students where profile_complete = 'f';"
         => "Have not finished basic profile.",
