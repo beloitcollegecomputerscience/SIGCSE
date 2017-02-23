@@ -13,7 +13,7 @@ $queries = array(
         "xxxxxxxx SELECT tshirt_size, count(tshirt_size) from students where times_complete = 't' group by tshirt_size;"
         => "find out needed t-shirt sizes for all students (does exclude ones not done with registration)",
 
-
+    //Check whether this query should display activities with more than the desired number/if we want a separate query for it
         "actclick SELECT A.activity_id, A.desired_workers - (
         SELECT count(SS.activity_id)
         from student_shifts SS
@@ -34,7 +34,7 @@ $queries = array(
         SELECT count(SS.activity_id)
         from student_shifts SS
         where SS.activity_id = A.activity_id
-        )) * (time_to_sec(TS.end_time) - time_to_sec(TS.start_time)) / 3600) as short_hours
+        )) * (time_to_sec(TS.end_time) - time_to_sec(TS.start_time)) / 3600) as activity_id
         from activity A, time_slots TS
         where A.slot_id = TS.slot_id
         and A.desired_workers <>
@@ -176,8 +176,8 @@ require("php/head.php");
                 <?php
 
                 foreach ($queries as $query => $desc) {
-$stuclick=false;
-$actclick=false;
+                    $stuclick=false;
+                    $actclick=false;
 if (strpos($query,'stuclick') !== false) {
     $stuclick=true;
     $actclick=false;
@@ -267,7 +267,9 @@ $query=substr ( $query ,9);
 
                                     $row = $result->fetch_assoc();
 
-if(array_key_exists ( "activity_id" , $row )){$act_key_to_use="activity_id";}
+                                    if(array_key_exists ( "activity_id" , $row )) {
+                                        $act_key_to_use="activity_id";
+                                    }
 
 $act_link_query="select * from activity where $act_key_to_use = '$row[$act_key_to_use]';";
 $act_link_result = $db->query($act_link_query);
