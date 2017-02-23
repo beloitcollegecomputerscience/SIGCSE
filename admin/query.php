@@ -14,15 +14,11 @@ $queries = array(
         => "find out needed t-shirt sizes for all students (does exclude ones not done with registration)",
 
     //Check whether this query should display activities with more than the desired number/if we want a separate query for it
-        "actclick SELECT A.activity_id, A.desired_workers - (
+        "actclick SELECT A.activity_id, A.activity_name, A.desired_workers - (
         SELECT count(SS.activity_id)
         from student_shifts SS
         where SS.activity_id = A.activity_id
-        ) as desired_workers, A.desired_workers - (
-        SELECT count(SS.activity_id)
-        from student_shifts SS
-        where SS.activity_id = A.activity_id
-        ) * (time_to_sec(TS.end_time) - time_to_sec(TS.start_time)) / 3600) as Total
+        ) as desired_workers
         from activity A
         where A.desired_workers >
         (
