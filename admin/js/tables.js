@@ -3,7 +3,8 @@
 $(document).ready(function() {
     $(document).ready(function() {
         $('.datatable').dataTable({     //Query issue touches here
-            "sPaginationType": "bs_full"
+            "sPaginationType": "bs_full",
+            "aoColumns": [null]
         });
         $('.datatable').each(function(){
             var datatable = $(this);

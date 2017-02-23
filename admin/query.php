@@ -27,7 +27,7 @@ $queries = array(
                 from student_shifts SS
                 where SS.activity_id = A.activity_id
         );"
-        => "Get desired workers/hours for activities w/ less workers than desired.",
+        => "Get desired workers/hours for activities w/ less workers than requested.",
 
         "actclick SELECT SS.activity_id, count(SS.activity_id)
         from student_shifts SS
@@ -236,9 +236,6 @@ $query=substr ( $query ,9);
 
                                         }
                                         }
-
-
-
 
                                     echo "</tr>";
                                 }
