@@ -30,6 +30,21 @@ $queries = array(
         );"
         => "Get desired workers/hours for activities w/ less workers than requested.",
 
+        "actclick SELECT sum((A.desired_workers - (
+        SELECT count(SS.activity_id)
+        from student_shifts SS
+        where SS.activity_id = A.activity_id
+        )) * (time_to_sec(TS.end_time) - time_to_sec(TS.start_time)) / 3600) as short_hours
+        from activity A, time_slots TS
+        where A.slot_id = TS.slot_id
+        and A.desired_workers <>
+        (
+                SELECT count(SS.activity_id)
+                from student_shifts SS
+                where SS.activity_id = A.activity_id
+        );"
+    => "Get desired total time.",
+
         "actclick SELECT SS.activity_id, count(SS.activity_id)
         from student_shifts SS
         group by SS.activity_id;"
