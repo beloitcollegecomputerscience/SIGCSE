@@ -12,12 +12,12 @@
  * I use 0 for false and 1 for true. Not perfect but works.
  */
 // If true then live system, otherwise at test server at Beloit.
-define('SYSTEM_LIVE', 1); // true
-// define ( 'SYSTEM_LIVE', 0 ); // false
+//define('SYSTEM_LIVE', 1); // true
+ define ( 'SYSTEM_LIVE', 0 ); // false
 
 // If true then testing which means files are located in special location on server.
-// define ( 'SYSTEM_TESTING', 1 ); // true
-define('SYSTEM_TESTING', 0); // false
+ define ( 'SYSTEM_TESTING', 1 ); // true
+//define('SYSTEM_TESTING', 0); // false
 
 // If true then PHP messages are enabled. By default only on if testing.
 if (SYSTEM_TESTING) {
@@ -40,7 +40,7 @@ if (SYSTEM_TESTING) {
  * strtotime() /home/huss/public_html/sigcse/sigcse_testing/project/admin/schedule.php:60
  */
 // TODO: check correct solution to timezone.
-date_default_timezone_set ( 'America/Los_Angeles' );
+date_default_timezone_set ( 'America/Chicago' );
 // TODO: Do we want to change SYSTEM_EMAIL_ADDRESS more?
 if (SYSTEM_LIVE) {
     define ( 'SYSTEM_EMAIL_ADDRESS', 'sigcse2017-volunteers@cs.vt.edu' );
@@ -56,11 +56,13 @@ if (SYSTEM_LIVE) {
     define ( 'SYSTEM_EMAIL_ADDRESS', 'huss@beloit.edu' );
 
     if (SYSTEM_TESTING) {
-        define ( 'SYSTEM_WEBHOME_DIR', '/home/twomeypm/public_html/SIGCSE-live/' );
-        define('SYSTEM_WEB_BASE_ADDRESS', 'https://csserver.beloit.edu/~twomeypm/SIGCSE-live/');
+        //define ( 'SYSTEM_WEBHOME_DIR', '/home/twomeypm/public_html/SIGCSE-live/' );
+        define ( 'SYSTEM_WEBHOME_DIR', dirname(dirname(__FILE__)));
+        define('SYSTEM_WEB_BASE_ADDRESS', 'localhost:8888/');
     } else {
-        define ( 'SYSTEM_WEBHOME_DIR', '/home/sigcse/public_html/project/' );
-        define('SYSTEM_WEB_BASE_ADDRESS', 'https://csserver.beloit.edu/~huss/sigcse/sigcse/project/');
+        //define ( 'SYSTEM_WEBHOME_DIR', '/home/sigcse/public_html/project/' );
+        define ( 'SYSTEM_WEBHOME_DIR', dirname(dirname(__FILE__)) );
+        define('SYSTEM_WEB_BASE_ADDRESS', 'localhost:8888/');
     }
 }
 
@@ -70,9 +72,9 @@ define ( 'SIGCSE_HOME_PAGE', "http://sigcse2017.sigcse.org/" );
 define ( 'SIGCSE_VOL_PAGE', "http://sigcse2017.sigcse.org/info/studentvolunteers.html" );
 
 // Make all PHP regex methods available
-require_once (SYSTEM_WEBHOME_DIR . "global/regex.php");
+require_once (SYSTEM_WEBHOME_DIR . '/global/regex.php');
 // require_once(SYSTEM_WEBHOME_DIR."images/nav.php");
-require_once (SYSTEM_WEBHOME_DIR . "global/mail.php");
+require_once (SYSTEM_WEBHOME_DIR . '/global/mail.php');
 
 // If PHP messages are enabled then turn them on.
 if (SYSTEM_PHP_MSG) {
@@ -102,10 +104,9 @@ if (SYSTEM_LIVE) {
  * We put this under the same private directory that the session files are in but in a
  * different subdirectory.
  */
-define ( 'SYSTEM_PRIVATE_CONFIG_DIR', SYSTEM_WEBHOME_DIR . 'global/' );
 
 // Connect to DB and choose schema.
-require_once (SYSTEM_PRIVATE_CONFIG_DIR . 'private/db/dbaccess.php');
+require_once (SYSTEM_WEBHOME_DIR . '/global/private/db/dbaccess.php');
 $db = new DBAccess ();
 
 define ( 'DISPLAY_TODOS', 1 ); // true
