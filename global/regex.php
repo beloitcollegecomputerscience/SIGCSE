@@ -1,5 +1,3 @@
-<!-- Licensed under the BSD. See License.txt for full text.  -->
-
 <?php
 /*
  regex.php

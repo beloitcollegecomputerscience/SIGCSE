@@ -9,12 +9,12 @@
 require_once('../global/include.php');
 
 // Include the head for every page
-require_once(SYSTEM_WEBHOME_DIR.'user/php/head.php');
+require_once(SYSTEM_WEBHOME_DIR.'/user/php/head.php');
 ?>
 
 <body>
 
-    <?php require(SYSTEM_WEBHOME_DIR."user/php/nav.php"); echoNav($system_text, $db, $isLoggedIn, $isAdmin, "index"); ?>
+    <?php require(SYSTEM_WEBHOME_DIR."/user/php/nav.php"); echoNav($system_text, $db, $isLoggedIn, $isAdmin, "index"); ?>
 
     <?php
 

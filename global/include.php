@@ -1,5 +1,3 @@
-<!-- Licensed under the BSD. See License.txt for full text.  -->
-
 <?php
 
 /*
@@ -58,11 +56,11 @@ if (SYSTEM_LIVE) {
     if (SYSTEM_TESTING) {
         //define ( 'SYSTEM_WEBHOME_DIR', '/home/twomeypm/public_html/SIGCSE-live/' );
         define ( 'SYSTEM_WEBHOME_DIR', dirname(dirname(__FILE__)));
-        define('SYSTEM_WEB_BASE_ADDRESS', 'localhost:8888/');
+        define('SYSTEM_WEB_BASE_ADDRESS', 'localhost:8888/SIGCSE/');
     } else {
         //define ( 'SYSTEM_WEBHOME_DIR', '/home/sigcse/public_html/project/' );
         define ( 'SYSTEM_WEBHOME_DIR', dirname(dirname(__FILE__)) );
-        define('SYSTEM_WEB_BASE_ADDRESS', 'localhost:8888/');
+        define('SYSTEM_WEB_BASE_ADDRESS', 'localhost:8888/SIGCSE/');
     }
 }
 
@@ -113,21 +111,19 @@ define ( 'DISPLAY_TODOS', 1 ); // true
                                // define('DISPLAY_TODOS', 0); // false
 function toDo($string) {
     if (DISPLAY_TODOS) {
-        ?>
-<div class="alert alert-info">
-    <span class="glyphicon glyphicon-hand-right"></span> <?php echo $string; ?></div>
-<?php
+        echo ( "<div class=\"alert alert-info\">
+    <span class=\"glyphicon glyphicon-hand-right\"></span> {$string} </div>");
+
     }
 }
 
 // Start session. Check if user is logged in.
 session_start ();
+
 // TODO: Error checking to make sure valid student_id.
 $isLoggedIn = isset ( $_SESSION ['student_id'] ) && is_numeric ( $_SESSION ['student_id'] ) ? true : false;
-
 // Check if user is an admin.
 $isAdmin = isset ( $_SESSION ['admin_id'] ) ? true : false;
-
 // Check if user is an admin.
 // if (isset($_SESSION['admin'])) {
 // $isAdmin = $_SESSION['admin'] == 't' ? true : false;
@@ -184,8 +180,5 @@ $mass_email_queries = array(
 
 
 );
-
-
-
 
 ?>
