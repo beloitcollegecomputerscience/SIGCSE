@@ -54,13 +54,13 @@ if (SYSTEM_LIVE) {
     define ( 'SYSTEM_EMAIL_ADDRESS', 'huss@beloit.edu' );
 
     if (SYSTEM_TESTING) {
-        //define ( 'SYSTEM_WEBHOME_DIR', '/home/twomeypm/public_html/SIGCSE-live/' );
-        define ( 'SYSTEM_WEBHOME_DIR', dirname(dirname(__FILE__)));
-        define('SYSTEM_WEB_BASE_ADDRESS', 'localhost:8888/SIGCSE/');
+        define ( 'SYSTEM_WEBHOME_DIR', '/home/twomeypm/public_html/SIGCSE-live/' );
+        //define ( 'SYSTEM_WEBHOME_DIR', dirname(dirname(__FILE__)));
+        define('SYSTEM_WEB_BASE_ADDRESS', 'http://csserver.beloit.edu/~twomeypm/SIGCSE-live/');
     } else {
-        //define ( 'SYSTEM_WEBHOME_DIR', '/home/sigcse/public_html/project/' );
-        define ( 'SYSTEM_WEBHOME_DIR', dirname(dirname(__FILE__)) );
-        define('SYSTEM_WEB_BASE_ADDRESS', 'localhost:8888/SIGCSE/');
+        define ( 'SYSTEM_WEBHOME_DIR', '/home/sigcse/public_html/project/' );
+        //define ( 'SYSTEM_WEBHOME_DIR', dirname(dirname(__FILE__)) );
+        define('SYSTEM_WEB_BASE_ADDRESS', 'http://csserver.beloit.edu/~twomeypm/SIGCSE-live/');
     }
 }
 
