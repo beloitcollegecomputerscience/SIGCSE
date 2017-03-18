@@ -85,11 +85,6 @@ $displayingSchedule = $lockRow ['locked'] == "t" ? false : true;
                     </p>
 
 
-
-
-
-
-
                     <!-- --------------THIS PART --------------->
 
                     <br />
@@ -251,8 +246,7 @@ $displayingSchedule = $lockRow ['locked'] == "t" ? false : true;
                 if ($displayingSchedule) {
                     // Shows general instructions for student that can always see.
                     ?>
-        <a
-                    href="<?php echo SYSTEM_WEB_BASE_ADDRESS."user/generalinstruction.php" ?>"
+                    <a href="<?php echo SYSTEM_WEB_BASE_ADDRESS."user/generalinstruction.php" ?>"
                     target="_blank"><h4>General student instructions</h4></a>
                     <?php
                     schedule ( $system_text, $db );
@@ -304,6 +298,9 @@ function schedule($system_text, $db) {
 
 <div class="col-lg-4 col-md-4 col-sm-4">
     <h3>Schedule</h3>
+    <a href="<?php echo SYSTEM_WEB_BASE_ADDRESS; ?>user/password.php"><button
+                style="margin-top: 3px;" type="button"
+                class="btn btn-default btn-xs"> Counts </button></a>
     <hr />
 
     <?php

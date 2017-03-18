@@ -5,5 +5,4 @@
 /node_modules/
 /global/private/
 npm-debug.log
-
-
+.idea
