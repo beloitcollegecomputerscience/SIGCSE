@@ -2,11 +2,10 @@
 
 <!DOCTYPE html>
 <html lang="en">
-
 <?php
 
 // Access to global variables
-require_once ('../global/include.php');
+require_once ('../../global/include.php');
 
 // Include the head for every page
 require_once (SYSTEM_WEBHOME_DIR . 'user/php/head.php');
@@ -31,6 +30,7 @@ $displayingSchedule = $lockRow ['locked'] == "t" ? false : true;
 
 */
 
-?>
+$displayName = $row ['preferred_name'] == null ? $row ['first_name'] : $row ['preferred_name'];
 
-<body> <p>Counts page.</p> </body>
+?>
+<p>Counts page. Welcome, <?php echo $displayName ?>.</p>
