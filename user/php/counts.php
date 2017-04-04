@@ -39,10 +39,8 @@ $displayingSchedule = $lockRow ['locked'] == "t" ? false : true;
 
 */
 
-$displayName = $row ['preferred_name'] == null ? $row ['first_name'] : $row ['preferred_name'];
-
 ?>
-<p>Counts page. Welcome, <?php echo $displayName ?>.</p>
+
 
 <div class="col-lg-12">
     <div class="panel panel-primary">
@@ -62,7 +60,7 @@ $displayName = $row ['preferred_name'] == null ? $row ['first_name'] : $row ['pr
 
 
                             ?>
-                            <th><?php echo $key2; ?><i class="fa fa-plus pull-right"></i></th>
+                            <th><?php echo $key2; ?><i class="fa fa-clock-o pull-right"></i></th>
                             <?php
                         }
                     }
@@ -74,17 +72,92 @@ $displayName = $row ['preferred_name'] == null ? $row ['first_name'] : $row ['pr
                 </thead>
                 <tbody>
                 <?php
+                $countResult = $db->query ( $countQuery );
+                $numCountRows = mysqli_num_rows($countResult);
+                //Iterate through
                 for ($i = 0; $i < $numCountRows; $i++) {
 
                     $row = $countResult->fetch_assoc();
 
                     echo "<tr>";
 
+                    // TODO: make link to either a user-visible activity, a display for the count, or something useful
+
                     if (is_array($row)) {
                         foreach ($row as $value) {
-                            echo "<td>$value</td>";
+                            // Do something about this making some count values links
+                            if ($value == $row['activity_id']) {
+                                echo "<td><a href='../../admin/activity.php?id=".$row['activity_id']."'>" . $value. "</a></td>";
+                            } else echo "<td>$value</td>";
+                        }
+                    } else echo "<td>$row</td>";
+
+                    echo "</tr>";
+                } ?>
+
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</div>
+
+<?php
+//query to get all upcoming activities for the student
+$upcomingQuery = "SELECT activity_name FROM activity, student_shifts WHERE student_shifts.student_id =" . $_SESSION ['student_id'] . " AND activity.activity_id = student_shifts.activity_id";
+$upResult = $db->query ( $upcomingQuery );
+$uRow = $upResult->fetch_assoc ();
+$numUpRows = mysqli_num_rows($upResult);
+?>
+
+<!-- New counts table -->
+<div class="col-lg-12">
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h3 class="panel-title" >
+                <i class="fa fa-folder-open"><u style="font-size: x-large">Upcoming Activities</u></i>
+            </h3>
+        </div>
+        <div class="panel-body">
+
+            <table class="datatable table table-striped table-bordered table-hover ">
+                <thead>
+                <tr>
+                    <?php
+                    if($numUpRows != 0) {
+                        foreach ($uRow as $key2 => $value2) {
+
+
+                            ?>
+                            <th><?php echo $key2; ?><i class="fa fa-clock-o pull-right"></i></th>
+                            <?php
                         }
                     }
+                    ?>
+
+
+
+                </tr>
+                </thead>
+                <tbody>
+                <?php
+
+                $upResult = $db->query ( $upcomingQuery );
+                $numUpRows = mysqli_num_rows($upResult);
+                for ($i = 0; $i < $numUpRows; $i++) {
+
+                    $row = $upResult->fetch_assoc();
+
+                    echo "<tr>";
+
+                    // TODO: make link to either a user-visible activity, a display for the count, or something useful
+
+                    if (is_array($row)) {
+                        foreach ($row as $value) {
+                            // Do something about this making some count values links
+                                echo "<td>$value</td>";
+                        }
+                    } else echo "<td>$row</td>";
 
                     echo "</tr>";
                 } ?>
