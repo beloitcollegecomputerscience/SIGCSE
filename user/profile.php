@@ -23,7 +23,7 @@ $row = $result->fetch_assoc ();
 
 
 
-/* ----------------this part here- */
+/* ----------------this part here- (This part here what? PT 04/03/17) */
 
 $result2= $db->query ( "SELECT * FROM student_skills WHERE student_id = " . $_SESSION ['student_id']." and skill_id= -1"  );
 $kids_camp_result = mysqli_num_rows($result2);
