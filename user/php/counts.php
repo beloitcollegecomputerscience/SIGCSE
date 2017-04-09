@@ -85,10 +85,7 @@ $displayingSchedule = $lockRow ['locked'] == "t" ? false : true;
 
                     if (is_array($row)) {
                         foreach ($row as $value) {
-                            // Do something about this making some count values links
-                            if ($value == $row['activity_id']) {
-                                echo "<td><a href='../../admin/activity.php?id=".$row['activity_id']."'>" . $value. "</a></td>";
-                            } else echo "<td>$value</td>";
+                             echo "<td>$value</td>";
                         }
                     } else echo "<td>$row</td>";
 
@@ -131,10 +128,11 @@ $numUpRows = mysqli_num_rows($upResult);
                             ?>
                             <th><?php echo $key2; ?><i class="fa fa-clock-o pull-right"></i></th>
                             <?php
-                        }
+                        } ?>
+                        <th>Counts</th>
+                    <?php
                     }
                     ?>
-
 
 
                 </tr>
@@ -150,13 +148,16 @@ $numUpRows = mysqli_num_rows($upResult);
 
                     echo "<tr>";
 
-                    // TODO: make link to either a user-visible activity, a display for the count, or something useful
 
                     if (is_array($row)) {
                         foreach ($row as $value) {
-                            // Do something about this making some count values links
                                 echo "<td>$value</td>";
                         }
+                        // TODO: make this button change after a count is entered.
+                        ?>
+                        <!-- This creates the submit count dialog -->
+                        <td><button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#createCount">Enter Count</button></td>
+                        <?php
                     } else echo "<td>$row</td>";
 
                     echo "</tr>";
@@ -168,140 +169,26 @@ $numUpRows = mysqli_num_rows($upResult);
 
     </div>
 </div>
-<!-- This is here for reference on how the paginating tables are created.
 
-<div class="col-lg-12">
-    <div class="panel panel-primary">
-        <div class="panel-heading">
-            <h3 class="panel-title">
-                <i class="fa fa-folder-open"></i>
 
-            </h3>
+<!-- Modal -->
+<div id="createCount" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Enter New Count</h4>
+            </div>
+            <div class="modal-body">
+                <p>Entry fields go here, auto-populate what you can.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Save</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+            </div>
         </div>
-        <div class="panel-body">
-            <?php/*
 
-            $result2 = $db->query($query);
-            $row2 = $result2->fetch_assoc();
-
-            ?>
-
-            <table class="datatable table table-striped table-bordered table-hover ">
-                <thead>
-                <tr>
-                    <?php
-                    if($numCountRows != 0) {
-                        foreach ($row2 as $key2 => $value2) {
-
-
-                            ?>
-                            <th><?php echo $key2; ?><i class="fa fa-plus pull-right"></i></th>
-                            <?php
-                        }
-                    }
-                    ?>
-
-
-
-                </tr>
-                </thead>
-                <tbody>
-                <?php
-
-                $result = $db->query($query);
-                $affected_rows = mysqli_num_rows($result);
-
-                if($stuclick && $affected_rows != 0){
-
-                    for ($i = 0; $i < $affected_rows; $i++) {
-
-                        $row = $result->fetch_assoc();
-
-                        if(array_key_exists ( "email" , $row )){$stu_key_to_use="email";}
-                        else if(array_key_exists ( "student_id" , $row )){$stu_key_to_use="student_id";}
-                        $stu_link_query="select * from students where $stu_key_to_use = '$row[$stu_key_to_use]';";
-                        $stu_link_result = $db->query($stu_link_query);
-                        $stu_link_row = $stu_link_result->fetch_assoc();
-                        $stu_link_id=$stu_link_row['student_id'];
-                        echo "<tr>";
-                        if (is_array($row)) {
-
-                            foreach ($row as $value) {
-                                echo "<td><a href='volunteer.php?id=".$stu_link_id."'>" . $value. "</a></td>";
-
-                            }
-                        }
-
-                        echo "</tr>";
-                    }
-                }
-
-
-                if($actclick && $affected_rows != 0){
-
-                    for ($i = 0; $i < $affected_rows; $i++) {
-
-                        $row = $result->fetch_assoc();
-
-                        if(array_key_exists ( "activity_id" , $row )) {
-                            $act_key_to_use="activity_id";
-                        }
-
-                        $act_link_query="select * from activity where $act_key_to_use = '$row[$act_key_to_use]';";
-                        $act_link_result = $db->query($act_link_query);
-                        $act_link_row = $act_link_result->fetch_assoc();
-                        $act_link_id=$act_link_row['activity_id'];
-
-                        echo "<tr>";
-                        if (is_array($row)) {
-
-                            foreach ($row as $value) {
-
-
-                                echo "<td><a href='activity.php?id=".$act_link_id."'>" . $value. "</a></td>";
-
-
-
-                            }
-                        }
-
-
-
-
-                        echo "</tr>";
-                    }}
-
-                else{
-                    for ($i = 0; $i < $affected_rows; $i++) {
-
-                        $row = $result->fetch_assoc();
-
-
-
-                        echo "<tr>";
-                        if (is_array($row)) {
-
-                            foreach ($row as $value) {
-                                echo "<td>" . $value . "</td>";
-                            }
-                        }
-
-
-
-
-                        echo "</tr>";
-                    }}
-
-
-
-
-
-                ?>
-                </tbody>
-            </table>
-
-        </div>
     </div>
 </div>
-
-*/ ?>
