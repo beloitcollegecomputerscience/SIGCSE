@@ -15,6 +15,8 @@ if (! $isLoggedIn) {
     header ( 'Location: ' . SYSTEM_WEB_BASE_ADDRESS . 'user/index.php' );
 }
 
+require(SYSTEM_WEBHOME_DIR."user/php/nav.php"); echoNav($system_text, $db, $isLoggedIn, $isAdmin, "profile");
+
 // Get user info from database. This may not be necessary
 $query = "SELECT * FROM students WHERE students.student_id =" . $_SESSION ['student_id'];
 $result = $db->query ( $query );
