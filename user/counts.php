@@ -5,7 +5,7 @@
 <?php
 
 // Access to global variables
-require_once ('../../global/include.php');
+require_once('../global/include.php');
 
 // Include the head for every page
 require_once (SYSTEM_WEBHOME_DIR . 'user/php/head.php');
@@ -26,6 +26,7 @@ $numUserRow = mysqli_num_rows($result);
 $countQuery = "SELECT * FROM counts WHERE counts.student_id =" . $_SESSION ['student_id'];
 $countResult = $db->query ( $countQuery );
 $cRow = $countResult->fetch_assoc ();
+mysqli_data_seek($countResult, 0);
 $numCountRows = mysqli_num_rows($countResult);
 
 
@@ -72,8 +73,7 @@ $displayingSchedule = $lockRow ['locked'] == "t" ? false : true;
                 </thead>
                 <tbody>
                 <?php
-                $countResult = $db->query ( $countQuery );
-                $numCountRows = mysqli_num_rows($countResult);
+
                 //Iterate through
                 for ($i = 0; $i < $numCountRows; $i++) {
 
@@ -104,6 +104,7 @@ $displayingSchedule = $lockRow ['locked'] == "t" ? false : true;
 $upcomingQuery = "SELECT activity_name FROM activity, student_shifts WHERE student_shifts.student_id =" . $_SESSION ['student_id'] . " AND activity.activity_id = student_shifts.activity_id";
 $upResult = $db->query ( $upcomingQuery );
 $uRow = $upResult->fetch_assoc ();
+mysqli_data_seek($upResult, 0);
 $numUpRows = mysqli_num_rows($upResult);
 ?>
 
@@ -140,8 +141,6 @@ $numUpRows = mysqli_num_rows($upResult);
                 <tbody>
                 <?php
 
-                $upResult = $db->query ( $upcomingQuery );
-                $numUpRows = mysqli_num_rows($upResult);
                 for ($i = 0; $i < $numUpRows; $i++) {
 
                     $row = $upResult->fetch_assoc();
@@ -151,12 +150,11 @@ $numUpRows = mysqli_num_rows($upResult);
 
                     if (is_array($row)) {
                         foreach ($row as $value) {
-                                echo "<td>$value</td>";
+                                echo "<td>$value</td> <td></td>";
                         }
                         // TODO: make this button change after a count is entered.
                         ?>
                         <!-- This creates the submit count dialog -->
-                        <td><button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#createCount">Enter Count</button></td>
                         <?php
                     } else echo "<td>$row</td>";
 

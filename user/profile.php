@@ -298,7 +298,7 @@ function schedule($system_text, $db) {
 
 <div class="col-lg-4 col-md-4 col-sm-4">
     <h3>Schedule</h3>
-    <a href="<?php echo SYSTEM_WEB_BASE_ADDRESS; ?>user/php/counts.php"><button
+    <a href="<?php echo SYSTEM_WEB_BASE_ADDRESS; ?>user/counts.php"><button
                 style="margin-top: 3px;" type="button"
                 class="btn btn-default btn-xs"> Headcounts </button></a>
     <hr />
