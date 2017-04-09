@@ -101,7 +101,7 @@ $displayingSchedule = $lockRow ['locked'] == "t" ? false : true;
 
 <?php
 //query to get all upcoming activities for the student
-$upcomingQuery = "SELECT activity_name FROM activity, student_shifts WHERE student_shifts.student_id =" . $_SESSION ['student_id'] . " AND activity.activity_id = student_shifts.activity_id";
+$upcomingQuery = "SELECT activity_name, activity.activity_id FROM activity, student_shifts WHERE student_shifts.student_id =" . $_SESSION ['student_id'] . " AND activity.activity_id = student_shifts.activity_id";
 $upResult = $db->query ( $upcomingQuery );
 $uRow = $upResult->fetch_assoc ();
 mysqli_data_seek($upResult, 0);
@@ -125,12 +125,12 @@ $numUpRows = mysqli_num_rows($upResult);
                     if($numUpRows != 0) {
                         foreach ($uRow as $key2 => $value2) {
 
-
-                            ?>
-                            <th><?php echo $key2; ?><i class="fa fa-clock-o pull-right"></i></th>
-                            <?php
+                            if($key2 == 'activity_name') {
+                                ?>
+                                <th><?php echo $key2; ?><i class="fa fa-clock-o pull-right"></i></th>
+                                <?php
+                            }
                         } ?>
-                        <th>Counts</th>
                     <?php
                     }
                     ?>
@@ -141,6 +141,7 @@ $numUpRows = mysqli_num_rows($upResult);
                 <tbody>
                 <?php
 
+
                 for ($i = 0; $i < $numUpRows; $i++) {
 
                     $row = $upResult->fetch_assoc();
@@ -149,13 +150,13 @@ $numUpRows = mysqli_num_rows($upResult);
 
 
                     if (is_array($row)) {
-                        foreach ($row as $value) {
-                                echo "<td>$value</td> <td></td>";
-                        }
-                        // TODO: make this button change after a count is entered.
-                        ?>
-                        <!-- This creates the submit count dialog -->
-                        <?php
+                        $rowId = array_pop($row);
+                        $rowName = array_pop($row);
+
+                                echo "<td><a href='#createCount' data-toggle='modal' data-act-name='" . $rowName ."' data-act-id='" . $rowId ."'>" . $rowName . "</a></td>";
+
+                            // TODO: make this button change after a count is entered.
+
                     } else echo "<td>$row</td>";
 
                     echo "</tr>";
@@ -177,15 +178,23 @@ $numUpRows = mysqli_num_rows($upResult);
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Enter New Count</h4>
+                <h4 class="modal-title">Enter New Count: </h4>
             </div>
+
             <div class="modal-body">
-                <p>Entry fields go here, auto-populate what you can.</p>
+                <form method="post" action="./php/countAdd.php">
+                    <input name="actId" hidden id="actId" type="number">
+                    <label for="countTime">Time Taken:</label>
+                    <input id="countTime" type="time">
+                    <label for="count">Attendees:</label>
+                    <input id="count" type="number"><br>
+                    <input id="submit" type="submit" class="btn btn-default">
+                </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Save</button>
                 <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
             </div>
+
         </div>
 
     </div>

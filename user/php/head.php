@@ -8,7 +8,7 @@
 <meta name="keywords"
     content="SIGCSE Volunteer Registration, sigcse, volunteer registration, volunteer, register, special interest group for computer science education, computer science, education, special interest" />
 <meta name="description"
-    content="SIGCSE 2014 continues our long tradition of bringing together colleagues from around the world to present papers, panels, posters, special sessions, and workshops, and to discuss computer science education in birds-of-a-feather sessions and informal settings." />
+    content="SIGCSE 2017 continues our long tradition of bringing together colleagues from around the world to present papers, panels, posters, special sessions, and workshops, and to discuss computer science education in birds-of-a-feather sessions and informal settings." />
 <meta name="author" content="Beloit College" />
 <meta name="Copyright" content="Beloit College 2013" />
 
@@ -43,5 +43,6 @@
 <script src="<?php echo SYSTEM_WEB_BASE_ADDRESS; ?>user/js/register_2.js"></script>
 <script src="<?php echo SYSTEM_WEB_BASE_ADDRESS; ?>user/js/login.js"></script>
 <script src="<?php echo SYSTEM_WEB_BASE_ADDRESS; ?>user/js/password.js"></script>
+<script src="<?php echo SYSTEM_WEB_BASE_ADDRESS; ?>user/js/counts.js"></script>
 
 </head>
