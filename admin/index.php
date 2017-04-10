@@ -59,7 +59,7 @@ $activityCount = $row ['count'];
                             </h1>
                         </div>
                         <div class="col-md-4">
-                            <button type="button" style="float:left; margin-top: 20px;margin-right:20px; margin-bottom: 10px;" class="btn btn-primary " onClick="window.open('<?php echo SYSTEM_WEB_BASE_ADDRESS."user/generalinstruction.php"?>')"><span class="glyphicon glyphicon-log-in"></span></button>
+                            <button type="button" style="float:left; margin-top: 20px;margin-right:20px; margin-bottom: 10px;" class="btn btn-primary " onClick="window.open('<?php echo SYSTEM_WEB_BASE_ADDRESS."user/generalinstruction.php"?>')"><span class="glyphicon glyphicon-log-in"></span>General Instructions</button>
                             <button style=" margin-top: 20px; margin-bottom: 10px;margin-right:20px;" type="button" class="btn btn-primary" onClick="window.open('printinstructions.php')">Print Instructions</button>
                             <button style=" margin-top: 20px; margin-bottom: 10px;margin-right:20px;" type="button" class="btn btn-primary" onClick="window.open('php/quick_checkin.php')">Quick Checkin</button>
                         </div>

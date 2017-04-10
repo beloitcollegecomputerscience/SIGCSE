@@ -9,7 +9,7 @@
 require_once ('../global/include.php');
 
 // Include the head for every page
-require_once (SYSTEM_WEBHOME_DIR . 'user/php/head.php');
+require_once (SYSTEM_WEBHOME_DIR . '/user/php/head.php');
 
 if (! $isLoggedIn) {
     header ( 'Location: ' . SYSTEM_WEB_BASE_ADDRESS . 'user/index.php' );
@@ -23,7 +23,7 @@ $row = $result->fetch_assoc ();
 
 
 
-/* ----------------this part here- */
+/* ----------------this part here- (This part here what? PT 04/03/17) */
 
 $result2= $db->query ( "SELECT * FROM student_skills WHERE student_id = " . $_SESSION ['student_id']." and skill_id= -1"  );
 $kids_camp_result = mysqli_num_rows($result2);
@@ -49,7 +49,7 @@ $displayingSchedule = $lockRow ['locked'] == "t" ? false : true;
 
 <body>
 
-    <?php require(SYSTEM_WEBHOME_DIR."user/php/nav.php"); echoNav($system_text, $db, $isLoggedIn, $isAdmin, "profile"); ?>
+    <?php require(SYSTEM_WEBHOME_DIR."/user/php/nav.php"); echoNav($system_text, $db, $isLoggedIn, $isAdmin, "profile"); ?>
 
     <div style="" class="container">
 
@@ -83,11 +83,6 @@ $displayingSchedule = $lockRow ['locked'] == "t" ? false : true;
                     <p style="margin: 0px;">
                         <b><?php echo $row['first_name'] . " " . $row['last_name']; ?> </b>
                     </p>
-
-
-
-
-
 
 
                     <!-- --------------THIS PART --------------->
@@ -251,8 +246,7 @@ $displayingSchedule = $lockRow ['locked'] == "t" ? false : true;
                 if ($displayingSchedule) {
                     // Shows general instructions for student that can always see.
                     ?>
-        <a
-                    href="<?php echo SYSTEM_WEB_BASE_ADDRESS."user/generalinstruction.php" ?>"
+                    <a href="<?php echo SYSTEM_WEB_BASE_ADDRESS."user/generalinstruction.php" ?>"
                     target="_blank"><h4>General student instructions</h4></a>
                     <?php
                     schedule ( $system_text, $db );
@@ -304,6 +298,9 @@ function schedule($system_text, $db) {
 
 <div class="col-lg-4 col-md-4 col-sm-4">
     <h3>Schedule</h3>
+    <a href="<?php echo SYSTEM_WEB_BASE_ADDRESS; ?>user/counts.php"><button
+                style="margin-top: 3px;" type="button"
+                class="btn btn-default btn-xs"> Headcounts </button></a>
     <hr />
 
     <?php
