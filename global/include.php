@@ -44,22 +44,23 @@ if (SYSTEM_LIVE) {
     define ( 'SYSTEM_EMAIL_ADDRESS', 'sigcse2017-volunteers@cs.vt.edu' );
 
     if (SYSTEM_TESTING) {
-        define ( 'SYSTEM_WEBHOME_DIR', '/ubc/cs/home/s/sig-cse/public_html/sigcse_testing/project/' );
+        //define ( 'SYSTEM_WEBHOME_DIR', '/ubc/cs/home/s/sig-cse/public_html/sigcse_testing/project/' );
+        define ( 'SYSTEM_WEBHOME_DIR', dirname(dirname(__FILE__)));
         define ( 'SYSTEM_WEB_BASE_ADDRESS', 'https://www.cs.ubc.ca/~sig-cse/sigcse_testing/project/' );
     } else {
-        define ( 'SYSTEM_WEBHOME_DIR', '/ubc/cs/home/s/sig-cse/public_html/sigcse/' );
+        //define ( 'SYSTEM_WEBHOME_DIR', '/ubc/cs/home/s/sig-cse/public_html/sigcse/' );
+        define ( 'SYSTEM_WEBHOME_DIR', dirname(dirname(__FILE__)));
         define ( 'SYSTEM_WEB_BASE_ADDRESS', 'https://www.cs.ubc.ca/~sig-cse/sigcse/' );
     }
 } else {
     define ( 'SYSTEM_EMAIL_ADDRESS', 'huss@beloit.edu' );
 
     if (SYSTEM_TESTING) {
-        define ( 'SYSTEM_WEBHOME_DIR', '/home/twomeypm/public_html/SIGCSE-live/' );
-        //define ( 'SYSTEM_WEBHOME_DIR', dirname(dirname(__FILE__)));
+        define ( 'SYSTEM_WEBHOME_DIR', dirname(dirname(__FILE__)));
         define('SYSTEM_WEB_BASE_ADDRESS', 'http://csserver.beloit.edu/~twomeypm/SIGCSE-live/');
     } else {
-        define ( 'SYSTEM_WEBHOME_DIR', '/home/sigcse/public_html/project/' );
-        //define ( 'SYSTEM_WEBHOME_DIR', dirname(dirname(__FILE__)) );
+        //define ( 'SYSTEM_WEBHOME_DIR', '/home/sigcse/public_html/project/' );
+        define ( 'SYSTEM_WEBHOME_DIR', dirname(dirname(__FILE__)) );
         define('SYSTEM_WEB_BASE_ADDRESS', 'http://csserver.beloit.edu/~twomeypm/SIGCSE-live/');
     }
 }

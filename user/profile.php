@@ -9,7 +9,7 @@
 require_once ('../global/include.php');
 
 // Include the head for every page
-require_once (SYSTEM_WEBHOME_DIR . 'user/php/head.php');
+require_once (SYSTEM_WEBHOME_DIR . '/user/php/head.php');
 
 if (! $isLoggedIn) {
     header ( 'Location: ' . SYSTEM_WEB_BASE_ADDRESS . 'user/index.php' );
@@ -49,7 +49,7 @@ $displayingSchedule = $lockRow ['locked'] == "t" ? false : true;
 
 <body>
 
-    <?php require(SYSTEM_WEBHOME_DIR."user/php/nav.php"); echoNav($system_text, $db, $isLoggedIn, $isAdmin, "profile"); ?>
+    <?php require(SYSTEM_WEBHOME_DIR."/user/php/nav.php"); echoNav($system_text, $db, $isLoggedIn, $isAdmin, "profile"); ?>
 
     <div style="" class="container">
 

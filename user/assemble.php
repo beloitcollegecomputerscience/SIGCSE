@@ -12,7 +12,7 @@ Designed to assemble the documents for student volunteer directions
 require_once('../global/include.php');
 
 // Function to create an instruction.
-require_once(SYSTEM_WEBHOME_DIR.'user/php/assemble.php');
+require_once(SYSTEM_WEBHOME_DIR.'/user/php/assemble.php');
 
 // If the user is not logged in then redirect them to login.php
 if (!$isLoggedIn) {
@@ -36,4 +36,4 @@ else{
     $instruction = assembleInstruction($db, $activity_id, $student_id, $isAdmin);
     echo $instruction . "</br>";
 }
-?>
+

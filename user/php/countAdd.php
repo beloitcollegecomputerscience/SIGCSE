@@ -6,7 +6,7 @@
 require_once('../../global/include.php');
 
 // Include the head for every page
-require_once(SYSTEM_WEBHOME_DIR . 'user/php/head.php');
+require_once(SYSTEM_WEBHOME_DIR . '/user/php/head.php');
 
 
 // 1 second delay to prevent attack
@@ -57,7 +57,7 @@ $row = $result->fetch_assoc();
                     <script>
                     function goBack() {
                         window.history.back();
-                }   </script>";?>
+                }   </script>"; ?>
         </div>
     </div>
 </div>

@@ -5,7 +5,7 @@
 require_once ('../global/include.php');
 
 // Function to create an instruction.
-require_once (SYSTEM_WEBHOME_DIR . 'user/php/assemble.php');
+require_once (SYSTEM_WEBHOME_DIR . '/user/php/assemble.php');
 
 // Start session and check if user is logged in
 if (! $isAdmin) {

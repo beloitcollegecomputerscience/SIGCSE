@@ -9,7 +9,7 @@
 require_once('../global/include.php');
 
 // Include the head for every page
-require_once(SYSTEM_WEBHOME_DIR.'user/php/head.php');
+require_once(SYSTEM_WEBHOME_DIR.'/user/php/head.php');
 
 $stepTwo = isset($_GET['two']) ? true : false;
 $stepThree = (isset($_GET['three']) & !$stepTwo) ? true : false;
@@ -33,7 +33,7 @@ if ($isLoggedIn) {
 ?>
 
 <body>
-    <?php require(SYSTEM_WEBHOME_DIR."user/php/nav.php"); echoNav($system_text, $db, $isLoggedIn, $isAdmin, "register"); ?>
+    <?php require(SYSTEM_WEBHOME_DIR."/user/php/nav.php"); echoNav($system_text, $db, $isLoggedIn, $isAdmin, "register"); ?>
 
     <?php
 
