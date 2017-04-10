@@ -6,10 +6,11 @@ $(document).ready(function() {
 
 		//get data-id attribute of the clicked element
 		var actId = $(e.relatedTarget).data('act-id');
-		var actName = $(e.relatedTarget).data('act-name');
+		var actTime = $(e.relatedTarget).data('act-datetime');
 
 		//populate the textbox
 		$(e.currentTarget).find('input[name="actId"]').val(actId);
+		$(e.currentTarget).find('input[name="countTime"]').val(actTime);
 	});
 
 });

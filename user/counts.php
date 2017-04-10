@@ -17,19 +17,7 @@ if (! $isLoggedIn) {
 
 require(SYSTEM_WEBHOME_DIR."user/php/nav.php"); echoNav($system_text, $db, $isLoggedIn, $isAdmin, "profile");
 
-// Get user info from database. This may not be necessary
-$query = "SELECT * FROM students WHERE students.student_id =" . $_SESSION ['student_id'];
-$result = $db->query ( $query );
-$row = $result->fetch_assoc ();
-$numUserRow = mysqli_num_rows($result);
 
-
-// Get user's counts
-$countQuery = "SELECT * FROM counts WHERE counts.student_id =" . $_SESSION ['student_id'];
-$countResult = $db->query ( $countQuery );
-$cRow = $countResult->fetch_assoc ();
-mysqli_data_seek($countResult, 0);
-$numCountRows = mysqli_num_rows($countResult);
 
 
 // Get boolean as to if the user can enter counts
@@ -42,68 +30,10 @@ $displayingSchedule = $lockRow ['locked'] == "t" ? false : true;
 
 */
 
-?>
-
-
-<div class="col-lg-12">
-    <div class="panel panel-primary">
-        <div class="panel-heading">
-            <h3 class="panel-title" >
-                <i class="fa fa-folder-open"><u style="font-size: x-large">Headcounts</u></i>
-            </h3>
-        </div>
-        <div class="panel-body">
-
-            <table class="datatable table table-striped table-bordered table-hover ">
-                <thead>
-                <tr>
-                    <?php
-                    if($numCountRows != 0) {
-                        foreach ($cRow as $key2 => $value2) {
-
-
-                            ?>
-                            <th><?php echo $key2; ?><i class="fa fa-clock-o pull-right"></i></th>
-                            <?php
-                        }
-                    }
-                    ?>
-
-
-
-                </tr>
-                </thead>
-                <tbody>
-                <?php
-
-                //Iterate through
-                for ($i = 0; $i < $numCountRows; $i++) {
-
-                    $row = $countResult->fetch_assoc();
-
-                    echo "<tr>";
-
-                    // TODO: make link to either a user-visible activity, a display for the count, or something useful
-
-                    if (is_array($row)) {
-                        foreach ($row as $value) {
-                             echo "<td>$value</td>";
-                        }
-                    } else echo "<td>$row</td>";
-
-                    echo "</tr>";
-                } ?>
-
-                </tbody>
-            </table>
-        </div>
-
-    </div>
-</div>
-
-<?php
 //query to get all upcoming activities for the student
-$upcomingQuery = "SELECT activity_name, activity.activity_id FROM activity, student_shifts WHERE student_shifts.student_id =" . $_SESSION ['student_id'] . " AND activity.activity_id = student_shifts.activity_id";
+// TODO: make this actually filter to activities upcoming
+
+$upcomingQuery = "SELECT activity_name, activity.activity_id, time_slots.start_time FROM activity, student_shifts, SIGCSE_testing.time_slots WHERE student_shifts.student_id =" . $_SESSION ['student_id'] . " AND activity.activity_id = student_shifts.activity_id AND activity.slot_id = time_slots.slot_id";
 $upResult = $db->query ( $upcomingQuery );
 $uRow = $upResult->fetch_assoc ();
 mysqli_data_seek($upResult, 0);
@@ -152,13 +82,80 @@ $numUpRows = mysqli_num_rows($upResult);
 
 
                     if (is_array($row)) {
+                        $rowTime = array_pop($row);
                         $rowId = array_pop($row);
                         $rowName = array_pop($row);
 
-                                echo "<td><a href='#createCount' data-toggle='modal' data-act-name='" . $rowName ."' data-act-id='" . $rowId ."'>" . $rowName . "</a></td>";
+                                echo "<td><a href='#createCount' data-toggle='modal' data-act-datetime='" . $rowTime ."' data-act-name='" . $rowName ."' data-act-id='" . $rowId ."'>" . $rowName . "</a></td>";
 
                             // TODO: make this button change after a count is entered.
 
+                    } else echo "<td>$row</td>";
+
+                    echo "</tr>";
+                } ?>
+
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</div>
+
+<?php
+// Get user's counts
+$countQuery = "SELECT activity.activity_name, counts.record_time, counts.headcount FROM counts, SIGCSE_testing.activity WHERE counts.student_id =" . $_SESSION ['student_id'] . " AND activity.activity_id = counts.activity_id";
+$countResult = $db->query ( $countQuery );
+$cRow = $countResult->fetch_assoc ();
+mysqli_data_seek($countResult, 0);
+$numCountRows = mysqli_num_rows($countResult);
+?>
+
+<div class="col-lg-12">
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h3 class="panel-title" >
+                <i class="fa fa-folder-open"><u style="font-size: x-large">Headcounts</u></i>
+            </h3>
+        </div>
+        <div class="panel-body">
+
+            <table class="datatable table table-striped table-bordered table-hover ">
+                <thead>
+                <tr>
+                    <?php
+                    if($numCountRows != 0) {
+                        foreach ($cRow as $key2 => $value2) {
+
+                            if ($key2 != 'student_id') {
+                                ?>
+                                <th><?php echo $key2; ?><i class="fa fa-clock-o pull-right"></i></th>
+                                <?php
+                            }
+                        }
+                    }
+                    ?>
+
+
+
+                </tr>
+                </thead>
+                <tbody>
+                <?php
+
+                //Iterate through
+                for ($i = 0; $i < $numCountRows; $i++) {
+
+                    $row = $countResult->fetch_assoc();
+
+                    echo "<tr>";
+
+                    if (is_array($row)) {
+                        foreach ($row as $key2 => $value) {
+                            if ($key2 != 'student_id') {
+                                echo "<td>$value</td>";
+                            }
+                        }
                     } else echo "<td>$row</td>";
 
                     echo "</tr>";
@@ -187,9 +184,9 @@ $numUpRows = mysqli_num_rows($upResult);
                 <form method="post" action="./php/countAdd.php">
                     <input name="actId" hidden id="actId" type="number">
                     <label for="countTime">Time Taken:</label>
-                    <input id="countTime" type="time">
+                    <input name="countTime" id="countTime" type="datetime">
                     <label for="count">Attendees:</label>
-                    <input id="count" type="number"><br>
+                    <input name="count" id="count" type="number"><br>
                     <input id="submit" type="submit" class="btn btn-default">
                 </form>
             </div>
