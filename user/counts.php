@@ -32,7 +32,7 @@ $displayingSchedule = $lockRow ['locked'] == "t" ? false : true;
 
 
 // Get counts for activities the user is scheduled for.
-$countQuery = "SELECT activity.activity_name, headcounts.record_time, headcounts.count_val, headcounts.stu_id FROM student_shifts, headcounts, SIGCSE_testing.activity WHERE student_shifts.student_id =" . $_SESSION ['student_id'] . " AND student_shifts.activity_id = activity.activity_id AND activity.activity_id = headcounts.act_id";
+$countQuery = "SELECT activity.activity_name, headcounts.record_time, headcounts.count_val, headcounts.stu_id, time_slots.start_time FROM student_shifts, headcounts, SIGCSE_testing.activity, SIGCSE_testing.time_slots WHERE student_shifts.student_id =" . $_SESSION ['student_id'] . " AND student_shifts.activity_id = activity.activity_id AND activity.activity_id = headcounts.act_id AND activity.slot_id = time_slots.slot_id";
 $countResult = $db->query ( $countQuery );
 $cRow = $countResult->fetch_assoc ();
 mysqli_data_seek($countResult, 0);
@@ -55,10 +55,11 @@ $numCountRows = mysqli_num_rows($countResult);
                     if($numCountRows != 0) {
                         foreach ($cRow as $key2 => $value2) {
 
+                            if ($key2 != 'start_time') {
                             ?>
                             <th><?php echo $key2; ?><i class="fa fa-clock-o pull-right"></i></th>
                             <?php
-
+                        }
                         }
                     }
                     ?>
@@ -70,7 +71,6 @@ $numCountRows = mysqli_num_rows($countResult);
                 <tbody>
                 <?php
 
-                //Iterate through
                 for ($i = 0; $i < $numCountRows; $i++) {
 
                     $row = $countResult->fetch_assoc();
@@ -78,13 +78,13 @@ $numCountRows = mysqli_num_rows($countResult);
                     echo "<tr>";
 
                     if (is_array($row)) {
+                        $oldTime = array_pop($row);
                         $rowId = array_pop($row);
                         $rowVal = array_pop($row);
                         $rowTime = array_pop($row);
                         $rowName = array_pop($row);
 
-
-                        echo "<td><a href='#createCount' data-toggle='modal' data-act-datetime='" . $rowTime ."' data-act-name='" . $rowName ."' data-act-id='" . $rowId ."'>" . $rowName . "</a></td>";
+                        echo "<td>" . $rowName . "</td>";
 
                         echo "<td>$rowTime</td>";
                         echo "<td>$rowVal</td>";
@@ -102,9 +102,7 @@ $numCountRows = mysqli_num_rows($countResult);
 </div>
 
 <?php
-//query to get all upcoming activities for the student
-// TODO: make this actually filter to activities upcoming
-
+//query to get all upcoming activities for the student that don't have counts.
 $upcomingQuery = "SELECT activity_name, activity.activity_id, time_slots.start_time FROM activity, student_shifts, SIGCSE_testing.time_slots WHERE activity.activity_id NOT IN (SELECT act_id from headcounts) AND student_shifts.student_id =" . $_SESSION ['student_id'] . " AND activity.activity_id = student_shifts.activity_id AND activity.slot_id = time_slots.slot_id";
 $upResult = $db->query ( $upcomingQuery );
 $uRow = $upResult->fetch_assoc ();
@@ -158,12 +156,8 @@ $numUpRows = mysqli_num_rows($upResult);
                         $rowId = array_pop($row);
                         $rowName = array_pop($row);
 
-                        echo "<td><a href='#createCount' data-toggle='modal' data-act-datetime='" . $rowTime . "' data-act-name='" . $rowName . "' data-act-id='" . $rowId . "'>" . $rowName . "</a></td>";
-
-                        // TODO: make this button change after a count is entered.
-
+                        echo "<td><a data-toggle='modal' data-target='#CreateCount' data-act-dateTime='" . $rowTime . "' data-act-name='" . $rowName . "' data-act-id='" . $rowId . "'>" . $rowName . "</a></td>";
                     }
-
                     echo "</tr>";
                 }
                 }?>
@@ -175,12 +169,8 @@ $numUpRows = mysqli_num_rows($upResult);
     </div>
 </div>
 
-
-
-
-<!-- Modal -->
-<a name="createCount"></a>
-<div id="createCount" class="modal fade" role="dialog">
+<!-- Create Count Modal -->
+<div id="CreateCount" class="modal fade" role="dialog">
     <div class="modal-dialog">
 
         <!-- Modal content-->
@@ -192,8 +182,8 @@ $numUpRows = mysqli_num_rows($upResult);
 
             <div class="modal-body">
                 <form method="post" action="./php/countAdd.php">
-                    <input name="actId" hidden id="actId" type="number">
-                    <label for="countTime">Time Taken:</label>
+                    <input name="actId"  id="actId" type="number">
+                    <label for="countTime">Time Recorded:</label>
                     <input name="countTime" id="countTime" type="datetime">
                     <label for="count">Attendees:</label>
                     <input name="count" id="count" type="number"><br>

@@ -36,6 +36,10 @@ $row = $result->fetch_assoc();
                 $count = $_POST["count"];
                 $countTime = '"' . $_POST["countTime"] . '"';
 
+                $checkQuery = "SELECT * FROM headcounts WHERE headcounts.act_id = $actId";
+                $checkResult = $db->query($checkQuery);
+                $numCounts = mysqli_num_rows($checkResult);
+
                 $insertQuery = "INSERT INTO headcounts(record_time, act_id, count_val, stu_id) VALUES ($countTime, $actId, $count, $stuId)";
                 $db->query($insertQuery);
                 echo "<h3>Added count.</h3><br>";
