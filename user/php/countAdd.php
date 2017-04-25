@@ -36,7 +36,7 @@ $row = $result->fetch_assoc();
                 $count = $_POST["count"];
                 $countTime = '"' . $_POST["countTime"] . '"';
 
-                $checkQuery = "SELECT * FROM counts WHERE counts.activity_id = $actId AND counts.student_id = $stuId";
+                $checkQuery = "SELECT * FROM headcounts WHERE headcounts.act_id = $actId AND headcounts.record_time = $countTime";
                 $checkResult = $db->query($checkQuery);
                 $numCounts = mysqli_num_rows($checkResult);
 
@@ -44,8 +44,7 @@ $row = $result->fetch_assoc();
                     echo "<h3>You have already submitted a count for this activity!</h3><br>";
                 } else {
 
-                    // TODO: implement database interaction here.
-                    $insertQuery = "INSERT INTO counts(student_id, activity_id, record_time, headcount) VALUES ($stuId, $actId, $countTime, $count)";
+                    $insertQuery = "INSERT INTO headcounts(record_time, act_id, count_val, stu_id) VALUES ($countTime, $actId, $count, $stuId)";
                     $db->query($insertQuery);
 
                     echo "<h3>Added count.</h3><br>";

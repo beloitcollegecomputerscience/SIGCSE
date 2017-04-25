@@ -30,79 +30,7 @@ $displayingSchedule = $lockRow ['locked'] == "t" ? false : true;
 
 */
 
-//query to get all upcoming activities for the student
-// TODO: make this actually filter to activities upcoming
 
-$upcomingQuery = "SELECT activity_name, activity.activity_id, time_slots.start_time FROM activity, student_shifts, SIGCSE_testing.time_slots WHERE student_shifts.student_id =" . $_SESSION ['student_id'] . " AND activity.activity_id = student_shifts.activity_id AND activity.slot_id = time_slots.slot_id";
-$upResult = $db->query ( $upcomingQuery );
-$uRow = $upResult->fetch_assoc ();
-mysqli_data_seek($upResult, 0);
-$numUpRows = mysqli_num_rows($upResult);
-?>
-
-<!-- New counts table -->
-<div class="col-lg-12">
-    <div class="panel panel-primary">
-        <div class="panel-heading">
-            <h3 class="panel-title" >
-                <i class="fa fa-folder-open"><u style="font-size: x-large">Upcoming Activities</u></i>
-            </h3>
-        </div>
-        <div class="panel-body">
-
-            <table class="datatable table table-striped table-bordered table-hover ">
-                <thead>
-                <tr>
-                    <?php
-                    if($numUpRows != 0) {
-                        foreach ($uRow as $key2 => $value2) {
-
-                            if($key2 == 'activity_name') {
-                                ?>
-                                <th><?php echo $key2; ?><i class="fa fa-clock-o pull-right"></i></th>
-                                <?php
-                            }
-                        } ?>
-                    <?php
-                    }
-                    ?>
-
-
-                </tr>
-                </thead>
-                <tbody>
-                <?php
-
-
-                for ($i = 0; $i < $numUpRows; $i++) {
-
-                    $row = $upResult->fetch_assoc();
-
-                    echo "<tr>";
-
-
-                    if (is_array($row)) {
-                        $rowTime = array_pop($row);
-                        $rowId = array_pop($row);
-                        $rowName = array_pop($row);
-
-                                echo "<td><a href='#createCount' data-toggle='modal' data-act-datetime='" . $rowTime ."' data-act-name='" . $rowName ."' data-act-id='" . $rowId ."'>" . $rowName . "</a></td>";
-
-                            // TODO: make this button change after a count is entered.
-
-                    } else echo "<td>$row</td>";
-
-                    echo "</tr>";
-                } ?>
-
-                </tbody>
-            </table>
-        </div>
-
-    </div>
-</div>
-
-<?php
 // Get counts for activities the user is scheduled for.
 $countQuery = "SELECT activity.activity_name, headcounts.record_time, headcounts.count_val, headcounts.stu_id FROM student_shifts, headcounts, SIGCSE_testing.activity WHERE student_shifts.student_id =" . $_SESSION ['student_id'] . " AND student_shifts.activity_id = activity.activity_id AND activity.activity_id = headcounts.act_id";
 $countResult = $db->query ( $countQuery );
@@ -127,11 +55,10 @@ $numCountRows = mysqli_num_rows($countResult);
                     if($numCountRows != 0) {
                         foreach ($cRow as $key2 => $value2) {
 
-                            if ($key2 != 'student_id') {
-                                ?>
-                                <th><?php echo $key2; ?><i class="fa fa-clock-o pull-right"></i></th>
-                                <?php
-                            }
+                            ?>
+                            <th><?php echo $key2; ?><i class="fa fa-clock-o pull-right"></i></th>
+                            <?php
+
                         }
                     }
                     ?>
@@ -151,13 +78,19 @@ $numCountRows = mysqli_num_rows($countResult);
                     echo "<tr>";
 
                     if (is_array($row)) {
-                        foreach ($row as $key2 => $value) {
+                        $rowId = array_pop($row);
+                        $rowVal = array_pop($row);
+                        $rowTime = array_pop($row);
+                        $rowName = array_pop($row);
 
-                                echo "<td>$value</td>";
 
-                        }
-                    } else echo "<td>$row</td>";
+                        echo "<td><a href='#createCount' data-toggle='modal' data-act-datetime='" . $rowTime ."' data-act-name='" . $rowName ."' data-act-id='" . $rowId ."'>" . $rowName . "</a></td>";
 
+                        echo "<td>$rowTime</td>";
+                        echo "<td>$rowVal</td>";
+                        echo "<td>$rowId</td>";
+
+                    }
                     echo "</tr>";
                 } ?>
 
@@ -167,6 +100,82 @@ $numCountRows = mysqli_num_rows($countResult);
 
     </div>
 </div>
+
+<?php
+//query to get all upcoming activities for the student
+// TODO: make this actually filter to activities upcoming
+
+$upcomingQuery = "SELECT activity_name, activity.activity_id, time_slots.start_time FROM activity, student_shifts, SIGCSE_testing.time_slots WHERE activity.activity_id NOT IN (SELECT act_id from headcounts) AND student_shifts.student_id =" . $_SESSION ['student_id'] . " AND activity.activity_id = student_shifts.activity_id AND activity.slot_id = time_slots.slot_id";
+$upResult = $db->query ( $upcomingQuery );
+$uRow = $upResult->fetch_assoc ();
+mysqli_data_seek($upResult, 0);
+$numUpRows = mysqli_num_rows($upResult);
+?>
+
+<!-- New counts table -->
+<div class="col-lg-12">
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h3 class="panel-title" >
+                <i class="fa fa-folder-open"><u style="font-size: x-large">Upcoming Activities</u></i>
+            </h3>
+        </div>
+        <div class="panel-body">
+
+            <table class="datatable table table-striped table-bordered table-hover ">
+                <thead>
+                <tr>
+                    <?php
+                    if($numUpRows != 0) {
+                    foreach ($uRow as $key2 => $value2) {
+
+                        if ($key2 == 'activity_name') {
+                            ?>
+                            <th><?php echo $key2; ?><i class="fa fa-clock-o pull-right"></i></th>
+                            <?php
+                        }
+                    } ?>
+                    <?php
+
+                    ?>
+
+
+                </tr>
+                </thead>
+                <tbody>
+                <?php
+
+
+                for ($i = 0; $i < $numUpRows; $i++) {
+
+                    $row = $upResult->fetch_assoc();
+
+                    echo "<tr>";
+
+
+                    if (is_array($row)) {
+                        $rowTime = array_pop($row);
+                        $rowId = array_pop($row);
+                        $rowName = array_pop($row);
+
+                        echo "<td><a href='#createCount' data-toggle='modal' data-act-datetime='" . $rowTime . "' data-act-name='" . $rowName . "' data-act-id='" . $rowId . "'>" . $rowName . "</a></td>";
+
+                        // TODO: make this button change after a count is entered.
+
+                    }
+
+                    echo "</tr>";
+                }
+                }?>
+
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</div>
+
+
 
 
 <!-- Modal -->
