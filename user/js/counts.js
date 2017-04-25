@@ -2,7 +2,7 @@
 
 $(document).ready(function() {
 
-	$('#createCount').on('show.bs.modal', function(e) {
+	$('#CreateCount').on('show.bs.modal', function(e) {
 
 		//get data-id attribute of the clicked element
 		var actId = $(e.relatedTarget).data('act-id');

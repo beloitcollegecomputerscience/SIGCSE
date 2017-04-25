@@ -30,78 +30,6 @@ $displayingSchedule = $lockRow ['locked'] == "t" ? false : true;
 
 */
 
-
-// Get counts for activities the user is scheduled for.
-$countQuery = "SELECT activity.activity_name, headcounts.record_time, headcounts.count_val, headcounts.stu_id, time_slots.start_time FROM student_shifts, headcounts, SIGCSE_testing.activity, SIGCSE_testing.time_slots WHERE student_shifts.student_id =" . $_SESSION ['student_id'] . " AND student_shifts.activity_id = activity.activity_id AND activity.activity_id = headcounts.act_id AND activity.slot_id = time_slots.slot_id";
-$countResult = $db->query ( $countQuery );
-$cRow = $countResult->fetch_assoc ();
-mysqli_data_seek($countResult, 0);
-$numCountRows = mysqli_num_rows($countResult);
-?>
-
-<div class="col-lg-12">
-    <div class="panel panel-primary">
-        <div class="panel-heading">
-            <h3 class="panel-title" >
-                <i class="fa fa-folder-open"><u style="font-size: x-large">Headcounts</u></i>
-            </h3>
-        </div>
-        <div class="panel-body">
-
-            <table class="datatable table table-striped table-bordered table-hover ">
-                <thead>
-                <tr>
-                    <?php
-                    if($numCountRows != 0) {
-                        foreach ($cRow as $key2 => $value2) {
-
-                            if ($key2 != 'start_time') {
-                            ?>
-                            <th><?php echo $key2; ?><i class="fa fa-clock-o pull-right"></i></th>
-                            <?php
-                        }
-                        }
-                    }
-                    ?>
-
-
-
-                </tr>
-                </thead>
-                <tbody>
-                <?php
-
-                for ($i = 0; $i < $numCountRows; $i++) {
-
-                    $row = $countResult->fetch_assoc();
-
-                    echo "<tr>";
-
-                    if (is_array($row)) {
-                        $oldTime = array_pop($row);
-                        $rowId = array_pop($row);
-                        $rowVal = array_pop($row);
-                        $rowTime = array_pop($row);
-                        $rowName = array_pop($row);
-
-                        echo "<td>" . $rowName . "</td>";
-
-                        echo "<td>$rowTime</td>";
-                        echo "<td>$rowVal</td>";
-                        echo "<td>$rowId</td>";
-
-                    }
-                    echo "</tr>";
-                } ?>
-
-                </tbody>
-            </table>
-        </div>
-
-    </div>
-</div>
-
-<?php
 //query to get all upcoming activities for the student that don't have counts.
 $upcomingQuery = "SELECT activity_name, activity.activity_id, time_slots.start_time FROM activity, student_shifts, SIGCSE_testing.time_slots WHERE activity.activity_id NOT IN (SELECT act_id from headcounts) AND student_shifts.student_id =" . $_SESSION ['student_id'] . " AND activity.activity_id = student_shifts.activity_id AND activity.slot_id = time_slots.slot_id";
 $upResult = $db->query ( $upcomingQuery );
@@ -198,3 +126,75 @@ $numUpRows = mysqli_num_rows($upResult);
 
     </div>
 </div>
+<?php
+
+// Get counts for activities the user is scheduled for.
+$countQuery = "SELECT activity.activity_name, headcounts.record_time, headcounts.count_val, headcounts.stu_id, time_slots.start_time FROM student_shifts, headcounts, SIGCSE_testing.activity, SIGCSE_testing.time_slots WHERE student_shifts.student_id =" . $_SESSION ['student_id'] . " AND student_shifts.activity_id = activity.activity_id AND activity.activity_id = headcounts.act_id AND activity.slot_id = time_slots.slot_id";
+$countResult = $db->query ( $countQuery );
+$cRow = $countResult->fetch_assoc ();
+mysqli_data_seek($countResult, 0);
+$numCountRows = mysqli_num_rows($countResult);
+?>
+
+<div class="col-lg-12">
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h3 class="panel-title" >
+                <i class="fa fa-folder-open"><u style="font-size: x-large">Headcounts</u></i>
+            </h3>
+        </div>
+        <div class="panel-body">
+
+            <table class="datatable table table-striped table-bordered table-hover ">
+                <thead>
+                <tr>
+                    <?php
+                    if($numCountRows != 0) {
+                        foreach ($cRow as $key2 => $value2) {
+
+                            if ($key2 != 'start_time') {
+                            ?>
+                            <th><?php echo $key2; ?><i class="fa fa-clock-o pull-right"></i></th>
+                            <?php
+                        }
+                        }
+                    }
+                    ?>
+
+
+
+                </tr>
+                </thead>
+                <tbody>
+                <?php
+
+                for ($i = 0; $i < $numCountRows; $i++) {
+
+                    $row = $countResult->fetch_assoc();
+
+                    echo "<tr>";
+
+                    if (is_array($row)) {
+                        $oldTime = array_pop($row);
+                        $rowId = array_pop($row);
+                        $rowVal = array_pop($row);
+                        $rowTime = array_pop($row);
+                        $rowName = array_pop($row);
+
+                        echo "<td>" . $rowName . "</td>";
+
+                        echo "<td>$rowTime</td>";
+                        echo "<td>$rowVal</td>";
+                        echo "<td>$rowId</td>";
+
+                    }
+                    echo "</tr>";
+                } ?>
+
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</div>
+
