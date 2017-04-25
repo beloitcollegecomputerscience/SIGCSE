@@ -103,8 +103,8 @@ $numUpRows = mysqli_num_rows($upResult);
 </div>
 
 <?php
-// Get user's counts
-$countQuery = "SELECT activity.activity_name, counts.record_time, counts.headcount FROM counts, SIGCSE_testing.activity WHERE counts.student_id =" . $_SESSION ['student_id'] . " AND activity.activity_id = counts.activity_id";
+// Get counts for activities the user is scheduled for.
+$countQuery = "SELECT activity.activity_name, headcounts.record_time, headcounts.count_val, headcounts.stu_id FROM student_shifts, headcounts, SIGCSE_testing.activity WHERE student_shifts.student_id =" . $_SESSION ['student_id'] . " AND student_shifts.activity_id = activity.activity_id AND activity.activity_id = headcounts.act_id";
 $countResult = $db->query ( $countQuery );
 $cRow = $countResult->fetch_assoc ();
 mysqli_data_seek($countResult, 0);
@@ -152,9 +152,9 @@ $numCountRows = mysqli_num_rows($countResult);
 
                     if (is_array($row)) {
                         foreach ($row as $key2 => $value) {
-                            if ($key2 != 'student_id') {
+
                                 echo "<td>$value</td>";
-                            }
+
                         }
                     } else echo "<td>$row</td>";
 
@@ -170,6 +170,7 @@ $numCountRows = mysqli_num_rows($countResult);
 
 
 <!-- Modal -->
+<a name="createCount"></a>
 <div id="createCount" class="modal fade" role="dialog">
     <div class="modal-dialog">
 
