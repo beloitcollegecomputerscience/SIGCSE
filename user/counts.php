@@ -182,7 +182,7 @@ $numUpRows = mysqli_num_rows($upResult);
 
             <div class="modal-body">
                 <form method="post" action="./php/countAdd.php">
-                    <input name="actId"  id="actId" type="number">
+                    <input name="actId" hidden id="actId" type="number">
                     <label for="countTime">Time Recorded:</label>
                     <input name="countTime" id="countTime" type="datetime">
                     <label for="count">Attendees:</label>
