@@ -13,4 +13,10 @@ $(document).ready(function() {
 		$(e.currentTarget).find('input[name="countTime"]').val(actTime);
 	});
 
+	$(".toggler").click(function(e){
+		e.preventDefault();
+		$('.cat'+$(this).attr('data-row-type')).toggle();
+	});
+
 });
+
