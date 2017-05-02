@@ -27,26 +27,23 @@ $row = $result->fetch_assoc();
         <div class="panel-body">
 
             <?php
-            // If login lock is on, send back to login page with an error
+            // If count lock is on, send back to login page with an error
             if ($row['locked'] == 't') {
-                echo "<h3>Adding counts is currently locked.</h3>";
+                echo "<h3>Editing counts is currently locked.</h3>";
             } else {
                 $stuId = $_SESSION["student_id"];
-                $actId = $_POST["actId"];
-                $count = $_POST["count"];
-                $countTime = '"' . $_POST["countTime"] . '"';
+                $actId = $_POST["actIdE"];
+                $count = $_POST["countE"];
+                $countTime = $_POST["countTimeE"];
+                $oldTime = $_POST["oldTimeE"];
 
-                $checkQuery = "SELECT * FROM headcounts WHERE headcounts.act_id = $actId";
-                $checkResult = $db->query($checkQuery);
-                $numCounts = mysqli_num_rows($checkResult);
-
-                $insertQuery = "INSERT INTO headcounts(record_time, act_id, count_val, stu_id) VALUES ($countTime, $actId, $count, $stuId)";
-                $db->query($insertQuery);
-                echo "<h3>Added count.</h3><br>";
+                $updateQuery = "UPDATE headcounts SET record_time = $countTime, count_val = $count, stu_id = $stuId WHERE record_time = $oldTime AND act_id = $actId";
+                $db->query($updateQuery);
+                echo "<h3>Updated count.</h3><br>";
             }
 
-            echo "<br> <button class=\"btn btn-default\" onclick=\"goBack()\">Back to Counts</button> 
-                    <script> function goBack() { window.history.back(); } </script>";
+            echo "<br><button class='btn btn-default' onclick='goBack()'>Back to Counts</button> 
+                    <script> function goBack() { window.history.back();}</script>";
             ?>
         </div>
     </div>

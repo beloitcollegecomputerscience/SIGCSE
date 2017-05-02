@@ -32,16 +32,16 @@ $row = $result->fetch_assoc();
                 echo "<h3>Adding counts is currently locked.</h3>";
             } else {
                 $stuId = $_SESSION["student_id"];
-                $actId = $_POST["actId"];
-                $count = $_POST["count"];
-                $countTime = '"' . $_POST["countTime"] . '"';
+                $actId = $_POST["actIdC"];
+                $count = $_POST["countC"];
+                $countTime = '"' . $_POST["countTimeC"] . '"';
 
                 $insertQuery = "INSERT INTO headcounts(record_time, act_id, count_val, stu_id) VALUES ($countTime, $actId, $count, $stuId)";
                 $db->query($insertQuery);
                 echo "<h3>Added count.</h3><br>";
             }
 
-            echo "<br> <button class=\"btn btn-default\" onclick=\"goBack()\">Back to Counts</button> 
+            echo "<br> <button class='btn btn-default' onclick='goBack()'>Back to Counts</button> 
                     <script> function goBack() { window.history.back(); } </script>";
             ?>
         </div>

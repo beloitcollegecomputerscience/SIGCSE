@@ -17,9 +17,6 @@ if (! $isLoggedIn) {
 
 require(SYSTEM_WEBHOME_DIR."/user/php/nav.php"); echoNav($system_text, $db, $isLoggedIn, $isAdmin, "profile");
 
-
-
-
 // Get boolean as to if the user can enter counts
 // todo: make a system lock for this
 /*
@@ -30,17 +27,15 @@ $displayingSchedule = $lockRow ['locked'] == "t" ? false : true;
 
 */
 
-//query to get all upcoming activities for the student that don't have counts.
-$upcomingQuery = "SELECT activity_name, activity.activity_id, time_slots.start_time FROM activity, student_shifts, SIGCSE_testing.time_slots WHERE  student_shifts.student_id =" . $_SESSION ['student_id'] . " AND activity.activity_id = student_shifts.activity_id AND activity.slot_id = time_slots.slot_id";
+//query to get all upcoming activities for the student.
+$upcomingQuery = "SELECT activity_name, activity.activity_id, time_slots.start_time FROM activity, student_shifts, SIGCSE_testing.time_slots WHERE  student_shifts.student_id =" . $_SESSION ['student_id'] . " AND activity.activity_id = student_shifts.activity_id AND activity.slot_id = time_slots.slot_id GROUP BY activity_id";
 $upResult = $db->query ( $upcomingQuery );
 $uRow = $upResult->fetch_assoc ();
 mysqli_data_seek($upResult, 0);
 $numUpRows = mysqli_num_rows($upResult);
 
-$allCountQuery = "SELECT * FROM headcounts";
+$allCountQuery = "SELECT * FROM headcounts GROUP BY act_id";
 $allCountResult = $db->query ( $allCountQuery );
-$cRow = $allCountResult->fetch_assoc ();
-mysqli_data_seek($allCountResult, 0);
 $numCountRows = mysqli_num_rows($allCountResult);
 ?>
 
@@ -57,18 +52,9 @@ $numCountRows = mysqli_num_rows($allCountResult);
             <table class="datatable table table-striped table-bordered table-hover ">
                 <thead>
                 <tr>
-                    <?php
-                        if($numUpRows != 0) {
-                        foreach ($uRow as $key2 => $value2) {
+                    <?php if($numUpRows != 0) { ?>
 
-                            if ($key2 == 'activity_name') {
-                                ?>
-                                <th><?php echo $key2; ?><i class="fa fa-clock-o pull-right"></i></th>
-                                <?php
-                            }
-                        }
-                    ?>
-
+                    <th>activity_name<i class="fa fa-clock-o pull-right"></i></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -77,25 +63,23 @@ $numCountRows = mysqli_num_rows($allCountResult);
                 for ($i = 0; $i < $numUpRows; $i++) {
 
                     $row = $upResult->fetch_assoc();
-
                     if (is_array($row)) {
-
-                        echo "<tr>";
 
                         $rowTime = array_pop($row);
                         $rowId = array_pop($row);
                         $rowName = array_pop($row);
 
-                        echo "<td><a href='#' class='toggler' data-row-type='1'</a>$rowName</td>";
-                        //echo "<td>$rowTime</td>";
-
-                        echo "</tr>";
+                        // Creates the activity row with toggler link.
+                        echo "<tr><td><a href='#' class='toggler' data-row-type='" . $i . "'</a>$rowName</td></tr>";
+                        // Creates the new count row
+                        echo "<tr class='cat" . $i . "' style='display:none'><td>&emsp;<a data-target='#CreateCount' data-toggle='modal' data-actId='{$rowId}' data-recTime='{$rowTime}' </a>Add new count</td></tr>";
                         $printCount = 1;
-                        for ($i = 0; $i < $numCountRows; $i++) {
+                        $found = false;
+                        for ($j = 0; $j < $numCountRows; $j++) {
 
                             $countRow = $allCountResult->fetch_assoc();
-
                             if ($countRow['act_id'] == $rowId) {
+                                $found = true;
                                 $rowStuId = array_pop($countRow);
                                 $rowVal = array_pop($countRow);
                                 $rowActId = array_pop($countRow);
@@ -104,10 +88,14 @@ $numCountRows = mysqli_num_rows($allCountResult);
                                 $countStr = $printCount . ") Recorded: " . $cRowTime . " by student " . $rowStuId;
                                 $printCount++;
 
-                                echo "<tr class='cat1' style='display:none'><td>$countStr</td></tr>";
+                                echo "<tr class='cat" . $i . "' style='display:none'><td>&emsp;<a href='#EditCount' data-toggle='modal' data-target='#EditCount' data-actId='{$rowActId}' data-recTime='{$cRowTime}' </a>$countStr</td></tr>";
+                                $printCount++;
+                            } elseif ($found) {
+                                break;
                             }
                         }
                     }
+                    mysqli_data_seek($allCountResult, 0);
                 }
                 }?>
 
@@ -122,20 +110,19 @@ $numCountRows = mysqli_num_rows($allCountResult);
 <div id="CreateCount" class="modal fade" role="dialog">
     <div class="modal-dialog">
 
-        <!-- Modal content-->
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Enter New Count: </h4>
+                <button type="button" class="close" data-dismiss="modal">x</button>
+                <h4 class="modal-title">Record New Count: </h4>
             </div>
 
             <div class="modal-body">
-                <form method="post" action="./php/countAdd.php">
-                    <input name="actId"  id="actId" type="number">
-                    <label for="countTime">Time Recorded:</label>
-                    <input name="countTime" id="countTime" type="datetime">
-                    <label for="count">Attendees:</label>
-                    <input name="count" id="count" type="number"><br>
+                <form name="createForm" method="post" action="./php/countAdd.php">
+                    <input name="actIdC" hidden id="actIdC" type="number">
+                    <label for="countTimeC">Time Recorded:</label>
+                    <input name="countTimeC" id="countTimeC" type="datetime">
+                    <label for="countC">Attendees:</label>
+                    <input name="countC" id="countC" type="number"><br>
                     <input id="submit" type="submit" class="btn btn-default">
                 </form>
             </div>
@@ -147,73 +134,32 @@ $numCountRows = mysqli_num_rows($allCountResult);
 
     </div>
 </div>
-<?php
-//
-//// Get counts for activities the user is scheduled for.
-//$countQuery = "SELECT activity.activity_name, headcounts.record_time, headcounts.count_val, headcounts.stu_id, time_slots.start_time FROM student_shifts, headcounts, SIGCSE_testing.activity, SIGCSE_testing.time_slots WHERE student_shifts.student_id =" . $_SESSION ['student_id'] . " AND student_shifts.activity_id = activity.activity_id AND activity.activity_id = headcounts.act_id AND activity.slot_id = time_slots.slot_id";
-//$countResult = $db->query ( $countQuery );
-//$cRow = $countResult->fetch_assoc ();
-//mysqli_data_seek($countResult, 0);
-//$numCountRows = mysqli_num_rows($countResult);
-?>
-<!--
-<div class="col-lg-12">
-    <div class="panel panel-primary">
-        <div class="panel-heading">
-            <h3 class="panel-title" >
-                <i class="fa fa-folder-open"><u style="font-size: x-large">Headcounts</u></i>
-            </h3>
-        </div>
-        <div class="panel-body">
 
-            <table class="datatable table table-striped table-bordered table-hover ">
-                <thead>
-                <tr>
-                    <?php /*
-                    if($numCountRows != 0) {
-                        foreach ($cRow as $key2 => $value2) {
+<!-- Edit Count Modal -->
+<div id="EditCount" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">x</button>
+                <h4 class="modal-title">Edit Count: </h4>
+            </div>
 
-                            if ($key2 != 'start_time') {
-                            ?>
-                            <th><?php echo $key2; ?><i class="fa fa-clock-o pull-right"></i></th>
-                            <?php
-                        }
-                        }
-                    }
-                    ?>
+            <div class="modal-body">
+                <form name="editForm" method="post" action="./php/countEdit.php">
+                    <input name="actIdE" hidden id="actIdE" type="number">
+                    <input name="oldTimeE" hidden id="oldTimeE" type="datetime">
+                    <label for="countTimeE">Time Recorded:</label>
+                    <input name="countTimeE" id="countTimeE" type="datetime">
+                    <label for="countE">Attendees:</label>
+                    <input name="countE" id="countE" type="number"><br>
+                    <input id="submit" type="submit" class="btn btn-default">
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+            </div>
 
-
-
-                </tr>
-                </thead>
-                <tbody>
-                <?php
-
-                for ($i = 0; $i < $numCountRows; $i++) {
-
-                    $row = $countResult->fetch_assoc();
-
-                    echo "<tr>";
-
-                    if (is_array($row)) {
-                        $oldTime = array_pop($row);
-                        $rowId = array_pop($row);
-                        $rowVal = array_pop($row);
-                        $rowTime = array_pop($row);
-                        $rowName = array_pop($row);
-
-                        echo "<td>" . $rowName . "</td>";
-
-                        echo "<td>$rowTime</td>";
-                        echo "<td>$rowVal</td>";
-                        echo "<td>$rowId</td>";
-
-                    }
-                    echo "</tr>";
-                } ?>
-
-                </tbody>
-            </table>
         </div>
 
     </div>
