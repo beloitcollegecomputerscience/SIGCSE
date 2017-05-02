@@ -27,7 +27,7 @@ $row = $result->fetch_assoc();
         <div class="panel-body">
 
             <?php
-            // If login lock is on, send back to login page with an error
+            // If login lock is on, send back to login page with an error.
             if ($row['locked'] == 't') {
                 echo "<h3>Adding counts is currently locked.</h3>";
             } else {

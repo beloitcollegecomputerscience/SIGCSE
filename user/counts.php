@@ -72,7 +72,7 @@ $numCountRows = mysqli_num_rows($allCountResult);
                         // Creates the activity row with toggler link.
                         echo "<tr><td><a href='#' class='toggler' data-row-type='" . $i . "'</a>$rowName</td></tr>";
                         // Creates the new count row
-                        echo "<tr class='cat" . $i . "' style='display:none'><td>&emsp;<a data-target='#CreateCount' data-toggle='modal' data-actId='{$rowId}' data-recTime='{$rowTime}' </a>Add new count</td></tr>";
+                        echo "<tr class='cat" . $i . "' style='display:none'><td>&emsp;<a data-target='#CreateCount' data-toggle='modal' data-act-Id='$rowId' data-rec-Time='$rowTime' type='button' </a>Add new count</td></tr>";
                         $printCount = 1;
                         $found = false;
                         for ($j = 0; $j < $numCountRows; $j++) {
@@ -85,10 +85,10 @@ $numCountRows = mysqli_num_rows($allCountResult);
                                 $rowActId = array_pop($countRow);
                                 $cRowTime = array_pop($countRow);
 
-                                $countStr = $printCount . ") Recorded: " . $cRowTime . " by student " . $rowStuId;
+                                $countStr = $printCount . ") Students: " . $rowVal . " Recorded: " . $cRowTime . " by student " . $rowStuId;
                                 $printCount++;
 
-                                echo "<tr class='cat" . $i . "' style='display:none'><td>&emsp;<a href='#EditCount' data-toggle='modal' data-target='#EditCount' data-actId='{$rowActId}' data-recTime='{$cRowTime}' </a>$countStr</td></tr>";
+                                echo "<tr class='cat" . $i . "' style='display:none'><td>&emsp;<a href='#EditCount' data-toggle='modal' data-target='#EditCount' data-count-val='$rowVal' data-act-Id='$rowActId' data-rec-Time='$cRowTime' </a>$countStr</td></tr>";
                                 $printCount++;
                             } elseif ($found) {
                                 break;

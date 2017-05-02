@@ -5,8 +5,9 @@ $(document).ready(function() {
 	$('#CreateCount').on('show.bs.modal', function(e) {
 
 		//get data-id attribute of the clicked element
-		var actId = $(e.relatedTarget).data('actId');
-		var actTime = $(e.relatedTarget).data('recTime');
+		// For some reason these aren't getting the info right
+		var actId = $(e.relatedTarget).data('act-Id');
+		var actTime = $(e.relatedTarget).data('rec-Time');
 		//populate the textbox
 		$(e.currentTarget).find('input[name="actIdC"]').val(actId);
 		$(e.currentTarget).find('input[name="countTimeC"]').val(actTime);
@@ -15,14 +16,14 @@ $(document).ready(function() {
 	$('#EditCount').on('show.bs.modal', function(e) {
 
 		//get data-id attribute of the clicked element
-		var actId = $(e.relatedTarget).data('actId');
-		var actTime = $(e.relatedTarget).data('recTime');
-
-		alert($(e.relatedTarget).toString());
+		var actId = $(e.relatedTarget).data('act-Id');
+		var actTime = $(e.relatedTarget).data('rec-Time');
+		var val = $(e.relatedTarget).data('count-val');
 		//populate the textbox
 		$(e.currentTarget).find('input#actIdE').val(actId);
 		$(e.currentTarget).find('input#countTimeE').val(actTime);
-		$(e.currentTarget).find('input #oldTimeE').val(actTime);
+		$(e.currentTarget).find('input#oldTimeE').val(actTime);
+		$(e.currentTarget).find('input#countE').val(val);
 	});
 
 	$(".toggler").click(function(e){
@@ -31,13 +32,4 @@ $(document).ready(function() {
 	});
 
 });
-//
-// $(document).on("click", ".countCreate", function () {
-// 	var id = $(this).data('actId');
-// 	var time = $(this).data('recTime');
-// 	$(".modal-body #countTimeC").val( time );
-// 	$(".modal-body #actIdC").val( id );
-// });
-//
-
 

@@ -37,7 +37,7 @@ $row = $result->fetch_assoc();
                 $countTime = $_POST["countTimeE"];
                 $oldTime = $_POST["oldTimeE"];
 
-                $updateQuery = "UPDATE headcounts SET record_time = $countTime, count_val = $count, stu_id = $stuId WHERE record_time = $oldTime AND act_id = $actId";
+                $updateQuery = "UPDATE headcounts SET record_time = '$countTime', act_id = act_id, count_val = $count, stu_id = $stuId WHERE record_time = '$oldTime' AND act_id = $actId";
                 $db->query($updateQuery);
                 echo "<h3>Updated count.</h3><br>";
             }
